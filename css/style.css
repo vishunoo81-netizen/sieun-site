@@ -1,0 +1,158 @@
+/* ===== 시은영어학원 공통 스타일 ===== */
+:root {
+  --navy: #1a2b4a;
+  --navy-light: #2c4470;
+  --gray-bg: #f5f6f8;
+  --gray-line: #e2e5ea;
+  --gray-text: #5a6273;
+  --text: #222831;
+  --accent: #c9a24b;
+  --white: #ffffff;
+  --radius: 12px;
+  --maxw: 880px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
+  color: var(--text);
+  background: var(--white);
+  line-height: 1.85;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .nav-logo {
+  font-family: "Noto Serif KR", "Nanum Myeongjo", serif;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--navy);
+}
+
+a { color: var(--navy-light); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ===== 헤더 / 네비 ===== */
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.97);
+  border-bottom: 1px solid var(--gray-line);
+  backdrop-filter: blur(6px);
+}
+.nav-wrap {
+  max-width: var(--maxw); margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px;
+}
+.nav-logo { font-size: 20px; letter-spacing: -0.5px; }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 26px; list-style: none; }
+.nav-links a { color: var(--text); font-size: 15px; font-family: sans-serif; }
+.nav-links a:hover { color: var(--navy); text-decoration: none; }
+.nav-toggle {
+  display: none; background: none; border: none;
+  font-size: 26px; color: var(--navy); cursor: pointer;
+}
+
+/* ===== 레이아웃 ===== */
+main { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+section { padding: 48px 0; border-bottom: 1px solid var(--gray-line); }
+section:last-child { border-bottom: none; }
+
+.hero {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-light) 100%);
+  color: var(--white); text-align: center;
+  padding: 72px 20px 64px;
+}
+.hero h1 { color: var(--white); font-size: 32px; margin-bottom: 16px; }
+.hero p { font-size: 18px; color: #d6dce8; max-width: 620px; margin: 0 auto 8px; }
+.hero .tagline { color: var(--accent); font-size: 16px; margin-top: 18px; font-family: sans-serif; letter-spacing: 1px; }
+
+h2 { font-size: 25px; margin-bottom: 18px; }
+h3 { font-size: 19px; margin: 26px 0 10px; }
+p { margin-bottom: 16px; }
+.lead { font-size: 19px; color: var(--gray-text); }
+
+ul.clean { list-style: none; margin: 14px 0; }
+ul.clean li {
+  padding: 12px 0 12px 26px; position: relative;
+  border-bottom: 1px dashed var(--gray-line);
+}
+ul.clean li::before {
+  content: "▪"; color: var(--accent);
+  position: absolute; left: 4px; top: 12px;
+}
+
+.card {
+  background: var(--gray-bg); border: 1px solid var(--gray-line);
+  border-radius: var(--radius); padding: 24px 22px; margin: 18px 0;
+}
+.card h3 { margin-top: 0; }
+
+.stage-table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
+.stage-table th, .stage-table td {
+  border: 1px solid var(--gray-line); padding: 12px 14px; text-align: left; vertical-align: top;
+}
+.stage-table th { background: var(--navy); color: var(--white); font-weight: 600; }
+.stage-table tr:nth-child(even) td { background: var(--gray-bg); }
+
+/* ===== CTA ===== */
+.cta {
+  background: var(--navy); color: var(--white);
+  border-radius: var(--radius); padding: 32px 24px; text-align: center; margin: 36px 0;
+}
+.cta h2 { color: var(--white); }
+.cta p { color: #d6dce8; }
+.btn {
+  display: inline-block; background: var(--accent); color: var(--navy);
+  font-weight: 700; padding: 14px 28px; border-radius: 8px; margin: 8px 6px 0;
+  font-family: sans-serif; font-size: 16px;
+}
+.btn:hover { text-decoration: none; opacity: 0.92; }
+.btn.outline { background: transparent; color: var(--white); border: 1px solid var(--accent); }
+
+/* ===== FAQ ===== */
+.faq-item { border-bottom: 1px solid var(--gray-line); padding: 8px 0; }
+.faq-q {
+  font-weight: 700; color: var(--navy); font-size: 18px;
+  cursor: pointer; padding: 16px 30px 16px 0; position: relative;
+}
+.faq-q::after {
+  content: "+"; position: absolute; right: 4px; top: 14px;
+  font-size: 24px; color: var(--accent); transition: transform .2s;
+}
+.faq-item.open .faq-q::after { content: "−"; }
+.faq-a { display: none; padding: 0 0 18px; color: var(--gray-text); }
+.faq-item.open .faq-a { display: block; }
+
+/* ===== 푸터 ===== */
+footer {
+  background: var(--navy); color: #c2cad8;
+  padding: 40px 20px; margin-top: 40px; font-size: 14px;
+}
+.foot-wrap { max-width: var(--maxw); margin: 0 auto; }
+.foot-wrap strong { color: var(--white); font-size: 16px; }
+.foot-wrap a { color: var(--accent); }
+.foot-info { margin-top: 14px; line-height: 2; }
+
+/* ===== 모바일 ===== */
+@media (max-width: 720px) {
+  body { font-size: 16px; }
+  .hero h1 { font-size: 26px; }
+  .hero p { font-size: 16px; }
+  h2 { font-size: 22px; }
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none; position: absolute; top: 60px; left: 0; right: 0;
+    flex-direction: column; gap: 0; background: var(--white);
+    border-bottom: 1px solid var(--gray-line); padding: 10px 0;
+  }
+  .nav-links.show { display: flex; }
+  .nav-links li { padding: 0 20px; }
+  .nav-links a { display: block; padding: 12px 0; border-bottom: 1px solid var(--gray-line); }
+  .stage-table { font-size: 13px; }
+  .stage-table th, .stage-table td { padding: 8px; }
+}

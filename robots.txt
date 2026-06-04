@@ -20,4 +20,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://vishunoo81-netizen.github.io/sieun-site/sitemap.xml

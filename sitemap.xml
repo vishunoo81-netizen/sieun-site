@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://example.com/index.html</loc>
+    <loc>https://vishunoo81-netizen.github.io/sieun-site/index.html</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://example.com/about.html</loc>
+    <loc>https://vishunoo81-netizen.github.io/sieun-site/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://example.com/schools.html</loc>
+    <loc>https://vishunoo81-netizen.github.io/sieun-site/schools.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://example.com/faq.html</loc>
+    <loc>https://vishunoo81-netizen.github.io/sieun-site/faq.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

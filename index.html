@@ -44,6 +44,11 @@ body{font-family:"Noto Sans KR",sans-serif; color:var(--ink); background:var(--p
 .serif{font-family:"Noto Serif KR",serif;}
 img{display:block; max-width:100%;}
 header{position:sticky; top:0; z-index:50; background:rgba(15,29,51,.93); backdrop-filter:blur(10px); border-bottom:1px solid rgba(201,162,86,.25);}
+.promo-banner{display:block; background:linear-gradient(90deg,#c9a256,#e2c98e,#c9a256); color:#1a1f29; text-align:center; padding:11px 16px; font-size:14.5px; font-weight:700; letter-spacing:.3px; position:relative; z-index:60;}
+.promo-banner:hover{filter:brightness(1.06);}
+.promo-banner .pb-tag{display:inline-block; background:#0f1d33; color:#e2c98e; font-size:11px; font-weight:700; padding:2px 9px; border-radius:20px; margin-right:9px; vertical-align:middle;}
+.promo-banner .pb-arrow{margin-left:7px; font-weight:700;}
+@media(max-width:600px){.promo-banner{font-size:12.5px; padding:9px 12px;} .promo-banner .pb-tag{font-size:10px; margin-right:6px;}}
 .nav{max-width:1080px; margin:0 auto; padding:15px 26px; display:flex; align-items:center; justify-content:space-between;}
 .logo{color:#fff; font-size:20px; font-weight:700; letter-spacing:1px;}
 .logo span{color:var(--gold);}
@@ -182,6 +187,9 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
 </style>
 </head>
 <body>
+<a class="promo-banner" href="post-mun-yebijung1.html">
+  <span class="pb-tag">모집</span>예비중1 · 초6 영어, 7월 둘째 주 개강<span class="pb-arrow">자세히 보기 &rarr;</span>
+</a>
 <header>
   <nav class="nav">
     <div class="logo">시은<span>영어</span></div>

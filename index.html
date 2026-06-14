@@ -184,6 +184,34 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
   .rev-grid{grid-template-columns:1fr;}
   .feed-grid{grid-template-columns:1fr;}
 }
+/* ===== 학습 시스템 섹션 ===== */
+.system{background:linear-gradient(180deg,#0f1d33,#13243d); color:#fff; padding:84px 26px;}
+.system .inner{max-width:1000px; margin:0 auto;}
+.system .kicker{display:block; text-align:center; color:var(--gold-soft); font-size:12px; letter-spacing:5px; margin-bottom:14px;}
+.system .sec-h{text-align:center; font-family:"Noto Serif KR",serif; font-size:31px; font-weight:700; line-height:1.5; margin-bottom:14px;}
+.system .sec-h .hl{color:var(--gold);}
+.system .sec-p{text-align:center; color:#aeb7c6; font-size:15px; max-width:640px; margin:0 auto 16px; line-height:1.8;}
+.system .proof-line{text-align:center; margin-bottom:50px;}
+.system .proof-line span{display:inline-block; background:rgba(201,162,86,.13); border:1px solid rgba(201,162,86,.4); color:var(--gold-soft); font-size:13px; font-weight:700; padding:7px 16px; border-radius:30px; margin:4px;}
+.steps{position:relative; max-width:760px; margin:0 auto;}
+.steps::before{content:""; position:absolute; left:33px; top:34px; bottom:34px; width:2px; background:linear-gradient(180deg,var(--gold),rgba(201,162,86,.25));}
+.step{position:relative; display:flex; gap:24px; padding:16px 0;}
+.step .dot{flex:0 0 68px; height:68px; border-radius:50%; background:#0f1d33; border:2px solid var(--gold); display:flex; align-items:center; justify-content:center; font-family:"Noto Serif KR",serif; font-size:24px; font-weight:700; color:var(--gold-soft); z-index:2;}
+.step .sbody{flex:1; padding-top:6px;}
+.step .sbody h3{font-family:"Noto Serif KR",serif; font-size:20px; color:#fff; margin-bottom:8px;}
+.step .sbody h3 .num{color:var(--gold); font-size:13px; font-weight:700; letter-spacing:2px; display:block; margin-bottom:4px;}
+.step .sbody p{color:#bcc4d2; font-size:14.5px; line-height:1.8;}
+.step .sbody .badge{display:inline-block; background:var(--gold); color:var(--navy); font-size:12px; font-weight:800; padding:3px 11px; border-radius:20px; margin-top:10px;}
+.system .sys-more{text-align:center; margin-top:48px;}
+.system .sys-more a{display:inline-block; background:var(--gold); color:var(--navy); font-weight:700; font-size:15px; padding:14px 30px; border-radius:40px;}
+.system .sys-more a:hover{filter:brightness(1.07);}
+@media(max-width:600px){
+  .system{padding:60px 20px;}
+  .system .sec-h{font-size:23px;}
+  .step{gap:16px;}
+  .step .dot{flex:0 0 52px; height:52px; font-size:19px;}
+  .steps::before{left:25px;}
+}
 </style>
 </head>
 <body>
@@ -196,6 +224,7 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
     <ul>
       <li><a href="#results">합격·실적</a></li>
       <li><a href="#philo">철학</a></li>
+      <li><a href="#system">학습 시스템</a></li>
       <li><a href="#story">학생 이야기</a></li>
       <li><a href="#director">원장 이야기</a></li>
       <li><a href="blog.html">시흥동 영어 이야기</a></li>
@@ -257,6 +286,65 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
         <h3>아이의 속도를 기다립니다</h3>
         <p>느린 아이는 틀린 아이가 아닙니다. 이해의 속도가 다를 뿐입니다. 각자의 속도에 맞게 기다리고, 끝까지 다시 세웁니다.</p>
       </div>
+    </div>
+  </div>
+</section>
+<section class="system" id="system">
+  <div class="inner">
+    <span class="kicker">HOW WE TEACH</span>
+    <h2 class="sec-h">고등영어 <span class="hl">1등급 공식</span><br>시은 내신 5단계 · 적중률 85~95%</h2>
+    <p class="sec-p">입시 영어는 머리 좋은 아이를 가려내는 시험이 아닙니다. 충분한 공부량, 좋은 강의와 자료, 제대로 된 단계 — 이 세 가지가 채워지면 누구나 오릅니다. 그 '제대로 된 단계'가 시은영어의 5단계입니다.</p>
+    <div class="proof-line">
+      <span>예비고사 적중률 85~95%</span>
+      <span>지문 90% 숙지</span>
+      <span>통과할 때까지 반복</span>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="dot">1</div>
+        <div class="sbody">
+          <h3><span class="num">STEP 01 · 상세분석</span>지문을 7회독 이상, 두 가지 해석으로</h3>
+          <p>모든 지문을 일반 해석과 '쉬운 문해력 해석' 두 가지로 풀어 직관적으로 이해시킵니다. 순서·삽입에 대비해 문장마다 지시어·대명사·연결어를 정리합니다.</p>
+          <span class="badge">7회독 이상</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="dot">2</div>
+        <div class="sbody">
+          <h3><span class="num">STEP 02 · 워크북</span>분석과 완전히 연결된 전용 교재</h3>
+          <p>상세분석을 3회독한 뒤, 그 분석과 맞물린 자체 워크북을 풉니다. 지문 90% 숙지를 목표로 순서·삽입을 완전 정복하고 주제를 암기합니다.</p>
+          <span class="badge">지문 90% 숙지</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="dot">3</div>
+        <div class="sbody">
+          <h3><span class="num">STEP 03 · 어휘 · 주제 마스터</span>외울 때까지, 말할 때까지</h3>
+          <p>유의어·반의어·숙어까지 포함한 단어 시험을 쓰기와 말하기로 봅니다. 주제는 암기에서 끝내지 않고 직접 설명하게 합니다. 통과할 때까지 1~3차.</p>
+          <span class="badge">1~3차 반복</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="dot">4</div>
+        <div class="sbody">
+          <h3><span class="num">STEP 04 · 서술형 정복</span>문일고식 서술형을 역설계</h3>
+          <p>실제 서술형을 역설계해 난이도 L2·L3·L4로 변형 출제합니다. 서술형 암기와 변형 문장 시험을 통과할 때까지 1~3차 반복합니다.</p>
+          <span class="badge">난이도 3단계 변형</span>
+        </div>
+      </div>
+      <div class="step">
+        <div class="dot">5</div>
+        <div class="sbody">
+          <h3><span class="num">STEP 05 · 예비고사</span>실제 시험 전, 마지막 리허설</h3>
+          <p>학교 출제 패턴 그대로 만든 모의시험을 시험 직전에 봅니다. 지난 시험에서는 훈련한 16개 지문이 실제 시험에 전부 출제됐습니다.</p>
+          <span class="badge">적중률 85~95%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sys-more">
+      <a href="system.html">시은영어 시스템 자세히 보기 &rarr;</a>
     </div>
   </div>
 </section>

@@ -1,23 +1,4 @@
 User-agent: *
 Allow: /
 
-# AI 검색 크롤러 명시 허용
-User-agent: GPTBot
-Allow: /
-
-User-agent: OAI-SearchBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
 Sitemap: https://vishunoo81-netizen.github.io/sieun-site/sitemap.xml

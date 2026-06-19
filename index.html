@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="naver-site-verification" content="92d9b5f618892e95993901189e3ccc7eac37e2f1" />
 <title>시은영어학원 | 금천구 시흥동 영어학원 · 초·중·고 영어 내신/수능</title>
 <meta name="description" content="시은영어학원은 서울 금천구 시흥동의 영어 전문 학원입니다. 잘하는 아이는 더 높이, 느린 아이는 끝까지. 아이의 속도와 이해력에 맞춰 금천고·문일고·동일여고 내신과 수능을 대비합니다.">
 <meta name="keywords" content="시은영어학원, 금천구 영어학원, 시흥동 영어학원, 금천고 영어, 문일고 영어, 동일여고 영어, 고등영어 내신, 중등영어 선행, 예비고1 영어">
@@ -42,14 +41,21 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:"Noto Sans KR",sans-serif; color:var(--ink); background:var(--paper); line-height:1.85; overflow-x:hidden;}
+/* 메인 상단 모집/안내 배너 */
+.topbanner{background:linear-gradient(120deg,var(--navy),var(--navy3)); padding:0;}
+.topbanner a{display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; max-width:1080px; margin:0 auto; padding:20px 26px; color:#fff; text-align:center;}
+.topbanner .bn-tag{background:var(--gold); color:var(--navy); font-size:12px; font-weight:700; padding:5px 13px; border-radius:20px; letter-spacing:.5px; white-space:nowrap;}
+.topbanner .bn-txt{font-family:"Noto Serif KR",serif; font-size:18px; font-weight:600; line-height:1.5;}
+.topbanner .bn-txt .hl{color:var(--gold-soft);}
+.topbanner .bn-go{border:1px solid var(--gold); color:var(--gold-soft); font-size:13px; font-weight:600; padding:8px 18px; border-radius:30px; white-space:nowrap; transition:.2s;}
+.topbanner a:hover .bn-go{background:var(--gold); color:var(--navy);}
+@media(max-width:680px){
+  .topbanner .bn-txt{font-size:15.5px;}
+  .topbanner a{gap:10px; padding:16px 20px;}
+}
 .serif{font-family:"Noto Serif KR",serif;}
 img{display:block; max-width:100%;}
 header{position:sticky; top:0; z-index:50; background:rgba(15,29,51,.93); backdrop-filter:blur(10px); border-bottom:1px solid rgba(201,162,86,.25);}
-.promo-banner{display:block; background:linear-gradient(90deg,#c9a256,#e2c98e,#c9a256); color:#1a1f29; text-align:center; padding:11px 16px; font-size:14.5px; font-weight:700; letter-spacing:.3px; position:relative; z-index:60;}
-.promo-banner:hover{filter:brightness(1.06);}
-.promo-banner .pb-tag{display:inline-block; background:#0f1d33; color:#e2c98e; font-size:11px; font-weight:700; padding:2px 9px; border-radius:20px; margin-right:9px; vertical-align:middle;}
-.promo-banner .pb-arrow{margin-left:7px; font-weight:700;}
-@media(max-width:600px){.promo-banner{font-size:12.5px; padding:9px 12px;} .promo-banner .pb-tag{font-size:10px; margin-right:6px;}}
 .nav{max-width:1080px; margin:0 auto; padding:15px 26px; display:flex; align-items:center; justify-content:space-between;}
 .logo{color:#fff; font-size:20px; font-weight:700; letter-spacing:1px;}
 .logo span{color:var(--gold);}
@@ -185,66 +191,16 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
   .rev-grid{grid-template-columns:1fr;}
   .feed-grid{grid-template-columns:1fr;}
 }
-/* ===== 학습 시스템 섹션 ===== */
-.system{background:linear-gradient(180deg,#0f1d33,#13243d); color:#fff; padding:84px 26px;}
-.system .inner{max-width:1000px; margin:0 auto;}
-.system .kicker{display:block; text-align:center; color:var(--gold-soft); font-size:12px; letter-spacing:5px; margin-bottom:14px;}
-.system .sec-h{text-align:center; font-family:"Noto Serif KR",serif; font-size:31px; font-weight:700; line-height:1.5; margin-bottom:14px;}
-.system .sec-h .hl{color:var(--gold);}
-.system .sec-p{text-align:center; color:#aeb7c6; font-size:15px; max-width:640px; margin:0 auto 16px; line-height:1.8;}
-.system .proof-line{text-align:center; margin-bottom:50px;}
-.system .proof-line span{display:inline-block; background:rgba(201,162,86,.13); border:1px solid rgba(201,162,86,.4); color:var(--gold-soft); font-size:13px; font-weight:700; padding:7px 16px; border-radius:30px; margin:4px;}
-.steps{position:relative; max-width:760px; margin:0 auto;}
-.steps::before{content:""; position:absolute; left:33px; top:34px; bottom:34px; width:2px; background:linear-gradient(180deg,var(--gold),rgba(201,162,86,.25));}
-.step{position:relative; display:flex; gap:24px; padding:16px 0;}
-.step .dot{flex:0 0 68px; height:68px; border-radius:50%; background:#0f1d33; border:2px solid var(--gold); display:flex; align-items:center; justify-content:center; font-family:"Noto Serif KR",serif; font-size:24px; font-weight:700; color:var(--gold-soft); z-index:2;}
-.step .sbody{flex:1; padding-top:6px;}
-.step .sbody h3{font-family:"Noto Serif KR",serif; font-size:20px; color:#fff; margin-bottom:8px;}
-.step .sbody h3 .num{color:var(--gold); font-size:13px; font-weight:700; letter-spacing:2px; display:block; margin-bottom:4px;}
-.step .sbody p{color:#bcc4d2; font-size:14.5px; line-height:1.8;}
-.step .sbody .badge{display:inline-block; background:var(--gold); color:var(--navy); font-size:12px; font-weight:800; padding:3px 11px; border-radius:20px; margin-top:10px;}
-.system .sys-more{text-align:center; margin-top:48px;}
-.system .sys-more a{display:inline-block; background:var(--gold); color:var(--navy); font-weight:700; font-size:15px; padding:14px 30px; border-radius:40px;}
-.system .sys-more a:hover{filter:brightness(1.07);}
-@media(max-width:600px){
-  .system{padding:60px 20px;}
-  .system .sec-h{font-size:23px;}
-  .step{gap:16px;}
-  .step .dot{flex:0 0 52px; height:52px; font-size:19px;}
-  .steps::before{left:25px;}
-}
-/* ===== hero 아래 모집 배너 ===== */
-.enroll{background:linear-gradient(120deg,#13243d,#0f1d33); padding:0;}
-.enroll-in{max-width:1000px; margin:0 auto; padding:30px 26px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;}
-.enroll .etxt{flex:1; min-width:260px;}
-.enroll .etag{display:inline-block; background:var(--gold); color:var(--navy); font-size:12px; font-weight:800; padding:4px 13px; border-radius:20px; letter-spacing:1px; margin-bottom:12px;}
-.enroll h3{font-family:"Noto Serif KR",serif; color:#fff; font-size:24px; line-height:1.45; font-weight:700;}
-.enroll h3 .hl{color:var(--gold-soft);}
-.enroll p{color:#aeb7c6; font-size:14px; margin-top:8px;}
-.enroll .ebtns{display:flex; gap:10px; flex-wrap:wrap;}
-.enroll .ebtns a{display:inline-block; padding:13px 24px; border-radius:40px; font-weight:700; font-size:14.5px; white-space:nowrap;}
-.enroll .ebtns .b-primary{background:var(--gold); color:var(--navy);}
-.enroll .ebtns .b-ghost{border:1px solid var(--gold); color:var(--gold-soft);}
-@media(max-width:600px){
-  .enroll-in{flex-direction:column; align-items:flex-start; padding:24px 22px;}
-  .enroll h3{font-size:20px;}
-  .enroll .ebtns{width:100%;}
-  .enroll .ebtns a{flex:1; text-align:center; padding:13px 10px;}
-}
 </style>
 </head>
 <body>
-<a class="promo-banner" href="post-yebijung1-embed.html">
-  <span class="pb-tag">모집</span>예비중1 · 초6 신규생 모집 중<span class="pb-arrow">자세히 보기 &rarr;</span>
-</a>
 <header>
   <nav class="nav">
     <div class="logo">시은<span>영어</span></div>
     <ul>
       <li><a href="#results">합격·실적</a></li>
       <li><a href="#philo">철학</a></li>
-      <li><a href="#system">학습 시스템</a></li>
-      <li><a href="stories.html">학생 이야기</a></li>
+      <li><a href="#story">학생 이야기</a></li>
       <li><a href="#director">원장 이야기</a></li>
       <li><a href="blog.html">시흥동 영어 이야기</a></li>
       <li><a href="#cta">상담</a></li>
@@ -261,19 +217,13 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
     <div class="scroll">아래로 내려보세요<span>&darr;</span></div>
   </div>
 </div>
-<section class="enroll">
-  <div class="enroll-in">
-    <div class="etxt">
-      <span class="etag">신규생 모집 · 특강</span>
-      <h3>예비중1 · 초6, <span class="hl">지금이 출발선</span>입니다</h3>
-      <p>중학 영어는 초등과 다릅니다. 먼저 출발한 아이가 앞서갑니다.</p>
-    </div>
-    <div class="ebtns">
-      <a class="b-primary" href="https://naver.me/FLEIb36u" target="_blank" rel="noopener">상담 신청하기</a>
-      <a class="b-ghost" href="post-yebijung1-embed.html">자세히 보기 &rarr;</a>
-    </div>
-  </div>
-</section>
+<div class="topbanner">
+  <a href="어법만_틀리는건_머리문제가_아닙니다_예비고1.html">
+    <span class="bn-tag">예비고1 · 어법</span>
+    <span class="bn-txt">영어는 곧잘 하는데 <span class="hl">어법만 자꾸 틀린다면?</span></span>
+    <span class="bn-go">해결법 보기 &rarr;</span>
+  </a>
+</div>
 <section class="results" id="results">
   <div class="inner">
     <span class="kicker">RESULTS</span>
@@ -318,65 +268,6 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
         <h3>아이의 속도를 기다립니다</h3>
         <p>느린 아이는 틀린 아이가 아닙니다. 이해의 속도가 다를 뿐입니다. 각자의 속도에 맞게 기다리고, 끝까지 다시 세웁니다.</p>
       </div>
-    </div>
-  </div>
-</section>
-<section class="system" id="system">
-  <div class="inner">
-    <span class="kicker">HOW WE TEACH</span>
-    <h2 class="sec-h">고등영어 <span class="hl">1등급 공식</span><br>시은 내신 5단계 · 적중률 85~95%</h2>
-    <p class="sec-p">입시 영어는 머리 좋은 아이를 가려내는 시험이 아닙니다. 충분한 공부량, 좋은 강의와 자료, 제대로 된 단계 — 이 세 가지가 채워지면 누구나 오릅니다. 그 '제대로 된 단계'가 시은영어의 5단계입니다.</p>
-    <div class="proof-line">
-      <span>예비고사 적중률 85~95%</span>
-      <span>지문 90% 숙지</span>
-      <span>통과할 때까지 반복</span>
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="dot">1</div>
-        <div class="sbody">
-          <h3><span class="num">STEP 01 · 상세분석</span>지문을 7회독 이상, 두 가지 해석으로</h3>
-          <p>모든 지문을 일반 해석과 '쉬운 문해력 해석' 두 가지로 풀어 직관적으로 이해시킵니다. 순서·삽입에 대비해 문장마다 지시어·대명사·연결어를 정리합니다.</p>
-          <span class="badge">7회독 이상</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="dot">2</div>
-        <div class="sbody">
-          <h3><span class="num">STEP 02 · 워크북</span>분석과 완전히 연결된 전용 교재</h3>
-          <p>상세분석을 3회독한 뒤, 그 분석과 맞물린 자체 워크북을 풉니다. 지문 90% 숙지를 목표로 순서·삽입을 완전 정복하고 주제를 암기합니다.</p>
-          <span class="badge">지문 90% 숙지</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="dot">3</div>
-        <div class="sbody">
-          <h3><span class="num">STEP 03 · 어휘 · 주제 마스터</span>외울 때까지, 말할 때까지</h3>
-          <p>유의어·반의어·숙어까지 포함한 단어 시험을 쓰기와 말하기로 봅니다. 주제는 암기에서 끝내지 않고 직접 설명하게 합니다. 통과할 때까지 1~3차.</p>
-          <span class="badge">1~3차 반복</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="dot">4</div>
-        <div class="sbody">
-          <h3><span class="num">STEP 04 · 서술형 정복</span>문일고식 서술형을 역설계</h3>
-          <p>실제 서술형을 역설계해 난이도 L2·L3·L4로 변형 출제합니다. 서술형 암기와 변형 문장 시험을 통과할 때까지 1~3차 반복합니다.</p>
-          <span class="badge">난이도 3단계 변형</span>
-        </div>
-      </div>
-      <div class="step">
-        <div class="dot">5</div>
-        <div class="sbody">
-          <h3><span class="num">STEP 05 · 예비고사</span>실제 시험 전, 마지막 리허설</h3>
-          <p>학교 출제 패턴 그대로 만든 모의시험을 시험 직전에 봅니다. 지난 시험에서는 훈련한 16개 지문이 실제 시험에 전부 출제됐습니다.</p>
-          <span class="badge">적중률 85~95%</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="sys-more">
-      <a href="system.html">시은영어 시스템 자세히 보기 &rarr;</a>
     </div>
   </div>
 </section>
@@ -453,9 +344,9 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
       <a href="blog.html">전체 글 보기 &rarr;</a>
     </div>
     <div class="feed-grid">
-      <a class="post" href="post-writing-embed.html" style="text-decoration:none;"><div class="thumb t3"><span class="tag">입시 &middot; 학습법</span></div><div class="pb"><h4>"쓰기"가 공부의 8할입니다 — 단, 받아적기는 빼고요</h4><small>읽어보기 &rarr;</small></div></a>
-      <a class="post" href="post-dongil-d10-embed.html" style="text-decoration:none;"><div class="thumb t2"><span class="tag">시험분석</span></div><div class="pb"><h4>시험 D-10, 영어는 지금부터가 진짜입니다 — 동일여고 학생들에게</h4><small>읽어보기 &rarr;</small></div></a>
-      <a class="post" href="post-grammar-vs-usage-embed.html" style="text-decoration:none;"><div class="thumb t1"><span class="tag">문법</span></div><div class="pb"><h4>중2까지 잘하던 아이가, 고등 가서 무너지는 이유</h4><small>읽어보기 &rarr;</small></div></a>
+      <a class="post" href="어법만_틀리는건_머리문제가_아닙니다_예비고1.html" style="text-decoration:none;"><div class="thumb t1"><span class="tag">문법 &middot; 어법</span></div><div class="pb"><h4>어법은 암기가 아니라 공식입니다 — 필승 어법 공부법</h4><small>읽어보기 &rarr;</small></div></a>
+      <a class="post" href="같은날_시작한_두아이_이야기.html" style="text-decoration:none;"><div class="thumb t2"><span class="tag">학생 이야기</span></div><div class="pb"><h4>같은 날 시작한 두 아이, 3년 뒤 1등급과 4등급 — 이유는?</h4><small>읽어보기 &rarr;</small></div></a>
+      <a class="post" href="post-speed-1.html" style="text-decoration:none;"><div class="thumb t3"><span class="tag">입시 &middot; 학습법</span></div><div class="pb"><h4>아이마다 속도가 다릅니다 — 60점대에서 의대로 간 아이</h4><small>읽어보기 &rarr;</small></div></a>
     </div>
   </div>
 </section>

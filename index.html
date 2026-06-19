@@ -49,6 +49,17 @@ body{font-family:"Noto Sans KR",sans-serif; color:var(--ink); background:var(--p
 .topbanner .bn-txt .hl{color:var(--gold-soft);}
 .topbanner .bn-go{border:1px solid var(--gold); color:var(--gold-soft); font-size:13px; font-weight:600; padding:8px 18px; border-radius:30px; white-space:nowrap; transition:.2s;}
 .topbanner a:hover .bn-go{background:var(--gold); color:var(--navy);}
+/* 모집 배너 (강조형 - 골드 채움) */
+.enrollbanner{background:var(--gold);}
+.enrollbanner a{display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; max-width:1080px; margin:0 auto; padding:18px 26px; color:var(--navy); text-align:center;}
+.enrollbanner .eb-tag{background:var(--navy); color:var(--gold-soft); font-size:12px; font-weight:700; padding:5px 13px; border-radius:20px; letter-spacing:.5px; white-space:nowrap;}
+.enrollbanner .eb-txt{font-family:"Noto Serif KR",serif; font-size:18px; font-weight:700; line-height:1.5; color:var(--navy);}
+.enrollbanner .eb-go{background:var(--navy); color:#fff; font-size:13px; font-weight:700; padding:9px 20px; border-radius:30px; white-space:nowrap; transition:.2s;}
+.enrollbanner a:hover .eb-go{background:#0a1322;}
+@media(max-width:680px){
+  .enrollbanner .eb-txt{font-size:15.5px;}
+  .enrollbanner a{gap:10px; padding:15px 20px;}
+}
 @media(max-width:680px){
   .topbanner .bn-txt{font-size:15.5px;}
   .topbanner a{gap:10px; padding:16px 20px;}
@@ -217,6 +228,13 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
     <div class="scroll">아래로 내려보세요<span>&darr;</span></div>
   </div>
 </div>
+<div class="enrollbanner">
+  <a href="post-yebijung1-embed.html">
+    <span class="eb-tag">신입생 모집</span>
+    <span class="eb-txt">예비중1, 지금이 영어 격차가 갈리는 시기입니다</span>
+    <span class="eb-go">모집 안내 &rarr;</span>
+  </a>
+</div>
 <div class="topbanner">
   <a href="어법만_틀리는건_머리문제가_아닙니다_예비고1.html">
     <span class="bn-tag">예비고1 · 어법</span>
@@ -268,6 +286,22 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
         <h3>아이의 속도를 기다립니다</h3>
         <p>느린 아이는 틀린 아이가 아닙니다. 이해의 속도가 다를 뿐입니다. 각자의 속도에 맞게 기다리고, 끝까지 다시 세웁니다.</p>
       </div>
+    </div>
+  </div>
+</section>
+<section class="feed" id="feed">
+  <div class="inner">
+    <div class="row">
+      <div>
+        <span class="kicker">시흥동 영어 이야기</span>
+        <h2 class="sec-h">입시를 배우고,<br>아이의 고민을 함께 풉니다</h2>
+      </div>
+      <a href="blog.html">전체 글 보기 &rarr;</a>
+    </div>
+    <div class="feed-grid">
+      <a class="post" href="어법만_틀리는건_머리문제가_아닙니다_예비고1.html" style="text-decoration:none;"><div class="thumb t1"><span class="tag">문법 &middot; 어법</span></div><div class="pb"><h4>어법은 암기가 아니라 공식입니다 — 필승 어법 공부법</h4><small>읽어보기 &rarr;</small></div></a>
+      <a class="post" href="같은날_시작한_두아이_이야기.html" style="text-decoration:none;"><div class="thumb t2"><span class="tag">학생 이야기</span></div><div class="pb"><h4>같은 날 시작한 두 아이, 3년 뒤 1등급과 4등급 — 이유는?</h4><small>읽어보기 &rarr;</small></div></a>
+      <a class="post" href="post-speed-1.html" style="text-decoration:none;"><div class="thumb t3"><span class="tag">입시 &middot; 학습법</span></div><div class="pb"><h4>아이마다 속도가 다릅니다 — 60점대에서 의대로 간 아이</h4><small>읽어보기 &rarr;</small></div></a>
     </div>
   </div>
 </section>
@@ -331,22 +365,6 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
         <div class="rev-tag"><b>&#9786;</b> 면학 분위기가 좋아요</div>
         <div class="rev-tag"><b>&#9757;</b> 학생 관리가 철저해요</div>
       </div>
-    </div>
-  </div>
-</section>
-<section class="feed" id="feed">
-  <div class="inner">
-    <div class="row">
-      <div>
-        <span class="kicker">시흥동 영어 이야기</span>
-        <h2 class="sec-h">입시를 배우고,<br>아이의 고민을 함께 풉니다</h2>
-      </div>
-      <a href="blog.html">전체 글 보기 &rarr;</a>
-    </div>
-    <div class="feed-grid">
-      <a class="post" href="어법만_틀리는건_머리문제가_아닙니다_예비고1.html" style="text-decoration:none;"><div class="thumb t1"><span class="tag">문법 &middot; 어법</span></div><div class="pb"><h4>어법은 암기가 아니라 공식입니다 — 필승 어법 공부법</h4><small>읽어보기 &rarr;</small></div></a>
-      <a class="post" href="같은날_시작한_두아이_이야기.html" style="text-decoration:none;"><div class="thumb t2"><span class="tag">학생 이야기</span></div><div class="pb"><h4>같은 날 시작한 두 아이, 3년 뒤 1등급과 4등급 — 이유는?</h4><small>읽어보기 &rarr;</small></div></a>
-      <a class="post" href="post-speed-1.html" style="text-decoration:none;"><div class="thumb t3"><span class="tag">입시 &middot; 학습법</span></div><div class="pb"><h4>아이마다 속도가 다릅니다 — 60점대에서 의대로 간 아이</h4><small>읽어보기 &rarr;</small></div></a>
     </div>
   </div>
 </section>

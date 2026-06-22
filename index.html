@@ -49,16 +49,20 @@ body{font-family:"Noto Sans KR",sans-serif; color:var(--ink); background:var(--p
 .topbanner .bn-txt .hl{color:var(--gold-soft);}
 .topbanner .bn-go{border:1px solid var(--gold); color:var(--gold-soft); font-size:13px; font-weight:600; padding:8px 18px; border-radius:30px; white-space:nowrap; transition:.2s;}
 .topbanner a:hover .bn-go{background:var(--gold); color:var(--navy);}
-/* 모집 배너 (강조형 - 골드 채움) */
-.enrollbanner{background:var(--gold);}
-.enrollbanner a{display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; max-width:1080px; margin:0 auto; padding:18px 26px; color:var(--navy); text-align:center;}
-.enrollbanner .eb-tag{background:var(--navy); color:var(--gold-soft); font-size:12px; font-weight:700; padding:5px 13px; border-radius:20px; letter-spacing:.5px; white-space:nowrap;}
-.enrollbanner .eb-txt{font-family:"Noto Serif KR",serif; font-size:18px; font-weight:700; line-height:1.5; color:var(--navy);}
-.enrollbanner .eb-go{background:var(--navy); color:#fff; font-size:13px; font-weight:700; padding:9px 20px; border-radius:30px; white-space:nowrap; transition:.2s;}
-.enrollbanner a:hover .eb-go{background:#0a1322;}
+/* 모집 배너 (강조형 - 골드 채움 + 확 튀게) */
+.enrollbanner{background:linear-gradient(100deg,#d9b163,var(--gold) 55%,#b8923f); position:relative; overflow:hidden; box-shadow:0 6px 20px rgba(201,162,86,.4); border-top:1px solid rgba(255,255,255,.35);}
+.enrollbanner::before{content:""; position:absolute; top:0; left:-60%; width:45%; height:100%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent); transform:skewX(-20deg); animation:eb-shine 4.5s ease-in-out infinite;}
+@keyframes eb-shine{0%{left:-60%;}45%,100%{left:130%;}}
+.enrollbanner a{display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; max-width:1080px; margin:0 auto; padding:22px 26px; color:var(--navy); text-align:center; position:relative; z-index:2;}
+.enrollbanner .eb-tag{background:var(--navy); color:var(--gold-soft); font-size:12.5px; font-weight:700; padding:6px 15px; border-radius:20px; letter-spacing:.5px; white-space:nowrap; animation:eb-pulse 1.8s ease-in-out infinite;}
+@keyframes eb-pulse{0%,100%{transform:scale(1); box-shadow:0 0 0 0 rgba(15,29,51,.4);}50%{transform:scale(1.06); box-shadow:0 0 0 6px rgba(15,29,51,0);}}
+.enrollbanner .eb-txt{font-family:"Noto Serif KR",serif; font-size:20px; font-weight:700; line-height:1.45; color:var(--navy);}
+.enrollbanner .eb-txt .eb-strong{color:#7a1f1f;}
+.enrollbanner .eb-go{background:var(--navy); color:#fff; font-size:13.5px; font-weight:700; padding:11px 24px; border-radius:30px; white-space:nowrap; transition:.2s; box-shadow:0 3px 10px rgba(15,29,51,.3);}
+.enrollbanner a:hover .eb-go{background:#0a1322; transform:translateY(-1px);}
 @media(max-width:680px){
-  .enrollbanner .eb-txt{font-size:15.5px;}
-  .enrollbanner a{gap:10px; padding:15px 20px;}
+  .enrollbanner .eb-txt{font-size:16.5px;}
+  .enrollbanner a{gap:11px; padding:18px 22px;}
 }
 @media(max-width:680px){
   .topbanner .bn-txt{font-size:15.5px;}
@@ -229,9 +233,9 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
   </div>
 </div>
 <div class="enrollbanner">
-  <a href="post-yebijung1-embed.html">
-    <span class="eb-tag">신입생 모집</span>
-    <span class="eb-txt">예비중1, 지금이 영어 격차가 갈리는 시기입니다</span>
+  <a href="예비중1_선행_모집.html">
+    <span class="eb-tag">7월 개강 · 모집중</span>
+    <span class="eb-txt">예비중1 선행반 &mdash; <span class="eb-strong">속도가 느려도 끝까지 책임집니다</span></span>
     <span class="eb-go">모집 안내 &rarr;</span>
   </a>
 </div>

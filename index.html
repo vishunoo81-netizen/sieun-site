@@ -41,33 +41,46 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:"Noto Sans KR",sans-serif; color:var(--ink); background:var(--paper); line-height:1.85; overflow-x:hidden;}
-/* 메인 상단 모집/안내 배너 (강조형 네이비) */
-.topbanner{background:linear-gradient(120deg,var(--navy),var(--navy3)); padding:0; position:relative; border-bottom:3px solid var(--gold);}
-.topbanner a{display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; max-width:1080px; margin:0 auto; padding:22px 26px; color:#fff; text-align:center;}
-.topbanner .bn-tag{background:var(--gold); color:var(--navy); font-size:12.5px; font-weight:700; padding:6px 15px; border-radius:20px; letter-spacing:.5px; white-space:nowrap; animation:bn-pulse 1.8s ease-in-out infinite;}
-@keyframes bn-pulse{0%,100%{transform:scale(1); box-shadow:0 0 0 0 rgba(201,162,86,.5);}50%{transform:scale(1.06); box-shadow:0 0 0 6px rgba(201,162,86,0);}}
-.topbanner .bn-txt{font-family:"Noto Serif KR",serif; font-size:19px; font-weight:700; line-height:1.5;}
-.topbanner .bn-txt .hl{color:var(--gold-soft);}
-.topbanner .bn-go{background:var(--gold); color:var(--navy); font-size:13.5px; font-weight:700; padding:10px 22px; border-radius:30px; white-space:nowrap; transition:.2s; box-shadow:0 3px 10px rgba(0,0,0,.25);}
-.topbanner a:hover .bn-go{background:var(--gold-soft); transform:translateY(-1px);}
-/* 모집 배너 (강조형 - 골드 채움 + 확 튀게) */
-.enrollbanner{background:linear-gradient(100deg,#d9b163,var(--gold) 55%,#b8923f); position:relative; overflow:hidden; box-shadow:0 6px 20px rgba(201,162,86,.4); border-top:1px solid rgba(255,255,255,.35);}
-.enrollbanner::before{content:""; position:absolute; top:0; left:-60%; width:45%; height:100%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent); transform:skewX(-20deg); animation:eb-shine 4.5s ease-in-out infinite;}
-@keyframes eb-shine{0%{left:-60%;}45%,100%{left:130%;}}
-.enrollbanner a{display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; max-width:1080px; margin:0 auto; padding:22px 26px; color:var(--navy); text-align:center; position:relative; z-index:2;}
-.enrollbanner .eb-tag{background:var(--navy); color:var(--gold-soft); font-size:12.5px; font-weight:700; padding:6px 15px; border-radius:20px; letter-spacing:.5px; white-space:nowrap; animation:eb-pulse 1.8s ease-in-out infinite;}
-@keyframes eb-pulse{0%,100%{transform:scale(1); box-shadow:0 0 0 0 rgba(15,29,51,.4);}50%{transform:scale(1.06); box-shadow:0 0 0 6px rgba(15,29,51,0);}}
-.enrollbanner .eb-txt{font-family:"Noto Serif KR",serif; font-size:20px; font-weight:700; line-height:1.45; color:var(--navy);}
-.enrollbanner .eb-txt .eb-strong{color:#7a1f1f;}
-.enrollbanner .eb-go{background:var(--navy); color:#fff; font-size:13.5px; font-weight:700; padding:11px 24px; border-radius:30px; white-space:nowrap; transition:.2s; box-shadow:0 3px 10px rgba(15,29,51,.3);}
-.enrollbanner a:hover .eb-go{background:#0a1322; transform:translateY(-1px);}
+/* ===== 메인 모집/안내 배너 3종 (공통: 반짝임+펄스+그림자) ===== */
+@keyframes bn-shine{0%{left:-60%;}45%,100%{left:130%;}}
+@keyframes bn-pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
+.bn{position:relative; overflow:hidden; border-radius:0;}
+.bn a{display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; max-width:1080px; margin:0 auto; padding:24px 26px; text-align:center; position:relative; z-index:2;}
+.bn .sweep{position:absolute; top:0; left:-60%; width:45%; height:100%; transform:skewX(-20deg); animation:bn-shine 4.5s ease-in-out infinite; z-index:1;}
+.bn .b-tag{font-size:13px; font-weight:700; padding:7px 16px; border-radius:20px; letter-spacing:.5px; white-space:nowrap; animation:bn-pulse 1.8s ease-in-out infinite;}
+.bn .b-txt{font-family:"Noto Serif KR",serif; font-size:21px; font-weight:700; line-height:1.5;}
+.bn .b-go{font-size:14px; font-weight:700; padding:12px 26px; border-radius:30px; white-space:nowrap; transition:.2s; box-shadow:0 3px 12px rgba(0,0,0,.3);}
+.bn a:hover .b-go{transform:translateY(-1px);}
+/* 1) 예비중1 - 골드 */
+.bn.b-mid{background:linear-gradient(100deg,#d9b163,#c9a256 55%,#b8923f); box-shadow:0 6px 22px rgba(201,162,86,.45);}
+.bn.b-mid .sweep{background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);}
+.bn.b-mid a{color:#0f1d33;}
+.bn.b-mid .b-tag{background:#0f1d33; color:#e2c98e;}
+.bn.b-mid .b-txt{color:#0f1d33;}
+.bn.b-mid .b-txt .hl{color:#7a1f1f;}
+.bn.b-mid .b-go{background:#0f1d33; color:#fff;}
+.bn.b-mid a:hover .b-go{background:#0a1322;}
+/* 2) 예비고1 - 네이비 */
+.bn.b-high{background:linear-gradient(100deg,#16335c,#0f1d33 55%,#1a3a66); box-shadow:0 6px 22px rgba(15,29,51,.5); border:1px solid rgba(201,162,86,.4);}
+.bn.b-high .sweep{background:linear-gradient(100deg,transparent,rgba(226,201,142,.4),transparent); animation-delay:.6s;}
+.bn.b-high a{color:#fff;}
+.bn.b-high .b-tag{background:#c9a256; color:#0f1d33;}
+.bn.b-high .b-txt{color:#fff;}
+.bn.b-high .b-txt .hl{color:#e2c98e;}
+.bn.b-high .b-go{background:#c9a256; color:#0f1d33;}
+.bn.b-high a:hover .b-go{background:#e2c98e;}
+/* 3) 어법특강 - 딥틸 */
+.bn.b-gram{background:linear-gradient(100deg,#13594d,#0d3b34 55%,#155f51); box-shadow:0 6px 22px rgba(13,59,52,.5); border:1px solid rgba(201,162,86,.4);}
+.bn.b-gram .sweep{background:linear-gradient(100deg,transparent,rgba(226,201,142,.4),transparent); animation-delay:1.2s;}
+.bn.b-gram a{color:#fff;}
+.bn.b-gram .b-tag{background:#c9a256; color:#0d3b34;}
+.bn.b-gram .b-txt{color:#fff;}
+.bn.b-gram .b-txt .hl{color:#e2c98e;}
+.bn.b-gram .b-go{background:#c9a256; color:#0d3b34;}
+.bn.b-gram a:hover .b-go{background:#e2c98e;}
 @media(max-width:680px){
-  .enrollbanner .eb-txt{font-size:16.5px;}
-  .enrollbanner a{gap:11px; padding:18px 22px;}
-}
-@media(max-width:680px){
-  .topbanner .bn-txt{font-size:15.5px;}
-  .topbanner a{gap:10px; padding:16px 20px;}
+  .bn .b-txt{font-size:16px;}
+  .bn a{gap:11px; padding:18px 22px;}
 }
 .serif{font-family:"Noto Serif KR",serif;}
 img{display:block; max-width:100%;}
@@ -233,18 +246,28 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
     <div class="scroll">아래로 내려보세요<span>&darr;</span></div>
   </div>
 </div>
-<div class="enrollbanner">
+<div class="bn b-mid">
   <a href="예비중1_선행_모집.html">
-    <span class="eb-tag">7월 개강 · 모집중</span>
-    <span class="eb-txt">예비중1 선행반 &mdash; <span class="eb-strong">속도가 느려도 끝까지 책임집니다</span></span>
-    <span class="eb-go">모집 안내 &rarr;</span>
+    <span class="sweep"></span>
+    <span class="b-tag">7월 개강 · 모집중</span>
+    <span class="b-txt">예비중1 선행반 &mdash; <span class="hl">속도가 느려도 끝까지 책임집니다</span></span>
+    <span class="b-go">모집 안내 &rarr;</span>
   </a>
 </div>
-<div class="topbanner">
+<div class="bn b-high">
   <a href="예비고등_선행_모집.html">
-    <span class="bn-tag">7월 개강 · 각 반 11명</span>
-    <span class="bn-txt">예비고1, <span class="hl">어법으로 1등급을 굳히는</span> 마지막 여름</span>
-    <span class="bn-go">모집 안내 &rarr;</span>
+    <span class="sweep"></span>
+    <span class="b-tag">7월 개강 · 각 반 11명</span>
+    <span class="b-txt">예비고1, <span class="hl">어법으로 1등급을 굳히는</span> 마지막 여름</span>
+    <span class="b-go">모집 안내 &rarr;</span>
+  </a>
+</div>
+<div class="bn b-gram">
+  <a href="어법만_틀리는건_머리문제가_아닙니다_예비고1.html">
+    <span class="sweep"></span>
+    <span class="b-tag">어법 특강 · 신뢰글</span>
+    <span class="b-txt">곧잘 하는데 <span class="hl">어법만 틀린다면, 머리 문제가 아닙니다</span></span>
+    <span class="b-go">해결법 보기 &rarr;</span>
   </a>
 </div>
 <section class="results" id="results">

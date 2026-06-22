@@ -41,14 +41,15 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:"Noto Sans KR",sans-serif; color:var(--ink); background:var(--paper); line-height:1.85; overflow-x:hidden;}
-/* 메인 상단 모집/안내 배너 */
-.topbanner{background:linear-gradient(120deg,var(--navy),var(--navy3)); padding:0;}
-.topbanner a{display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap; max-width:1080px; margin:0 auto; padding:20px 26px; color:#fff; text-align:center;}
-.topbanner .bn-tag{background:var(--gold); color:var(--navy); font-size:12px; font-weight:700; padding:5px 13px; border-radius:20px; letter-spacing:.5px; white-space:nowrap;}
-.topbanner .bn-txt{font-family:"Noto Serif KR",serif; font-size:18px; font-weight:600; line-height:1.5;}
+/* 메인 상단 모집/안내 배너 (강조형 네이비) */
+.topbanner{background:linear-gradient(120deg,var(--navy),var(--navy3)); padding:0; position:relative; border-bottom:3px solid var(--gold);}
+.topbanner a{display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; max-width:1080px; margin:0 auto; padding:22px 26px; color:#fff; text-align:center;}
+.topbanner .bn-tag{background:var(--gold); color:var(--navy); font-size:12.5px; font-weight:700; padding:6px 15px; border-radius:20px; letter-spacing:.5px; white-space:nowrap; animation:bn-pulse 1.8s ease-in-out infinite;}
+@keyframes bn-pulse{0%,100%{transform:scale(1); box-shadow:0 0 0 0 rgba(201,162,86,.5);}50%{transform:scale(1.06); box-shadow:0 0 0 6px rgba(201,162,86,0);}}
+.topbanner .bn-txt{font-family:"Noto Serif KR",serif; font-size:19px; font-weight:700; line-height:1.5;}
 .topbanner .bn-txt .hl{color:var(--gold-soft);}
-.topbanner .bn-go{border:1px solid var(--gold); color:var(--gold-soft); font-size:13px; font-weight:600; padding:8px 18px; border-radius:30px; white-space:nowrap; transition:.2s;}
-.topbanner a:hover .bn-go{background:var(--gold); color:var(--navy);}
+.topbanner .bn-go{background:var(--gold); color:var(--navy); font-size:13.5px; font-weight:700; padding:10px 22px; border-radius:30px; white-space:nowrap; transition:.2s; box-shadow:0 3px 10px rgba(0,0,0,.25);}
+.topbanner a:hover .bn-go{background:var(--gold-soft); transform:translateY(-1px);}
 /* 모집 배너 (강조형 - 골드 채움 + 확 튀게) */
 .enrollbanner{background:linear-gradient(100deg,#d9b163,var(--gold) 55%,#b8923f); position:relative; overflow:hidden; box-shadow:0 6px 20px rgba(201,162,86,.4); border-top:1px solid rgba(255,255,255,.35);}
 .enrollbanner::before{content:""; position:absolute; top:0; left:-60%; width:45%; height:100%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent); transform:skewX(-20deg); animation:eb-shine 4.5s ease-in-out infinite;}
@@ -240,10 +241,10 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
   </a>
 </div>
 <div class="topbanner">
-  <a href="어법만_틀리는건_머리문제가_아닙니다_예비고1.html">
-    <span class="bn-tag">예비고1 · 어법</span>
-    <span class="bn-txt">영어는 곧잘 하는데 <span class="hl">어법만 자꾸 틀린다면?</span></span>
-    <span class="bn-go">해결법 보기 &rarr;</span>
+  <a href="예비고등_선행_모집.html">
+    <span class="bn-tag">7월 개강 · 각 반 11명</span>
+    <span class="bn-txt">예비고1, <span class="hl">어법으로 1등급을 굳히는</span> 마지막 여름</span>
+    <span class="bn-go">모집 안내 &rarr;</span>
   </a>
 </div>
 <section class="results" id="results">

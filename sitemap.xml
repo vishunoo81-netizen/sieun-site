@@ -37,6 +37,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://vishunoo81-netizen.github.io/sieun-site/Geumcheon1_Final_Main.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vishunoo81-netizen.github.io/sieun-site/Geumcheon1_Final_Items_Mobile.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://vishunoo81-netizen.github.io/sieun-site/Geumcheon1_Final_Items_A4.html</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://vishunoo81-netizen.github.io/sieun-site/post-speed-1.html</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>monthly</changefreq>

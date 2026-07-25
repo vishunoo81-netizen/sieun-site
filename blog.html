@@ -76,6 +76,7 @@ header{position:sticky; top:0; z-index:50; background:rgba(15,29,51,.93); backdr
 .t-read{background:linear-gradient(140deg,#8a5b6b,#a67080);}
 .t-info{background:linear-gradient(140deg,#4a5a8a,#6678a6);}
 .t-prog{background:linear-gradient(140deg,#7a6a9e,#9486b6);}
+.t-mid{background:linear-gradient(140deg,#3f7d84,#57a0a8);}
 .card .tag{background:rgba(0,0,0,.32); color:#fff; font-size:11.5px; padding:5px 12px; border-radius:20px;}
 .card .body{padding:20px 20px 22px; flex:1; display:flex; flex-direction:column;}
 .card h2{font-family:"Noto Serif KR",serif; font-size:17px; color:var(--navy); line-height:1.5; margin-bottom:10px;}
@@ -125,6 +126,7 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
 <div class="filter-wrap">
   <div class="filter" id="filter">
     <button class="fbtn active" data-cat="all">전체</button>
+    <button class="fbtn" data-cat="mid">중등영어</button>
     <button class="fbtn" data-cat="exam">시험분석</button>
     <button class="fbtn" data-cat="vocab">어휘·어근</button>
     <button class="fbtn" data-cat="gram">문법</button>
@@ -138,22 +140,123 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
   <div class="grid" id="grid">
 
     <!-- ====== 글 카드: 새 글 추가 시 이 블록을 복사해서 맨 위에 붙이세요 ====== -->
-    <!-- data-cat 값: exam / vocab / gram / read / info / prog -->
+    <!-- data-cat 값: mid / exam / vocab / gram / read / info / prog ====== -->
 
-<a class="card" data-cat="info" href="문일고100점_원래잘하던아이였을까.html">
+    <!-- ===== 중등영어 (학교별 이야기) ===== -->
+    <a class="card" data-cat="mid" href="post-ancheon-2.html">
+      <div class="thumb t-mid"><span class="tag">중등영어</span></div>
+      <div class="body">
+        <h2>안천중 영어를 포기했던 아이가 돌아온 이야기</h2>
+        <p class="excerpt">학원 세 곳을 돌고 40점대에서 손을 놨던 아이가 두 번의 시험 만에 80점대로 온 과정을 담았습니다.</p>
+        <div class="meta"><span>중등영어</span><span class="more">읽어보기 &rarr;</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="mid" href="post-muniljung-2.html">
+      <div class="thumb t-mid"><span class="tag">중등영어</span></div>
+      <div class="body">
+        <h2>문일중 영어, 잘하던 아이가 손을 놓을 때</h2>
+        <p class="excerpt">1학년 90점에서 2학년 70점으로 떨어지고 영어를 놓으려던 아이가 회복한 이야기. 원인은 서술형이었습니다.</p>
+        <div class="meta"><span>중등영어</span><span class="more">읽어보기 &rarr;</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="mid" href="post-gasan-2.html">
+      <div class="thumb t-mid"><span class="tag">중등영어</span></div>
+      <div class="body">
+        <h2>가산중 영어, 아는데 서술형만 틀리는 아이</h2>
+        <p class="excerpt">객관식은 다 맞는데 서술형에서만 감점되던 아이. 실수가 아니라 조건을 놓치는 습관이었습니다.</p>
+        <div class="meta"><span>중등영어</span><span class="more">읽어보기 &rarr;</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="mid" href="post-dongiljung-2.html">
+      <div class="thumb t-mid"><span class="tag">중등영어</span></div>
+      <div class="body">
+        <h2>동일중 영어, 조용해서 놓치기 쉬운 아이</h2>
+        <p class="excerpt">말썽도 안 부리고 눈에 띄지도 않던 중간권 아이. 실력이 아니라 확인받을 기회가 없었을 뿐이었습니다.</p>
+        <div class="meta"><span>중등영어</span><span class="more">읽어보기 &rarr;</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="mid" href="post-hanul-2.html">
+      <div class="thumb t-mid"><span class="tag">중등영어</span></div>
+      <div class="body">
+        <h2>한울중 영어, 학원을 네 번 옮긴 아이</h2>
+        <p class="excerpt">대형학원·과외·공부방을 돌고 온 아이. 학원이 아니라 아무도 안 찾아준 구멍이 문제였습니다.</p>
+        <div class="meta"><span>중등영어</span><span class="more">읽어보기 &rarr;</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="mid" href="post-ancheon-1.html">
+      <div class="thumb t-mid"><span class="tag">중등영어</span></div>
+      <div class="body">
+        <h2>안천중 영어, 지금 잡아야 고1이 편합니다</h2>
+        <p class="excerpt">안천중 영어를 잘하던 아이가 고1 첫 시험에서 점수가 안 나오는 이유, 그리고 지금 집에서 하루 15분으로 잡는 것 하나를 이야기합니다.</p>
+        <div class="meta"><span>중등영어</span><span class="more">읽어보기 &rarr;</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="mid" href="post-siheung-1.html">
+      <div class="thumb t-mid"><span class="tag">중등영어</span></div>
+      <div class="body">
+        <h2>시흥중 영어 60점대에서 시작한 아이</h2>
+        <p class="excerpt">시흥중 영어 60점대에서 시작한 아이가 공부 순서를 바꿔 오른 이야기. 기록으로 관리하면 느렸던 아이도 다시 오릅니다.</p>
+        <div class="meta"><span>중등영어</span><span class="more">읽어보기 &rarr;</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="mid" href="post-siheung-2.html">
+      <div class="thumb t-mid"><span class="tag">중등영어</span></div>
+      <div class="body">
+        <h2>시흥중 영어, 2학기 전에 이것 하나만</h2>
+        <p class="excerpt">2학기를 위해 여름에 해야 할 것과 하지 말아야 할 것. 1학기 시험지 한 장으로 잡는 법을 담았습니다.</p>
+        <div class="meta"><span>중등영어</span><span class="more">읽어보기 &rarr;</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="mid" href="post-muniljung-1.html">
+      <div class="thumb t-mid"><span class="tag">중등영어</span></div>
+      <div class="body">
+        <h2>문일중 영어 시험 4주 전, 뭐부터 해야 할까</h2>
+        <p class="excerpt">문일중 영어 시험 4주 전, 양만 늘리는 공부가 왜 안 통하는지와 지금 잡아야 할 순서를 짚어드립니다.</p>
+        <div class="meta"><span>중등영어</span><span class="more">읽어보기 &rarr;</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="mid" href="post-gasan-1.html">
+      <div class="thumb t-mid"><span class="tag">중등영어</span></div>
+      <div class="body">
+        <h2>가산중 영어, 학원 보내는데 왜 그대로일까</h2>
+        <p class="excerpt">가산중 영어, 학원을 다니는데 점수가 그대로인 이유와 데이터로 관리하는 법을 이야기합니다.</p>
+        <div class="meta"><span>중등영어</span><span class="more">읽어보기 &rarr;</span></div>
+      </div>
+    </a>
+
+    <a class="card" data-cat="mid" href="post-dongiljung-1.html">
+      <div class="thumb t-mid"><span class="tag">중등영어</span></div>
+      <div class="body">
+        <h2>동일중 영어, 고등 가면 무엇이 바뀌나</h2>
+        <p class="excerpt">동일중 영어와 고등 영어의 차이 세 가지, 그리고 중3 때 해둬야 할 것을 정리했습니다.</p>
+        <div class="meta"><span>중등영어</span><span class="more">읽어보기 &rarr;</span></div>
+      </div>
+    </a>
+
+    <!-- ===== 기존 글 (고등·시험분석·학습법) ===== -->
+    <a class="card" data-cat="info" href="문일고100점_원래잘하던아이였을까.html">
       <div class="thumb t-info"><span class="tag">학생 이야기</span></div>
       <div class="body">
         <h2>문일고 영어 100점, 원래 잘하던 아이였을까요?</h2>
-        <p class="excerpt">처음엔 시험만 보면 점수가 뚝 떨어지던 아이였습니다. 외우던 습관을 고치고, 막힌 약점만 정확히 잡자 공부하는 방식이 바뀌었고 점수는 100점으로 따라왔습니다.</p>
+        <p class="excerpt">처음엔 시험만 보면 점수가 뚝 떨어지던 아이였습니다. 외우던 습관을 고치고, 약점만 정확히 잡자 공부하는 방식이 바뀌었고 점수는 100점으로 따라왔습니다.</p>
         <div class="meta"><span>학생 이야기</span><span class="more">읽어보기 &rarr;</span></div>
       </div>
     </a>
 
-<a class="card" data-cat="info" href="독산고영어1등급_어떻게만들어졌나.html">
+    <a class="card" data-cat="info" href="독산고영어1등급_어떻게만들어졌나.html">
       <div class="thumb t-info"><span class="tag">학생 이야기</span></div>
       <div class="body">
         <h2>독산고 영어 1등급, 그 아이는 어떻게 만들어졌나</h2>
-        <p class="excerpt">늘 1등급 문턱에서 한두 문제 차이로 미끄러지던 아이. 문제는 '많이'가 아니라 '어디서'였습니다. 새던 자리를 정확히 막자 아까운 실점이 사라졌습니다.</p>
+        <p class="excerpt">늘 1등급 문턱에서 한두 문제 차이로 미끄러지던 아이. 문제는 '많이'가 아니라 '어디서'였습니다. 새던 자리를 정확히 잡자 아까운 실점이 사라졌습니다.</p>
         <div class="meta"><span>학생 이야기</span><span class="more">읽어보기 &rarr;</span></div>
       </div>
     </a>
@@ -171,7 +274,7 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
       <div class="thumb t-info"><span class="tag">학생 이야기</span></div>
       <div class="body">
         <h2>기말 영어 100점, 중간보다 20점 올랐습니다 — 문일고 한 아이</h2>
-        <p class="excerpt">3월엔 독해 지문 한 줄 앞에서 펜이 멈춰 있던 아이. 매주 단어 300개로 기록을 쌓고, 어디서 막혔는지 찾고, 약한 곳만 정확히 쳤습니다. 결국 기말 100점. 타고난 머리가 아니라, 끝까지 데려가는 방법이 있었을 뿐입니다.</p>
+        <p class="excerpt">3월엔 독해 지문 한 줄 앞에서 펜이 멈춰 있던 아이. 매주 단어 300개로 기록을 쌓고, 어디서 점수를 놓쳤는지 찾고, 약한 곳만 정확히 쳤습니다. 결국 기말 100점. 타고난 머리가 아니라, 끝까지 데려가는 방법이 있었을 뿐입니다.</p>
         <div class="meta"><span>학생 이야기</span><span class="more">읽어보기 &rarr;</span></div>
       </div>
     </a>
@@ -297,7 +400,7 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
       <div class="thumb t-info"><span class="tag">입시·학습법</span></div>
       <div class="body">
         <h2>틀린 게 마음 아픈 아이에게</h2>
-        <p class="excerpt">틀린 문제 앞에서 무너지는 아이에게. 틀린 건 잘못이 아니라, 지금 어디에 서 있는지 알려주는 표시일 뿐입니다. 원장이 아이들에게 건네는 이야기.</p>
+        <p class="excerpt">틀린 문제 앞에서 힘들어하는 아이에게. 틀린 건 잘못이 아니라, 지금 어디에 서 있는지 알려주는 표시일 뿐입니다. 원장이 아이들에게 건네는 이야기.</p>
         <div class="meta"><span>입시·학습법</span><span class="more">읽어보기 &rarr;</span></div>
       </div>
     </a>
@@ -306,7 +409,7 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
       <div class="thumb t-prog"><span class="tag">프로그램 안내</span></div>
       <div class="body">
         <h2>예비고1, 지금 시작해야 하는 이유</h2>
-        <p class="excerpt">중학교까지 잘하던 아이가 고등학교에서 무너지는 데는 이유가 있습니다. 예비고1 시기에 무엇을 점검하고 어떻게 준비해야 하는지 안내합니다.</p>
+        <p class="excerpt">중학교까지 잘하던 아이가 고등학교에서 점수가 떨어지는 데는 이유가 있습니다. 예비고1 시기에 무엇을 점검하고 어떻게 준비해야 하는지 안내합니다.</p>
         <div class="meta"><span>프로그램 안내</span><span class="more">읽어보기 &rarr;</span></div>
       </div>
     </a>

@@ -41,57 +41,88 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:"Noto Sans KR",sans-serif; color:var(--ink); background:var(--paper); line-height:1.85; overflow-x:hidden;}
-/* ===== 메인 배너 ===== */
-.bn{position:relative; border-radius:0;}
-.bn a{display:flex; align-items:center; justify-content:center; gap:16px; flex-wrap:wrap;
-      max-width:1000px; margin:0 auto; padding:22px 26px; text-align:center; position:relative;}
-.bn .sweep{display:none;}
-.bn .b-tag{font-size:11.5px; font-weight:700; letter-spacing:1.2px; white-space:nowrap;}
-.bn .b-txt{font-family:"Noto Serif KR",serif; font-weight:600; line-height:1.55;}
-.bn .b-go{font-size:13px; font-weight:600; white-space:nowrap; transition:.25s;}
-
-/* --- 1) 학생 이야기 : 네이비 (가장 무겁게) --- */
-.bn.b-mid{background:#0f1d33;}
-.bn.b-mid a{padding:34px 26px; gap:18px;}
-.bn.b-mid .b-tag{color:var(--gold); border:1px solid rgba(201,162,86,.55); padding:5px 13px; border-radius:2px;}
-.bn.b-mid .b-txt{color:#fff; font-size:23px;}
-.bn.b-mid .b-txt .hl{color:#e2c98e;}
-.bn.b-mid .b-go{color:#e2c98e; border-bottom:1px solid rgba(226,201,142,.5); padding-bottom:3px;}
-.bn.b-mid a:hover .b-go{color:#fff; border-bottom-color:#fff;}
-
-/* --- 2) 예비고1 모집 : 골드 (유일한 밝은 면) --- */
-.bn.b-high{background:var(--gold);}
-.bn.b-high a{padding:26px;}
-.bn.b-high .b-tag{color:#0f1d33; border:1px solid rgba(15,29,51,.4); padding:5px 13px; border-radius:2px;}
-.bn.b-high .b-txt{color:#0f1d33; font-size:20px;}
-.bn.b-high .b-txt .hl{color:#5a1526;}
-.bn.b-high .b-go{color:#0f1d33; border-bottom:1px solid rgba(15,29,51,.45); padding-bottom:3px;}
-.bn.b-high a:hover .b-go{border-bottom-color:#0f1d33;}
-
-/* --- 3~6) 학교별 : 아이보리 + 학교색 세로선 --- */
-.bn.b-sch{background:#faf8f4; border-bottom:1px solid #e8e2d6;}
-.bn.sc-munil, .bn.sc-dongil{background:#f4f1ea;}
-.bn.b-sch a{padding:20px 26px 20px 30px; gap:14px; border-left:5px solid var(--sc);}
-.bn.b-sch .b-tag{color:var(--sc); padding:0;}
-.bn.b-sch .b-txt{color:#1a2438; font-size:18px;}
-.bn.b-sch .b-txt .hl{color:var(--sc);}
-.bn.b-sch .b-go{color:#7b7466; border-bottom:1px solid #d6cfc0; padding-bottom:2px;}
-.bn.b-sch a:hover .b-go{color:var(--sc); border-bottom-color:var(--sc);}
-.bn.b-sch a:hover .b-txt{color:#000;}
-
-.bn.sc-doksan{--sc:#2c5446;}   /* 독산고 · 딥그린 */
-.bn.sc-munil {--sc:#2b3f6b;}   /* 문일고 · 인디고 */
-.bn.sc-gumch {--sc:#7a2338;}   /* 금천고 · 버건디 */
-.bn.sc-dongil{--sc:#6d3557;}   /* 동일여고 · 플럼 */
-
+/* ===== 메인 모집/안내 배너 3종 (공통: 반짝임+펄스+그림자) ===== */
+@keyframes bn-shine{0%{left:-60%;}45%,100%{left:130%;}}
+@keyframes bn-pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
+.bn{position:relative; overflow:hidden; border-radius:0;}
+.bn a{display:flex; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; max-width:1080px; margin:0 auto; padding:24px 26px; text-align:center; position:relative; z-index:2;}
+.bn .sweep{position:absolute; top:0; left:-60%; width:45%; height:100%; transform:skewX(-20deg); animation:bn-shine 4.5s ease-in-out infinite; z-index:1;}
+.bn .b-tag{font-size:12px; font-weight:700; padding:6px 14px; border-radius:3px; letter-spacing:1.3px; white-space:nowrap; animation:bn-pulse 1.8s ease-in-out infinite;}
+.bn .b-txt{font-family:"Noto Serif KR",serif; font-size:22px; font-weight:700; line-height:1.5; letter-spacing:-.3px;}
+.bn .b-sub{font-family:"Noto Sans KR",sans-serif; font-size:14.5px; font-weight:500; letter-spacing:0; opacity:.72; margin-left:9px; white-space:nowrap;}
+.bn .b-go .ar{display:inline-block; transition:transform .25s;}
+.bn a:hover .b-go .ar{transform:translateX(4px);}
+.bn::before{content:""; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(201,162,86,.55),transparent); z-index:3;}
+.bn .b-go{font-size:13.5px; font-weight:700; padding:11px 24px; border-radius:4px; letter-spacing:.3px; white-space:nowrap; transition:.2s; box-shadow:0 3px 12px rgba(0,0,0,.28);}
+.bn a:hover .b-go{transform:translateY(-1px);}
+/* 1) 예비중1 - 골드 */
+.bn.b-mid{background:linear-gradient(100deg,#d9b163,#c9a256 55%,#b8923f); box-shadow:0 6px 22px rgba(201,162,86,.45);}
+.bn.b-mid .sweep{background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);}
+.bn.b-mid a{color:#0f1d33;}
+.bn.b-mid .b-tag{background:#0f1d33; color:#e2c98e;}
+.bn.b-mid .b-txt{color:#0f1d33;}
+.bn.b-mid .b-txt .hl{color:#7a1f1f;}
+.bn.b-mid .b-go{background:#0f1d33; color:#fff;}
+.bn.b-mid a:hover .b-go{background:#0a1322;}
+/* 2) 예비고1 - 네이비 */
+.bn.b-high{background:linear-gradient(100deg,#16335c,#0f1d33 55%,#1a3a66); box-shadow:0 6px 22px rgba(15,29,51,.5); border:1px solid rgba(201,162,86,.4);}
+.bn.b-high .sweep{background:linear-gradient(100deg,transparent,rgba(226,201,142,.4),transparent); animation-delay:.6s;}
+.bn.b-high a{color:#fff;}
+.bn.b-high .b-tag{background:#c9a256; color:#0f1d33;}
+.bn.b-high .b-txt{color:#fff;}
+.bn.b-high .b-txt .hl{color:#e2c98e;}
+.bn.b-high .b-go{background:#c9a256; color:#0f1d33;}
+.bn.b-high a:hover .b-go{background:#e2c98e;}
+/* 3) 어법특강 - 딥틸 */
+.bn.b-gram{background:linear-gradient(100deg,#13594d,#0d3b34 55%,#155f51); box-shadow:0 6px 22px rgba(13,59,52,.5); border:1px solid rgba(201,162,86,.4);}
+.bn.b-gram .sweep{background:linear-gradient(100deg,transparent,rgba(226,201,142,.4),transparent); animation-delay:1.2s;}
+.bn.b-gram a{color:#fff;}
+.bn.b-gram .b-tag{background:#c9a256; color:#0d3b34;}
+.bn.b-gram .b-txt{color:#fff;}
+.bn.b-gram .b-txt .hl{color:#e2c98e;}
+.bn.b-gram .b-go{background:#c9a256; color:#0d3b34;}
+.bn.b-gram a:hover .b-go{background:#e2c98e;}
+/* 4) 독산고 적중 - 버건디 */
+.bn.b-exam1{background:linear-gradient(100deg,#1f5745,#164536 55%,#0d2e23); box-shadow:0 6px 22px rgba(22,69,54,.5); border:1px solid rgba(201,162,86,.4);}
+.bn.b-exam1 .sweep{background:linear-gradient(100deg,transparent,rgba(226,201,142,.4),transparent); animation-delay:1.8s;}
+.bn.b-exam1 a{color:#fff;}
+.bn.b-exam1 .b-tag{background:#c9a256; color:#0d2e23;}
+.bn.b-exam1 .b-txt{color:#fff;}
+.bn.b-exam1 .b-txt .hl{color:#e2c98e;}
+.bn.b-exam1 .b-go{background:#c9a256; color:#0d2e23;}
+.bn.b-exam1 a:hover .b-go{background:#e2c98e;}
+/* 5) 금천고 분석 - 딥버건디/브라운 */
+.bn.b-exam2{background:linear-gradient(100deg,#8a2740,#7a2338 55%,#4f1223); box-shadow:0 6px 22px rgba(122,35,56,.5); border:1px solid rgba(201,162,86,.4);}
+.bn.b-exam2 .sweep{background:linear-gradient(100deg,transparent,rgba(226,201,142,.4),transparent); animation-delay:2.4s;}
+.bn.b-exam2 a{color:#fff;}
+.bn.b-exam2 .b-tag{background:#c9a256; color:#4f1223;}
+.bn.b-exam2 .b-txt{color:#fff;}
+.bn.b-exam2 .b-txt .hl{color:#e2c98e;}
+.bn.b-exam2 .b-go{background:#c9a256; color:#4f1223;}
+.bn.b-exam2 a:hover .b-go{background:#e2c98e;}
+/* 6) 동일여고 적중 - 로즈버건디 */
+.bn.b-exam3{background:linear-gradient(100deg,#6a2f63,#582653 55%,#3a1637); box-shadow:0 6px 22px rgba(88,38,83,.5); border:1px solid rgba(201,162,86,.4);}
+.bn.b-exam3 .sweep{background:linear-gradient(100deg,transparent,rgba(226,201,142,.4),transparent); animation-delay:3.0s;}
+.bn.b-exam3 a{color:#fff;}
+.bn.b-exam3 .b-tag{background:#c9a256; color:#3a1637;}
+.bn.b-exam3 .b-txt{color:#fff;}
+.bn.b-exam3 .b-txt .hl{color:#e2c98e;}
+.bn.b-exam3 .b-go{background:#c9a256; color:#3a1637;}
+.bn.b-exam3 a:hover .b-go{background:#e2c98e;}
+/* 7) 문일고 100% 적중 - 딥와인 */
+.bn.b-exam4{background:linear-gradient(100deg,#1c5a63,#15464e 50%,#0c2f35); box-shadow:0 6px 24px rgba(21,70,78,.55); border:1px solid rgba(201,162,86,.5);}
+.bn.b-exam4 .sweep{background:linear-gradient(100deg,transparent,rgba(226,201,142,.5),transparent); animation-delay:0.3s;}
+.bn.b-exam4 a{color:#fff;}
+.bn.b-exam4 .b-tag{background:#e2c98e; color:#0c2f35;}
+.bn.b-exam4 .b-txt{color:#fff;}
+.bn.b-exam4 .b-txt .hl{color:#e2c98e;}
+.bn.b-exam4 .b-go{background:#e2c98e; color:#0c2f35;}
+.bn.b-exam4 a:hover .b-go{background:#fff;}
 @media(max-width:680px){
-  .bn a{gap:9px; padding:18px 20px;}
-  .bn.b-mid a{padding:26px 20px;}
-  .bn.b-high a{padding:22px 20px;}
-  .bn.b-sch a{padding:16px 20px 16px 22px;}
-  .bn.b-mid .b-txt{font-size:18px;}
-  .bn.b-high .b-txt{font-size:17px;}
-  .bn.b-sch .b-txt{font-size:15.5px;}
+  .bn .b-txt{font-size:16.5px;}
+  .bn .b-sub{display:block; margin:5px 0 0; font-size:13px;}
+  .bn .b-tag{font-size:11px; letter-spacing:1px;}
+  .bn a{gap:11px; padding:18px 22px;}
 }
 .serif{font-family:"Noto Serif KR",serif;}
 img{display:block; max-width:100%;}
@@ -268,44 +299,50 @@ footer{background:#0a1322; color:#8993a6; padding:40px 26px; font-size:13px;}
 </div>
 <div class="bn b-mid">
   <a href="post-gumcheon-story.html">
-    <span class="b-tag">학생 이야기</span>
-    <span class="b-txt">겨울에 3등급이던 아이가, <span class="hl">금천고 전교 1등</span>이 되기까지</span>
-    <span class="b-go">이야기 읽기 &rarr;</span>
+    <span class="sweep"></span>
+    <span class="b-tag">3등급에서 시작했습니다</span>
+    <span class="b-txt">금천고 <span class="hl">전교 1등</span> 학생 이야기</span>
+    <span class="b-go">이야기 보기 <span class="ar">&rarr;</span></span>
   </a>
 </div>
 <div class="bn b-high">
   <a href="예비고등_선행_모집.html">
+    <span class="sweep"></span>
     <span class="b-tag">각 반 11명 &middot; 모집중</span>
-    <span class="b-txt">예비고1, <span class="hl">어법으로 1등급을 굳히는</span> 마지막 여름</span>
-    <span class="b-go">모집 안내 &rarr;</span>
+    <span class="b-txt">예비고1 <span class="hl">선행반 모집</span></span>
+    <span class="b-go">모집 안내 <span class="ar">&rarr;</span></span>
   </a>
 </div>
-<div class="bn b-sch sc-doksan">
+<div class="bn b-exam1">
   <a href="post-doksan-2semester.html">
-    <span class="b-tag">독산고 &middot; 2학기 중간 대비</span>
-    <span class="b-txt">독산고 <span class="hl">반 전원 영어 1등급</span>, 2학기도 이어갑니다</span>
-    <span class="b-go">대비 보기 &rarr;</span>
+    <span class="sweep"></span>
+    <span class="b-tag">지난 기말 &middot; 반 전원 1등급</span>
+    <span class="b-txt">독산고 영어 <span class="hl">2학기 중간시험 대비</span><span class="b-sub">자주 걸리는 함정 3가지</span></span>
+    <span class="b-go">대비 보기 <span class="ar">&rarr;</span></span>
   </a>
 </div>
-<div class="bn b-sch sc-munil">
+<div class="bn b-exam4">
   <a href="post-munil-2semester.html">
-    <span class="b-tag">문일고 &middot; 2학기 중간 대비</span>
-    <span class="b-txt">문일고 기말 <span class="hl">100점 &middot; 평균 20점 상승</span>, 다음은 2학기입니다</span>
-    <span class="b-go">대비 보기 &rarr;</span>
+    <span class="sweep"></span>
+    <span class="b-tag">지난 기말 &middot; 100점, 평균 20점 상승</span>
+    <span class="b-txt">문일고 영어 <span class="hl">2학기 중간시험 대비</span><span class="b-sub">어법과 서술형이 관건</span></span>
+    <span class="b-go">대비 보기 <span class="ar">&rarr;</span></span>
   </a>
 </div>
-<div class="bn b-sch sc-gumch">
+<div class="bn b-exam2">
   <a href="post-gumcheon-2semester.html">
-    <span class="b-tag">금천고 &middot; 2학기 중간 대비</span>
-    <span class="b-txt">금천고 기말, <span class="hl">독해 22문항이 전부 학평 지문</span>이었습니다</span>
-    <span class="b-go">대비 보기 &rarr;</span>
+    <span class="sweep"></span>
+    <span class="b-tag">지난 기말 &middot; 독해 22문항 적중</span>
+    <span class="b-txt">금천고 영어 <span class="hl">2학기 중간시험 대비</span><span class="b-sub">독해는 학력평가 지문에서</span></span>
+    <span class="b-go">대비 보기 <span class="ar">&rarr;</span></span>
   </a>
 </div>
-<div class="bn b-sch sc-dongil">
+<div class="bn b-exam3">
   <a href="post-dongil-2semester.html">
-    <span class="b-tag">동일여고 &middot; 2학기 중간 대비</span>
-    <span class="b-txt">동일여고 영어, <span class="hl">학교 시험을 미리 여섯 번</span> 봅니다</span>
-    <span class="b-go">대비 보기 &rarr;</span>
+    <span class="sweep"></span>
+    <span class="b-tag">지난 기말 &middot; 30문항 중 28문항 적중</span>
+    <span class="b-txt">동일여고 영어 <span class="hl">2학기 중간시험 대비</span><span class="b-sub">서술형이 30점</span></span>
+    <span class="b-go">대비 보기 <span class="ar">&rarr;</span></span>
   </a>
 </div>
 <section class="results" id="results">

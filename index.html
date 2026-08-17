@@ -548,10 +548,10 @@ footer{background:var(--ink);}
 .ac-card .ac-name{color:#bfd2e6!important;}
 .ac-card .ac-hs{color:#14375e!important;background:#fff!important;border:none!important;font-weight:700;}
 /* ② 6단계 — 1번만 두 배 */
-.rail .c.big1{flex:0 0 400px;background:#14375e;border-color:#14375e;}
-.rail .c.big1 .n{background:#fff;color:#14375e;}
-.rail .c.big1 b{color:#fff;font-size:23px;}
-.rail .c.big1 p{color:#bfd2e6;font-size:15px;}
+
+
+
+
 /* ③ 원장 — 좌우 분할 */
 .director.split{display:grid;grid-template-columns:44% 1fr;background:#fff!important;padding:0!important;min-height:640px;}
 .director.split .dl{background:#161412;overflow:hidden;}
@@ -567,8 +567,8 @@ footer{background:var(--ink);}
  .results{min-height:auto;padding:56px 0!important;}
  .results .sec-h{font-size:26px!important;}
  .ac-card{flex:0 0 190px!important;}
- .rail .c.big1{flex:0 0 270px;}
- .rail .c.big1 b{font-size:18px;}
+ 
+ 
  .director.split{grid-template-columns:1fr;min-height:auto;}
  .director.split .dl{height:320px;}
  .director.split .dr{padding:42px 22px;}
@@ -612,9 +612,9 @@ header{background:rgba(255,255,255,.97);border-bottom:1px solid var(--line);}
 .six{background:var(--w1)!important;}
 .rail .c{background:var(--w2)!important;border-color:var(--line)!important;}
 .rail .n{background:var(--navy)!important;color:#fff!important;}
-.rail .c.big1{background:var(--navy)!important;border-color:var(--navy)!important;}
-.rail .c.big1 .n{background:#fff!important;color:var(--navy)!important;}
-.rail .c.big1 p{color:#bfd2e6!important;}
+
+
+
 .six .go .p{background:var(--navy)!important;} .six .go .p:hover{background:var(--navy-d)!important;}
 .six .go .g{color:var(--navy)!important;border-color:rgba(20,55,94,.3)!important;}
 .six .go .g:hover{background:var(--navy)!important;color:#fff!important;}
@@ -693,6 +693,31 @@ footer{background:var(--ink)!important;}
 .thumb:after{background:linear-gradient(to top,rgba(13,36,64,.55),rgba(13,36,64,.05) 55%,transparent)!important;}
 .hero6{background:#0d2440!important;}
 </style>
+<style>
+/* ⑦ 첫 화면 글자만 버건디 */
+.k6{color:#7a2338!important;}
+.hero6 h1 em{color:#7a2338!important;}
+.cr6 b{color:#7a2338!important;}
+/* ⑤ 고등학교 카드 — 배경 전체에 색 */
+.sc{background:var(--pc)!important;border:1px solid var(--pb)!important;border-left:6px solid var(--pl)!important;padding:22px 22px!important;}
+.sc:hover{background:var(--ph)!important;border-color:var(--pl)!important;}
+.sc .s{color:var(--pl)!important;font-weight:700;}
+.sc b{color:#14375e!important;font-size:21px!important;}
+.sc em{color:#5a5a52!important;}
+.sc.doksan{--pc:#e8f0ea;--pb:#cfe0d4;--pl:#2f6b4a;--ph:#dde9e1;}
+.sc.munil{--pc:#e6eef7;--pb:#ccdcee;--pl:#1e5691;--ph:#d9e6f3;}
+.sc.gumch{--pc:#f7e9ed;--pb:#ecd2da;--pl:#8a2745;--ph:#f1dde3;}
+.sc.dongil{--pc:#efe9f5;--pb:#ddd2ea;--pl:#553a7d;--ph:#e7ddf0;}
+/* ⑥ 중학교 태그 글자 키우기 */
+.mtags a{font-size:19px!important;padding:14px 26px!important;font-family:"Noto Serif KR",serif!important;font-weight:700!important;letter-spacing:-.5px;}
+.mtags{gap:11px!important;}
+/* 섹션 라벨 크기 */
+.head4 span{font-size:14px!important;letter-spacing:2.5px;}
+@media(max-width:600px){
+ .mtags a{font-size:16px!important;padding:11px 19px!important;}
+ .sc b{font-size:19px!important;}
+}
+</style>
 </head>
 <body>
 <header>
@@ -746,7 +771,7 @@ footer{background:var(--ink)!important;}
       <p class="hint">옆으로 밀어보세요 &rarr;</p>
     </div>
     <div class="rail" id="rail">
-      <div class="c big1"><span class="n">1</span><b>순간순간 상세 관찰로<br>아이의 약점을 찾습니다</b><p>점수만 봐서는 모릅니다. 단어인지, 문장 구조인지, 서두르는 습관인지 찾습니다.</p></div>
+      <div class="c on"><span class="n">1</span><b>순간순간 상세 관찰로<br>아이의 약점을 찾습니다</b><p>점수만 봐서는 모릅니다. 단어인지, 문장 구조인지, 서두르는 습관인지 찾습니다.</p></div>
       <div class="c"><span class="n">2</span><b>전체수업 + 개별수업으로<br>채웁니다</b><p>개념은 다 같이. 그다음 개별 시간에는 아이마다 다른 것을 줍니다.</p></div>
       <div class="c"><span class="n">3</span><b>클리닉에서<br>통과할 때까지 봅니다</b><p>단어 클리닉은 전원 대상. 쓰기와 말하기 두 가지로 보고, 재시험은 다른 시험지입니다.</p></div>
       <div class="c"><span class="n">4</span><b>아이가 매시간<br>학습일지를 씁니다</b><p>“나는 ___할 때 자꾸 틀린다.” 선생이 말해주는 것과 자기 손으로 쓰는 것은 다릅니다.</p></div>
@@ -945,5 +970,25 @@ footer{background:var(--ink)!important;}
     </div>
   </div>
 </footer>
+<style>
+.rail .c{cursor:pointer;transition:flex-basis .35s ease, background .3s ease, border-color .3s ease;}
+.rail .c.on{flex:0 0 400px;background:#14375e!important;border-color:#14375e!important;}
+.rail .c.on .n{background:#fff!important;color:#14375e!important;}
+.rail .c.on b{color:#fff!important;font-size:23px;}
+.rail .c.on p{color:#bfd2e6!important;font-size:15px;}
+@media(max-width:900px){.rail .c.on{flex:0 0 270px;}.rail .c.on b{font-size:18px;}}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var cs=document.querySelectorAll('.rail .c');
+  cs.forEach(function(c){
+    c.addEventListener('click',function(){
+      cs.forEach(function(x){x.classList.remove('on');});
+      c.classList.add('on');
+      c.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+    });
+  });
+});
+</script>
 </body>
 </html>

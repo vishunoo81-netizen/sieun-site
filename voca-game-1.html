@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)https://vishunoo81-netizen.github.io/sieun-voca1/?v=2 -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>시은보카 1 · 단어게임</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0b1020;--pnl:#151b32;--ln:#2a3352;--tx:#e8ecf8;--dim:#8b94b8;
+--c1:#4ade80;--c2:#38bdf8;--c3:#f472b6;--warn:#fbbf24;--bad:#f87171;--gold:#fcd34d}
+body{font-family:'Malgun Gothic','맑은 고딕',-apple-system,sans-serif;background:var(--bg);
+color:var(--tx);min-height:100vh;overflow-x:hidden;user-select:none}
+.wrap{max-width:640px;margin:0 auto;padding:14px;min-height:100vh;display:flex;flex-direction:column}
+.scr{display:none;flex:1;flex-direction:column}
+.scr.on{display:flex}
+h1{font-size:26px;font-weight:900;text-align:center;letter-spacing:-1px;margin:18px 0 4px}
+h1 .a{color:var(--c2)}
+.sub{text-align:center;color:var(--dim);font-size:12px;margin-bottom:22px}
+.card{background:var(--pnl);border:1px solid var(--ln);border-radius:14px;padding:14px;margin-bottom:11px}
+.lb{font-size:11px;color:var(--dim);font-weight:700;margin-bottom:8px;letter-spacing:.5px}
+input[type=text]{width:100%;background:#0d1226;border:1px solid var(--ln);border-radius:9px;
+padding:11px;color:var(--tx);font-size:15px;font-family:inherit;outline:none}
+input[type=text]:focus{border-color:var(--c2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:#2a3654;border:1.5px solid #4d5d85;border-radius:7px;padding:7px 10px;
+font-size:12px;cursor:pointer;transition:.12s;font-weight:700;color:#f0f3fb}
+.chip:active{transform:scale(.94)}
+.chip.on{background:var(--c2);border-color:var(--c2);color:#06121f}
+.chip.sm{padding:5px 9px;font-size:11px}
+.row{display:flex;gap:6px;margin-bottom:8px}
+.row .chip{flex:1;text-align:center}
+.lvls{display:flex;flex-direction:column;gap:9px}
+.lvl{background:var(--pnl);border:2px solid var(--ln);border-radius:14px;padding:14px;
+cursor:pointer;transition:.14s;display:flex;align-items:center;gap:13px}
+.lvl:active{transform:scale(.97)}
+.lvl .ic{font-size:30px;width:44px;text-align:center}
+.lvl .tt{font-size:16px;font-weight:800;margin-bottom:2px}
+.lvl .ds{font-size:11px;color:var(--dim);line-height:1.4}
+.lvl[data-l="1"]{border-color:rgba(74,222,128,.4)} .lvl[data-l="1"] .tt{color:var(--c1)}
+.lvl[data-l="2"]{border-color:rgba(56,189,248,.4)} .lvl[data-l="2"] .tt{color:var(--c2)}
+.lvl[data-l="3"]{border-color:rgba(244,114,182,.4)} .lvl[data-l="3"] .tt{color:var(--c3)}
+.lvl[data-l="4"]{border-color:rgba(252,211,77,.45)} .lvl[data-l="4"] .tt{color:var(--gold)}
+.lvl[data-l="5"]{border-color:rgba(251,146,60,.45)} .lvl[data-l="5"] .tt{color:#fb923c}
+.lvl[data-l="6"]{border-color:rgba(248,113,113,.45)} .lvl[data-l="6"] .tt{color:var(--bad)}
+.lvl[data-l="7"]{border-color:rgba(167,139,250,.45)} .lvl[data-l="7"] .tt{color:#a78bfa}
+.best{margin-left:auto;text-align:right;font-size:10px;color:var(--dim)}
+.best b{display:block;font-size:15px;color:var(--gold)}
+.btn{width:100%;background:var(--c2);color:#06121f;border:none;border-radius:11px;
+padding:14px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit}
+.btn:active{transform:scale(.97)}
+.btn.g{background:var(--ln);color:var(--tx)}
+.hud{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px}
+.hud .x{background:none;border:1px solid var(--ln);color:var(--dim);width:32px;height:32px;
+border-radius:8px;font-size:16px;cursor:pointer;flex-shrink:0}
+.st{display:flex;gap:5px;align-items:center;font-size:12px;font-weight:800}
+.hp{font-size:15px;letter-spacing:1px}
+.sc{color:var(--gold);font-size:17px;font-weight:900}
+.cmb{color:var(--warn);font-size:12px;font-weight:900;opacity:0;transition:.2s}
+.cmb.on{opacity:1}
+.tbar{height:5px;background:#0d1226;border-radius:3px;overflow:hidden;margin-bottom:12px}
+.tfill{height:100%;background:var(--c1);transition:width .1s linear;border-radius:3px}
+.tfill.w{background:var(--warn)} .tfill.d{background:var(--bad)}
+.q{background:var(--pnl);border:1px solid var(--ln);border-radius:14px;padding:26px 14px;
+text-align:center;margin-bottom:11px}
+.q .w{font-size:32px;font-weight:900;letter-spacing:-.5px;word-break:break-word;line-height:1.15}
+.q .w.l1{font-size:26px} .q .w.l2{font-size:21px} .q .w.l3{font-size:17px}
+.q .t{font-size:10px;color:var(--dim);margin-top:6px;font-weight:700}
+.retry{font-size:13px;font-weight:900;color:var(--warn);margin-top:7px;height:16px;
+opacity:0;transition:.15s}
+.retry.on{opacity:1;animation:rtp .4s}
+@keyframes rtp{0%{transform:scale(.6)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
+.opt:disabled{cursor:default}
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{background:var(--pnl);border:1.5px solid var(--ln);border-radius:10px;padding:13px;
+font-size:14px;cursor:pointer;text-align:left;color:var(--tx);font-family:inherit;font-weight:600;
+transition:.1s}
+.opt:active{transform:scale(.98)}
+.opt.ok{background:rgba(74,222,128,.2);border-color:var(--c1)}
+.opt.no{background:rgba(248,113,113,.2);border-color:var(--bad)}
+/* 2단계 */
+#fall{position:relative;flex:1;min-height:300px;background:var(--pnl);border:1px solid var(--ln);
+border-radius:14px;overflow:hidden;margin-bottom:9px}
+.fw{position:absolute;background:#1e2745;border:1.5px solid var(--c2);border-radius:8px;
+padding:7px 12px;font-size:16px;font-weight:800;white-space:nowrap;color:var(--c2);max-width:94%;
+overflow:hidden;text-overflow:ellipsis}
+.fw.l1{font-size:13px} .fw.l2{font-size:11px;padding:6px 8px}
+.fw.dz{border-color:var(--bad);color:var(--bad);background:rgba(248,113,113,.15)}
+.gline{position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--bad);opacity:.5}
+.fopts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.fopt{background:var(--pnl);border:1.5px solid var(--ln);border-radius:9px;padding:12px 8px;
+font-size:13px;font-weight:700;cursor:pointer;color:var(--tx);font-family:inherit;text-align:center;
+min-height:46px;display:flex;align-items:center;justify-content:center}
+.fopt:active{transform:scale(.96)}
+.fopt.ok{background:rgba(74,222,128,.25);border-color:var(--c1)}
+.fopt.no{background:rgba(248,113,113,.25);border-color:var(--bad)}
+/* 3단계 보스 */
+.boss{background:var(--pnl);border:1px solid var(--ln);border-radius:14px;padding:13px;margin-bottom:9px}
+.bt{display:flex;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:6px}
+.bt .nm{color:var(--c3)}
+.bar{height:15px;background:#0d1226;border-radius:8px;overflow:hidden;border:1px solid var(--ln)}
+.bfill{height:100%;background:linear-gradient(90deg,#f472b6,#db2777);transition:width .3s;border-radius:7px}
+.bface{font-size:44px;text-align:center;margin:7px 0;transition:.1s}
+.bface.hit{transform:scale(1.22) rotate(-7deg);filter:brightness(1.6)}
+.mine{margin-top:9px}
+.mfill{height:100%;background:linear-gradient(90deg,#4ade80,#16a34a);transition:width .3s;border-radius:7px}
+/* 결과 */
+.res{text-align:center;padding:18px 0}
+.grade{font-size:74px;font-weight:900;line-height:1;margin:6px 0}
+.gS{color:var(--gold);text-shadow:0 0 26px rgba(252,211,77,.6)}
+.gA{color:var(--c1)} .gB{color:var(--c2)} .gC{color:var(--dim)}
+.rsc{font-size:38px;font-weight:900;color:var(--gold);margin:9px 0}
+.rl{color:var(--dim);font-size:12px;margin-bottom:14px}
+.rst{display:flex;justify-content:center;gap:16px;margin:14px 0;font-size:12px}
+.rst div{text-align:center}
+.rst b{display:block;font-size:19px;color:var(--tx);margin-bottom:2px}
+.nb{background:linear-gradient(90deg,var(--gold),#f59e0b);color:#1a1400;padding:5px 13px;
+border-radius:20px;font-size:12px;font-weight:900;display:inline-block;margin-bottom:9px}
+.pass{background:rgba(74,222,128,.15);border:1.5px solid var(--c1);border-radius:11px;
+padding:13px;margin:12px 0}
+.pass .h{font-size:17px;font-weight:900;color:var(--c1);margin-bottom:4px}
+.pass .c{font-size:24px;font-weight:900;letter-spacing:3px;color:var(--gold);margin-top:6px;
+font-family:monospace}
+.pass .s{font-size:11px;color:var(--dim)}
+.wrong{max-height:190px;overflow-y:auto;text-align:left;margin-top:12px}
+.wrong .wi{display:flex;justify-content:space-between;gap:9px;padding:7px 9px;
+border-bottom:1px solid var(--ln);font-size:12px}
+.wrong .wi b{color:var(--bad)}
+.wrong .wi span{color:var(--dim);text-align:right}
+.pop{position:fixed;pointer-events:none;font-weight:900;font-size:20px;z-index:99;
+animation:fly .8s ease-out forwards}
+@keyframes fly{0%{opacity:1;transform:translateY(0) scale(1)}
+100%{opacity:0;transform:translateY(-46px) scale(1.35)}}
+.shake{animation:sh .3s}
+@keyframes sh{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.cd{position:fixed;inset:0;background:rgba(11,16,32,.95);display:flex;align-items:center;
+justify-content:center;font-size:82px;font-weight:900;z-index:100;color:var(--c2)}
+/* 7단계 짝맞추기 */
+.mstat{display:flex;justify-content:center;gap:14px;margin-bottom:9px;font-size:11px;color:var(--dim);
+font-weight:700}
+.mstat b{color:var(--tx);font-size:13px}
+#cards{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.card{position:relative;aspect-ratio:1/1.18;perspective:600px;cursor:pointer}
+.card .inner{position:relative;width:100%;height:100%;transition:transform .34s;
+transform-style:preserve-3d}
+.card.flip .inner{transform:rotateY(180deg)}
+.card .fc{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+border-radius:9px;display:flex;align-items:center;justify-content:center;padding:3px;
+text-align:center;font-weight:800;overflow:hidden}
+.card .back{background:linear-gradient(145deg,#1e2745,#141c33);border:1.5px solid var(--ln);
+font-size:19px;color:var(--c2)}
+.card .front{background:var(--pnl);border:1.5px solid var(--c2);transform:rotateY(180deg);
+font-size:12px;line-height:1.2;color:var(--tx);word-break:break-word}
+.card .front.w{color:var(--c2);font-size:13px;font-weight:900}
+.card .front.f1{font-size:10px} .card .front.f2{font-size:8.5px}
+.card.done .inner{transform:rotateY(180deg)}
+.card.done .front{background:rgba(74,222,128,.18);border-color:var(--c1);opacity:.55}
+.card.bad .front{background:rgba(248,113,113,.22);border-color:var(--bad)}
+/* 지도 · 도장 · 뱃지 */
+.mapwrap{margin-bottom:11px}
+.maphd{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.maphd .mt{font-size:11px;color:var(--dim);font-weight:800;letter-spacing:.5px}
+.maphd .mp{font-size:11px;font-weight:900;color:var(--c1)}
+.map{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+.mc{aspect-ratio:1;border-radius:6px;background:#0d1226;border:1px solid var(--ln);
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+font-size:9px;font-weight:900;color:var(--dim);position:relative;overflow:hidden}
+.mc .cn{font-size:8px;line-height:1}
+.mc .cg{font-size:11px;line-height:1;margin-top:1px}
+.mc.done{border-color:var(--c1);background:rgba(74,222,128,.14);color:var(--c1)}
+.mc.gS{border-color:var(--gold);background:rgba(252,211,77,.18);color:var(--gold)}
+.mc.gA{border-color:var(--c1);background:rgba(74,222,128,.14);color:var(--c1)}
+.mc.gB{border-color:var(--c2);background:rgba(56,189,248,.12);color:var(--c2)}
+.mc.gC{border-color:var(--dim);background:rgba(139,148,184,.1);color:var(--dim)}
+.mc.boss::after{content:'💀';position:absolute;top:0;right:1px;font-size:7px}
+.badges{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.bg1{aspect-ratio:1;border-radius:7px;background:#0d1226;border:1px solid var(--ln);
+display:flex;align-items:center;justify-content:center;font-size:15px;opacity:.22;
+position:relative}
+.bg1.on{opacity:1;border-color:var(--gold);background:rgba(252,211,77,.12)}
+.nbg{background:rgba(252,211,77,.12);border:1.5px solid var(--gold);border-radius:11px;
+padding:11px;margin:10px 0}
+.nbt{font-size:14px;font-weight:900;color:var(--gold);margin-bottom:5px}
+.nbi{font-size:11.5px;color:var(--tx);padding:2px 0}
+.nbi b{color:var(--gold)}
+.rst2{display:flex;justify-content:center;gap:14px;font-size:10px;color:var(--dim);
+margin-top:8px}
+.rst2 b{color:var(--tx);font-size:13px;display:block}
+.wipe{background:none;border:1px solid var(--ln);color:var(--dim);border-radius:8px;
+padding:7px;font-size:11px;cursor:pointer;font-family:inherit;width:100%;margin-top:7px}
+/* 6단계 폭탄해체 */
+#bombs{display:flex;flex-direction:column;gap:8px;margin-bottom:9px}
+.bomb{background:var(--pnl);border:1.5px solid var(--ln);border-radius:12px;padding:10px 12px;
+cursor:pointer;transition:.12s;position:relative;overflow:hidden}
+.bomb:active{transform:scale(.985)}
+.bomb.sel{border-color:var(--warn);background:#1c2440}
+.bomb.danger{border-color:var(--bad);animation:bpulse .5s infinite}
+@keyframes bpulse{0%,100%{box-shadow:0 0 0 0 rgba(248,113,113,0)}50%{box-shadow:0 0 0 3px rgba(248,113,113,.28)}}
+.bomb.boom{animation:bboom .4s forwards}
+@keyframes bboom{0%{transform:scale(1)}35%{transform:scale(1.09);background:rgba(248,113,113,.5)}
+100%{transform:scale(.85);opacity:0}}
+.bomb.safe{animation:bsafe .45s forwards}
+@keyframes bsafe{0%{transform:scale(1)}40%{transform:scale(1.05);background:rgba(74,222,128,.35)}
+100%{transform:scale(.9);opacity:0}}
+.bhead{display:flex;align-items:center;gap:8px}
+.bicon{font-size:19px;flex-shrink:0}
+.bword{font-size:18px;font-weight:900;letter-spacing:-.3px;flex:1;overflow:hidden;
+text-overflow:ellipsis;white-space:nowrap}
+.bword.l1{font-size:15px} .bword.l2{font-size:13px}
+.bsec{font-size:15px;font-weight:900;color:var(--warn);flex-shrink:0;font-variant-numeric:tabular-nums}
+.bsec.hot{color:var(--bad)}
+.fuse{height:4px;background:#0d1226;border-radius:2px;margin-top:7px;overflow:hidden}
+.fuse i{display:block;height:100%;background:var(--c1);border-radius:2px;transition:width .1s linear}
+.fuse i.w{background:var(--warn)} .fuse i.d{background:var(--bad)}
+.btag{font-size:8.5px;color:var(--dim);font-weight:700;margin-top:4px}
+#bopts{display:flex;flex-direction:column;gap:6px;min-height:44px}
+#bopts .bo{background:var(--pnl);border:1.5px solid var(--c2);border-radius:9px;padding:11px;
+font-size:13.5px;font-weight:700;color:var(--tx);cursor:pointer;text-align:left;font-family:inherit}
+#bopts .bo:active{transform:scale(.98)}
+#bopts .bo.ok{background:rgba(74,222,128,.25);border-color:var(--c1)}
+#bopts .bo.no{background:rgba(248,113,113,.25);border-color:var(--bad)}
+.bhint{font-size:11px;color:var(--dim);text-align:center;padding:12px 0;font-weight:700}
+/* 5단계 두더지 */
+.mtarget{background:var(--pnl);border:1px solid var(--ln);border-radius:13px;padding:12px;
+text-align:center;margin-bottom:9px}
+.mtarget .mm{font-size:21px;font-weight:900;color:var(--warn);letter-spacing:-.5px;line-height:1.25}
+.mtarget .mh{font-size:9.5px;color:var(--dim);margin-top:4px;font-weight:700}
+#holes{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:290px;
+align-content:stretch}
+.hole{position:relative;background:#0d1226;border:1px solid var(--ln);border-radius:12px;
+overflow:hidden;display:flex;align-items:flex-end;justify-content:center;min-height:78px}
+.hole::after{content:'';position:absolute;bottom:0;left:8%;right:8%;height:9px;
+background:#1a2340;border-radius:50% 50% 0 0}
+.mole{position:relative;z-index:2;background:#1e2745;border:1.5px solid var(--c2);
+border-radius:9px;padding:6px 9px;font-size:14px;font-weight:900;color:var(--c2);
+white-space:nowrap;max-width:94%;overflow:hidden;text-overflow:ellipsis;cursor:pointer;
+transform:translateY(105%);transition:transform .22s cubic-bezier(.34,1.4,.64,1);
+margin-bottom:6px}
+.mole.up{transform:translateY(0)}
+.mole.l1{font-size:12px} .mole.l2{font-size:10.5px;padding:5px 6px}
+.mole.hitok{background:rgba(74,222,128,.35);border-color:var(--c1);color:var(--c1)}
+.mole.hitno{background:rgba(248,113,113,.35);border-color:var(--bad);color:var(--bad)}
+.mole.miss{opacity:.35}
+/* 4단계 어원조합 */
+.etarget{background:var(--pnl);border:1px solid var(--ln);border-radius:14px;padding:16px 12px;
+text-align:center;margin-bottom:10px}
+.etarget .em{font-size:23px;font-weight:900;color:var(--c1);letter-spacing:-.5px;line-height:1.25}
+.etarget .eh{font-size:10px;color:var(--dim);margin-top:5px;font-weight:700}
+.eslots{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-bottom:11px;min-height:52px}
+.eslot{min-width:66px;height:50px;border:2px dashed var(--ln);border-radius:10px;
+display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2px 8px;
+background:rgba(255,255,255,.02);transition:.15s}
+.eslot.fill{border-style:solid;border-color:var(--c1);background:rgba(74,222,128,.12);cursor:pointer}
+.eslot.fill:active{transform:scale(.94)}
+.eslot .sf{font-size:14px;font-weight:900;color:var(--c1)}
+.eslot .sm{font-size:8.5px;color:var(--dim);margin-top:1px}
+.eslot .idx{font-size:15px;color:var(--ln);font-weight:900}
+.eslot.wrongfx{border-color:var(--bad);background:rgba(248,113,113,.15);animation:sh .3s}
+.epieces{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.epc{background:var(--pnl);border:1.5px solid var(--c2);border-radius:9px;padding:8px 11px;
+cursor:pointer;transition:.12s;display:flex;flex-direction:column;align-items:center;min-width:60px}
+.epc:active{transform:scale(.93)}
+.epc.used{opacity:.22;pointer-events:none;border-color:var(--ln)}
+.epc .pf{font-size:15px;font-weight:900;color:var(--c2)}
+.epc .pm{font-size:8.5px;color:var(--dim);margin-top:1px}
+.ebar{display:flex;gap:5px;margin-bottom:9px}
+.ebar .eb{flex:1;height:4px;background:#0d1226;border-radius:2px;overflow:hidden}
+.ebar .eb i{display:block;height:100%;width:0;background:var(--c1);transition:width .3s}
+.ereveal{background:rgba(74,222,128,.1);border:1px solid var(--c1);border-radius:10px;
+padding:10px;margin-top:9px;font-size:12px;color:var(--c1);text-align:center;font-weight:700;
+line-height:1.5}
+#pause{position:fixed;inset:0;background:rgba(11,16,32,.94);z-index:98;display:none;
+flex-direction:column;align-items:center;justify-content:center;gap:14px}
+#pause.on{display:flex}
+#pause .pt{font-size:22px;font-weight:900}
+#pause .pb{background:var(--c2);color:#06121f;border:none;border-radius:11px;padding:13px 34px;
+font-size:16px;font-weight:800;cursor:pointer;font-family:inherit}
+.err{background:rgba(248,113,113,.15);border:1px solid var(--bad);border-radius:9px;
+padding:11px;font-size:12px;color:var(--bad);margin-bottom:9px;text-align:center}
+.brand{text-align:center;font-size:10px;color:var(--dim);letter-spacing:2px;font-weight:800;
+margin-top:auto;padding-top:12px}
+.brand b{color:var(--c2)}
+#flash{position:fixed;inset:0;pointer-events:none;z-index:90;opacity:0;transition:opacity .1s}
+#flash.on{opacity:1}
+.banner{position:fixed;top:52px;left:0;right:0;text-align:center;pointer-events:none;z-index:95;
+font-size:30px;font-weight:900;opacity:0;letter-spacing:-1px;text-shadow:0 2px 14px rgba(0,0,0,.9)}
+.banner.go{animation:bn .9s ease-out}
+@keyframes bn{0%{opacity:0;transform:scale(.5) rotate(-7deg)}
+22%{opacity:1;transform:scale(1.18) rotate(2deg)}
+55%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.05) translateY(-18px)}}
+.bg-heat{transition:background .5s}
+.snd{position:fixed;top:12px;right:12px;z-index:60;background:var(--pnl);border:1px solid var(--ln);
+color:var(--dim);width:34px;height:34px;border-radius:9px;font-size:14px;cursor:pointer;
+display:flex;align-items:center;justify-content:center;padding:0}
+.shot{background:linear-gradient(160deg,#1b2444,#111731);border:2px solid var(--c2);
+border-radius:16px;padding:16px;margin:10px 0}
+.shot .top{font-size:11px;color:var(--c2);font-weight:900;letter-spacing:2px;margin-bottom:6px}
+.shot .who{font-size:15px;font-weight:800;margin-bottom:2px}
+.shot .rng{font-size:10px;color:var(--dim)}
+.tip{font-size:11px;color:var(--dim);text-align:center;margin-top:9px;line-height:1.6}
+.bfc.rage{filter:hue-rotate(-25deg) brightness(1.3);animation:rg .5s infinite}
+@keyframes rg{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.rageon{color:var(--bad)!important;font-weight:900}
+</style></head><body>
+<div id="flash"></div>
+<div class="banner" id="bnr"></div>
+<button class="snd" id="sndb">🔊</button>
+<div id="pause"><div class="pt">일시정지</div>
+  <button class="pb" id="presume">계속하기</button>
+  <button class="pb" id="pquit" style="background:var(--ln);color:var(--tx)">그만두기</button></div>
+<div class="wrap">
+
+<div class="scr on" id="s_home">
+  <h1>시은보카 <span class="a">1</span></h1>
+  <div class="sub">어원으로 뚫는 수능 어휘 · 시은영어학원</div>
+  <div class="card"><div class="lb">이름</div>
+    <input type="text" id="nm" placeholder="이름을 입력하세요" maxlength="12"></div>
+  <div class="card"><div class="lb">범위</div>
+    <div class="row">
+      <button class="chip on" data-mode="one">1강씩</button>
+      <button class="chip" data-mode="many">여러 강</button>
+      <button class="chip" data-mode="all">전체 랜덤</button>
+    </div>
+    <div class="chips" id="chs"><button class="chip sm on" data-ch="1">1강</button><button class="chip sm" data-ch="2">2강</button><button class="chip sm" data-ch="3">3강</button><button class="chip sm" data-ch="4">4강</button><button class="chip sm" data-ch="5">5강</button><button class="chip sm" data-ch="6">6강</button><button class="chip sm" data-ch="7">7강</button><button class="chip sm" data-ch="8">8강</button><button class="chip sm" data-ch="9">9강</button><button class="chip sm" data-ch="10">10강</button><button class="chip sm" data-ch="11">11강</button><button class="chip sm" data-ch="12">12강</button><button class="chip sm" data-ch="13">13강</button><button class="chip sm" data-ch="14">14강</button><button class="chip sm" data-ch="15">15강</button><button class="chip sm" data-ch="16">16강</button><button class="chip sm" data-ch="17">17강</button><button class="chip sm" data-ch="18">18강</button><button class="chip sm" data-ch="19">19강</button><button class="chip sm" data-ch="20">20강</button></div></div>
+  <div class="card"><div class="lb">출제 범위</div>
+    <div class="chips" id="typ">
+      <button class="chip sm on" data-t="hw">표제어</button>
+      <button class="chip sm" data-t="der">파생어</button>
+      <button class="chip sm" data-t="idi">숙어</button>
+      <button class="chip sm" data-t="syn">유의어</button>
+      <button class="chip sm" data-t="ant">반의어</button>
+    </div></div>
+  <div id="err"></div>
+  <button class="btn" id="go">시작</button>
+  <div class="card mapwrap" style="margin-top:11px">
+    <div class="maphd"><span class="mt">진행 지도</span><span class="mp" id="mprog">0 / 20</span></div>
+    <div class="map" id="map"><div class="mc" title="1강 · 미클리어"><span class="cn">1</span></div><div class="mc" title="2강 · 미클리어"><span class="cn">2</span></div><div class="mc" title="3강 · 미클리어"><span class="cn">3</span></div><div class="mc" title="4강 · 미클리어"><span class="cn">4</span></div><div class="mc" title="5강 · 미클리어"><span class="cn">5</span></div><div class="mc" title="6강 · 미클리어"><span class="cn">6</span></div><div class="mc" title="7강 · 미클리어"><span class="cn">7</span></div><div class="mc" title="8강 · 미클리어"><span class="cn">8</span></div><div class="mc" title="9강 · 미클리어"><span class="cn">9</span></div><div class="mc" title="10강 · 미클리어"><span class="cn">10</span></div><div class="mc" title="11강 · 미클리어"><span class="cn">11</span></div><div class="mc" title="12강 · 미클리어"><span class="cn">12</span></div><div class="mc" title="13강 · 미클리어"><span class="cn">13</span></div><div class="mc" title="14강 · 미클리어"><span class="cn">14</span></div><div class="mc" title="15강 · 미클리어"><span class="cn">15</span></div><div class="mc" title="16강 · 미클리어"><span class="cn">16</span></div><div class="mc" title="17강 · 미클리어"><span class="cn">17</span></div><div class="mc" title="18강 · 미클리어"><span class="cn">18</span></div><div class="mc" title="19강 · 미클리어"><span class="cn">19</span></div><div class="mc" title="20강 · 미클리어"><span class="cn">20</span></div></div>
+    <div class="maphd" style="margin-top:11px"><span class="mt">도전과제</span>
+      <span class="mp" id="bprog">0 / 14</span></div>
+    <div class="badges" id="badges"><div class="bg1" title="첫 걸음 — 아무 모드나 클리어">🎯</div><div class="bg1" title="콤보 마스터 — 10콤보 달성">🔥</div><div class="bg1" title="시은 마스터 — 20콤보 달성">⚡</div><div class="bg1" title="무결점 — 한 번도 안 틀리고 클리어">💎</div><div class="bg1" title="S등급 — S등급 획득">⭐</div><div class="bg1" title="보스 사냥꾼 — 보스 1마리 처치">🗡️</div><div class="bg1" title="보스 학살자 — 보스 5마리 처치">⚔️</div><div class="bg1" title="보스 정복자 — 보스 20마리 전부 처치">👑</div><div class="bg1" title="어원 학자 — 어원 조합 클리어">🧩</div><div class="bg1" title="육관왕 — 6개 모드 전부 클리어">🎮</div><div class="bg1" title="5강 정복 — 5개 강 클리어">📗</div><div class="bg1" title="완전 정복 — 20강 전부 클리어">📚</div><div class="bg1" title="꾸준함 — 50판 플레이">🏃</div><div class="bg1" title="단어 사냥꾼 — 정답 500개">🧠</div></div>
+    <div class="rst2" id="lstat"><div><b>0</b>플레이</div><div><b>0</b>정답</div><div><b>0</b>최고콤보</div><div><b>0</b>보스</div></div>
+    <button class="wipe" id="wipe">기록 초기화</button>
+  </div>
+  <div class="brand">SIEUN ENGLISH · <b>시은영어학원</b></div>
+</div>
+
+<div class="scr" id="s_lvl">
+  <div class="hud"><button class="x" id="bk">←</button>
+    <div style="flex:1;text-align:center;font-size:13px;font-weight:800" id="lvinfo"></div>
+    <div style="width:32px"></div></div>
+  <div class="lvls">
+    <div class="lvl" data-l="1"><div class="ic">📝</div><div>
+      <div class="tt">1단계 · 5지선다</div>
+      <div class="ds">뜻 고르기 · 목숨 3 · 20문제</div></div>
+      <div class="best">최고<b id="b1">-</b></div></div>
+    <div class="lvl" data-l="2"><div class="ic">🌧️</div><div>
+      <div class="tt">2단계 · 낙하 단어</div>
+      <div class="ds">떨어지기 전에 뜻 터치 · 목숨 3</div></div>
+      <div class="best">최고<b id="b2">-</b></div></div>
+    <div class="lvl" data-l="3"><div class="ic">👹</div><div>
+      <div class="tt">3단계 · 보스전</div>
+      <div class="ds">60초 안에 보스 처치 · 크리티컬</div></div>
+      <div class="best">최고<b id="b3">-</b></div></div>
+    <div class="lvl" data-l="4"><div class="ic">🧩</div><div>
+      <div class="tt">4단계 · 어원 조합</div>
+      <div class="ds">조각을 순서대로 맞춰 단어 만들기</div></div>
+      <div class="best">최고<b id="b4">-</b></div></div>
+    <div class="lvl" data-l="5"><div class="ic">🔨</div><div>
+      <div class="tt">5단계 · 두더지</div>
+      <div class="ds">뜻에 맞는 단어만 때리기 · 목숨 3</div></div>
+      <div class="best">최고<b id="b5">-</b></div></div>
+    <div class="lvl" data-l="6"><div class="ic">💣</div><div>
+      <div class="tt">6단계 · 폭탄 해체</div>
+      <div class="ds">터지기 전에 뜻 고르기 · 동시 3개</div></div>
+      <div class="best">최고<b id="b6">-</b></div></div>
+    <div class="lvl" data-l="7"><div class="ic">🃏</div><div>
+      <div class="tt">7단계 · 짝 맞추기</div>
+      <div class="ds">단어와 뜻 카드 짝 찾기 · 8쌍</div></div>
+      <div class="best">최고<b id="b7">-</b></div></div>
+  </div>
+  <div class="brand">SIEUN ENGLISH · <b>시은영어학원</b></div>
+</div>
+
+<div class="scr" id="s_g1">
+  <div class="hud"><button class="x" onclick="quit()">✕</button>
+    <div class="st"><span class="hp" id="h1"></span></div>
+    <div class="st"><span class="cmb" id="c1"></span><span class="sc" id="p1">0</span></div></div>
+  <div class="tbar"><div class="tfill" id="t1" style="width:100%"></div></div>
+  <div class="q"><div class="w" id="q1"></div><div class="t" id="qt1"></div>
+    <div class="retry" id="rt1"></div></div>
+  <div class="opts" id="o1"></div>
+  <div style="text-align:center;color:var(--dim);font-size:11px;margin-top:9px" id="pr1"></div>
+</div>
+
+<div class="scr" id="s_g2">
+  <div class="hud"><button class="x" onclick="quit()">✕</button>
+    <div class="st"><span class="hp" id="h2"></span></div>
+    <div class="st"><span class="cmb" id="c2"></span><span class="sc" id="p2">0</span></div></div>
+  <div id="fall"><div class="gline"></div></div>
+  <div class="fopts" id="o2"></div>
+</div>
+
+<div class="scr" id="s_g3">
+  <div class="hud"><button class="x" onclick="quit()">✕</button>
+    <div class="st" style="color:var(--warn)">⏱ <span id="tm3">60</span></div>
+    <div class="st"><span class="cmb" id="c3"></span><span class="sc" id="p3">0</span></div></div>
+  <div class="boss">
+    <div class="bt"><span class="nm" id="bnm">👹 어휘 보스</span><span id="bhp">140 / 140</span></div>
+    <div class="bar"><div class="bfill" id="bf" style="width:100%"></div></div>
+    <div class="bface" id="bfc">👹</div>
+    <div class="mine"><div class="bt"><span style="color:var(--c1)">🛡 나</span>
+      <span id="mhp">100 / 100</span></div>
+      <div class="bar"><div class="mfill" id="mf" style="width:100%"></div></div></div>
+  </div>
+  <div class="q" style="padding:16px 12px"><div class="w l1" id="q3"></div>
+    <div class="t" id="qt3"></div></div>
+  <div class="opts" id="o3"></div>
+</div>
+
+<div class="scr" id="s_g4">
+  <div class="hud"><button class="x" onclick="quit()">✕</button>
+    <div class="st"><span class="hp" id="h4"></span></div>
+    <div class="st"><span class="cmb" id="c4"></span><span class="sc" id="p4">0</span></div></div>
+  <div class="ebar" id="eb4"></div>
+  <div class="etarget"><div class="em" id="q4"></div><div class="eh" id="qt4"></div></div>
+  <div class="eslots" id="sl4"></div>
+  <div class="epieces" id="pc4"></div>
+  <div id="rv4"></div>
+</div>
+
+<div class="scr" id="s_g5">
+  <div class="hud"><button class="x" onclick="quit()">✕</button>
+    <div class="st"><span class="hp" id="h5"></span></div>
+    <div class="st"><span class="cmb" id="c5"></span><span class="sc" id="p5">0</span></div></div>
+  <div class="mtarget"><div class="mm" id="q5"></div><div class="mh" id="qt5"></div></div>
+  <div id="holes"></div>
+</div>
+
+<div class="scr" id="s_g6">
+  <div class="hud"><button class="x" onclick="quit()">✕</button>
+    <div class="st"><span class="hp" id="h6"></span></div>
+    <div class="st"><span class="cmb" id="c6"></span><span class="sc" id="p6">0</span></div></div>
+  <div id="bombs"></div>
+  <div class="bhint" id="bh6">폭탄을 눌러 해체하세요</div>
+</div>
+
+<div class="scr" id="s_g7">
+  <div class="hud"><button class="x" onclick="quit()">✕</button>
+    <div class="st" style="color:var(--warn)">⏱ <span id="tm7">0</span></div>
+    <div class="st"><span class="cmb" id="c7"></span><span class="sc" id="p7">0</span></div></div>
+  <div class="mstat"><span>남은 짝 <b id="rest7">8</b></span><span>뒤집기 <b id="flip7">0</b></span></div>
+  <div id="cards"></div>
+</div>
+
+<div class="scr" id="s_res">
+  <div class="res">
+    <div id="nbadge"></div>
+    <div class="grade" id="grd">A</div>
+    <div class="rsc" id="rsc">0</div>
+    <div class="rl" id="rl"></div>
+    <div class="rst" id="rst"></div>
+    <div id="passbox"></div>
+    <div id="bdg"></div>
+    <div id="shot"></div>
+    <div class="mapwrap" style="margin-top:10px">
+      <div class="maphd"><span class="mt">진행 지도</span><span class="mp" id="mprog2">0 / 20</span></div>
+      <div class="map" id="map2"><div class="mc" title="1강 · 미클리어"><span class="cn">1</span></div><div class="mc" title="2강 · 미클리어"><span class="cn">2</span></div><div class="mc" title="3강 · 미클리어"><span class="cn">3</span></div><div class="mc" title="4강 · 미클리어"><span class="cn">4</span></div><div class="mc" title="5강 · 미클리어"><span class="cn">5</span></div><div class="mc" title="6강 · 미클리어"><span class="cn">6</span></div><div class="mc" title="7강 · 미클리어"><span class="cn">7</span></div><div class="mc" title="8강 · 미클리어"><span class="cn">8</span></div><div class="mc" title="9강 · 미클리어"><span class="cn">9</span></div><div class="mc" title="10강 · 미클리어"><span class="cn">10</span></div><div class="mc" title="11강 · 미클리어"><span class="cn">11</span></div><div class="mc" title="12강 · 미클리어"><span class="cn">12</span></div><div class="mc" title="13강 · 미클리어"><span class="cn">13</span></div><div class="mc" title="14강 · 미클리어"><span class="cn">14</span></div><div class="mc" title="15강 · 미클리어"><span class="cn">15</span></div><div class="mc" title="16강 · 미클리어"><span class="cn">16</span></div><div class="mc" title="17강 · 미클리어"><span class="cn">17</span></div><div class="mc" title="18강 · 미클리어"><span class="cn">18</span></div><div class="mc" title="19강 · 미클리어"><span class="cn">19</span></div><div class="mc" title="20강 · 미클리어"><span class="cn">20</span></div></div>
+    </div>
+    <div class="wrong" id="wrong"></div>
+  </div>
+  <div style="margin-top:auto">
+    <button class="btn" id="again" style="margin-bottom:7px">다시</button>
+    <button class="btn g" id="tolvl">단계 선택</button>
+    <div class="brand">SIEUN ENGLISH · <b>시은영어학원</b></div>
+  </div>
+</div>
+
+</div>
+<script>
+const DATA = [{"n":1,"hw":[{"w":"inspect","m":"검사하다, 점검하다","p":"동","a":["검사하다","점검하다","조사하다","살펴보다","면밀히 보다","검열하다"]},{"w":"respect","m":"존경하다, 존중하다","p":"동","a":["존경하다","존중하다","높이 여기다","공경하다","우러러보다"]},{"w":"expect","m":"기대하다, 예상하다","p":"동","a":["기대하다","예상하다","예측하다","바라다","기다리다"]},{"w":"prospect","m":"전망, 가망","p":"명","a":["전망","가망","예상","장래성","기대","가능성"]},{"w":"suspect","m":"의심하다, 수상히 여기다","p":"동","a":["의심하다","수상히 여기다","혐의를 두다","짐작하다","낌새채다"]},{"w":"spectator","m":"관중, 구경꾼","p":"명","a":["관중","구경꾼","관객","보는 사람","관람객"]},{"w":"suspicious","m":"의심스러운, 수상한","p":"형","a":["의심스러운","수상한","의심하는","미심쩍은","수상쩍은"]},{"w":"conspicuous","m":"눈에 잘 띄는, 두드러진","p":"형","a":["눈에 잘 띄는","눈에 띄는","두드러진","뚜렷한","현저한","눈에 띄게 드러나는"]},{"w":"despise","m":"경멸하다, 멸시하다","p":"동","a":["경멸하다","멸시하다","깔보다","업신여기다","얕보다","혐오하다"]},{"w":"special","m":"특별한","p":"형","a":["특별한","특수한","각별한","유별난","특별히 다른"]},{"w":"specific","m":"구체적인, 특정한","p":"형","a":["구체적인","특정한","명확한","분명한","특정의"]},{"w":"perspective","m":"관점, 시각, 원근법","p":"명","a":["관점","시각","견해","원근법","보는 눈","시점"]},{"w":"vision","m":"시력, 통찰력, 환상","p":"명","a":["시력","시각","통찰력","비전","환상","보는 능력","선견지명"]},{"w":"visible","m":"눈에 보이는, 명백한","p":"형","a":["눈에 보이는","보이는","보일 수 있는","명백한","뚜렷한"]},{"w":"visual","m":"시각의, 눈으로 보는","p":"형","a":["시각의","시각적인","눈으로 보는","보는","영상의"]},{"w":"evident","m":"명백한, 분명한","p":"형","a":["명백한","분명한","뚜렷한","확연한","명확한"]},{"w":"supervise","m":"감독하다, 관리하다","p":"동","a":["감독하다","관리하다","지도하다","감시하다","총괄하다","감독·관리하다"]},{"w":"review","m":"복습하다, 재검토하다","p":"동","a":["복습하다","재검토하다","검토하다","다시 보다","되짚어보다","평하다"]}],"der":[{"w":"inspection","m":"검사, 점검","p":"명"},{"w":"inspector","m":"검사관, 조사관","p":"명"},{"w":"respectful","m":"공손한, 정중한","p":"형"},{"w":"respectable","m":"존경할 만한","p":"형"},{"w":"expectation","m":"기대, 예상","p":"명"},{"w":"expected","m":"예상되는, 기대되는","p":"형"},{"w":"prospective","m":"장래의, 유망한","p":"형"},{"w":"suspicion","m":"의심, 혐의","p":"명"},{"w":"spectacle","m":"구경거리, 장관","p":"명"},{"w":"spectacular","m":"장관인, 멋진","p":"형"},{"w":"suspiciously","m":"수상쩍게","p":"부"},{"w":"conspicuously","m":"눈에 띄게","p":"부"},{"w":"despicable","m":"경멸스러운, 비열한","p":"형"},{"w":"specialize","m":"전문화하다","p":"동"},{"w":"specialist","m":"전문가","p":"명"},{"w":"especially","m":"특히","p":"부"},{"w":"specify","m":"구체적으로 명시하다","p":"동"},{"w":"specifically","m":"구체적으로, 특별히","p":"부"},{"w":"visionary","m":"선견지명이 있는","p":"형"},{"w":"envision","m":"마음속에 그리다","p":"동"},{"w":"visibility","m":"가시성, 시야","p":"명"},{"w":"visibly","m":"눈에 띄게","p":"부"},{"w":"visualize","m":"마음속에 그리다, 시각화하다","p":"동"},{"w":"visually","m":"시각적으로","p":"부"},{"w":"evidence","m":"증거","p":"명"},{"w":"evidently","m":"분명히","p":"부"},{"w":"supervisor","m":"감독관, 관리자","p":"명"},{"w":"supervision","m":"감독, 관리","p":"명"},{"w":"reviewer","m":"검토자, 평론가","p":"명"}],"syn":[{"w":"examine","m":"조사하다, 검토하다"},{"w":"scrutinize","m":"자세히 살피다"},{"w":"admire","m":"존경하다"},{"w":"honor","m":"공경하다"},{"w":"anticipate","m":"예상하다"},{"w":"await","m":"기다리다"},{"w":"outlook","m":"전망"},{"w":"possibility","m":"가능성"},{"w":"doubt","m":"의심하다"},{"w":"distrust","m":"불신하다"},{"w":"viewer","m":"보는 사람"},{"w":"onlooker","m":"구경꾼"},{"w":"doubtful","m":"의심스러운"},{"w":"questionable","m":"수상한"},{"w":"noticeable","m":"눈에 띄는"},{"w":"prominent","m":"두드러진"},{"w":"scorn","m":"멸시하다"},{"w":"disdain","m":"업신여기다"},{"w":"particular","m":"특별한, 특정한"},{"w":"unique","m":"독특한"},{"w":"precise","m":"정확한"},{"w":"viewpoint","m":"관점"},{"w":"standpoint","m":"견지"},{"w":"sight","m":"시력"},{"w":"insight","m":"통찰력"},{"w":"apparent","m":"명백한, 분명한"},{"w":"optical","m":"시각의, 광학의"},{"w":"obvious","m":"명백한"},{"w":"oversee","m":"감독하다"},{"w":"manage","m":"관리하다"},{"w":"reconsider","m":"재고하다"}],"ant":[{"w":"overlook","m":"간과하다"},{"w":"neglect","m":"소홀히 하다, 방치하다"},{"w":"despise","m":"경멸하다"},{"w":"scorn","m":"멸시하다"},{"w":"trust","m":"신뢰하다"},{"w":"believe","m":"믿다"},{"w":"participant","m":"참가자"},{"w":"player","m":"선수"},{"w":"trustworthy","m":"믿을 만한"},{"w":"inconspicuous","m":"눈에 안 띄는"},{"w":"hidden","m":"숨겨진"},{"w":"admire","m":"존경하다"},{"w":"respect","m":"존중하다"},{"w":"ordinary","m":"평범한"},{"w":"common","m":"흔한"},{"w":"general","m":"일반적인"},{"w":"vague","m":"막연한, 모호한"},{"w":"blindness","m":"실명, 눈이 멂"},{"w":"invisible","m":"보이지 않는"},{"w":"auditory","m":"청각의"},{"w":"obscure","m":"불분명한"}],"idi":[],"etym":[{"w":"inspect","m":"검사하다, 점검하다","pcs":[["in-","안을"],["spect","보다"]],"res":"검사하다"},{"w":"respect","m":"존경하다, 존중하다","pcs":[["re-","다시"],["spect","보다"]],"res":"존경하다"},{"w":"expect","m":"기대하다, 예상하다","pcs":[["ex-","밖을"],["(s)pect","보다"]],"res":"기대하다"},{"w":"prospect","m":"전망, 가망","pcs":[["pro-","앞으로"],["spect","보다"]],"res":"전망"},{"w":"suspect","m":"의심하다, 수상히 여기다","pcs":[["su(s)-","아래에서"],["spect","보다"]],"res":"의심하다"},{"w":"spectator","m":"관중, 구경꾼","pcs":[["spect","보다"],["-ator","사람"]],"res":"관중"},{"w":"suspicious","m":"의심스러운, 수상한","pcs":[["su(s)-","아래에서"],["spic","보다"],["-ous","형"]],"res":"수상한"},{"w":"conspicuous","m":"눈에 잘 띄는, 두드러진","pcs":[["con-","완전히"],["spic","보다"],["-ous","형"]],"res":"눈에 잘 띄는"},{"w":"despise","m":"경멸하다, 멸시하다","pcs":[["de-","아래로"],["spic","보다"]],"res":"경멸하다"},{"w":"special","m":"특별한","pcs":[["spec","보다"],["-ial","형"]],"res":"특별한"},{"w":"specific","m":"구체적인, 특정한","pcs":[["spec","보다"],["-fic","만드는"]],"res":"구체적인"},{"w":"perspective","m":"관점, 시각, 원근법","pcs":[["per-","통하여"],["spec","보다"],["-ive","것"]],"res":"관점"},{"w":"vision","m":"시력, 통찰력, 환상","pcs":[["vis","보다"],["-ion","것"]],"res":"시력 · 통찰력"},{"w":"visible","m":"눈에 보이는, 명백한","pcs":[["vis","보다"],["-ible","할 수 있는"]],"res":"눈에 보이는"},{"w":"visual","m":"시각의, 눈으로 보는","pcs":[["vis","보다"],["-ual","~의"]],"res":"시각의"},{"w":"evident","m":"명백한, 분명한","pcs":[["e-","밖으로"],["vid","보다"],["-ent","형"]],"res":"명백한"},{"w":"supervise","m":"감독하다, 관리하다","pcs":[["super-","위에서"],["vis","보다"]],"res":"감독하다"},{"w":"review","m":"복습하다, 재검토하다","pcs":[["re-","다시"],["view","보다"]],"res":"복습하다 · 재검토하다"}],"theme":"보다, 살피다 / 보다"},{"n":2,"hw":[{"w":"predict","m":"예측하다, 예언하다","p":"동","a":["예측하다","예언하다","예상하다","내다보다","전망하다"]},{"w":"dictate","m":"받아쓰게 하다, 명령하다","p":"동","a":["받아쓰게 하다","받아쓰다","구술하다","명령하다","지시하다","좌우하다"]},{"w":"dictionary","m":"사전","p":"명","a":["사전","사전책","낱말 사전"]},{"w":"contradict","m":"반박하다, 모순되다","p":"동","a":["반박하다","모순되다","부정하다","반대로 말하다","어긋나다"]},{"w":"indicate","m":"나타내다, 가리키다","p":"동","a":["나타내다","가리키다","보여주다","표시하다","암시하다"]},{"w":"dedicate","m":"바치다, 헌신하다","p":"동","a":["바치다","헌신하다","전념하다","기울이다","쏟다"]},{"w":"announce","m":"발표하다, 알리다","p":"동","a":["발표하다","알리다","공표하다","공지하다","선언하다"]},{"w":"pronounce","m":"발음하다, 선언하다","p":"동","a":["발음하다","선언하다","표명하다","단언하다","소리내어 말하다"]},{"w":"denounce","m":"비난하다, 고발하다","p":"동","a":["비난하다","고발하다","규탄하다","공공연히 비난하다","성토하다"]},{"w":"renounce","m":"포기하다, 단념하다","p":"동","a":["포기하다","단념하다","버리다","그만두다","(권리를) 포기하다"]},{"w":"vocabulary","m":"어휘, 단어","p":"명","a":["어휘","단어","용어","낱말","어휘력"]},{"w":"vocal","m":"목소리의, 거리낌 없이 말하는","p":"형","a":["목소리의","음성의","거리낌 없이 말하는","노골적으로 말하는","소리내어 표현하는"]},{"w":"advocate","m":"옹호하다, 지지하다","p":"동","a":["옹호하다","지지하다","주장하다","찬성하다","변호하다"]},{"w":"provoke","m":"유발하다, 화나게 하다","p":"동","a":["유발하다","화나게 하다","자극하다","도발하다","불러일으키다"]},{"w":"evoke","m":"불러일으키다, 환기하다","p":"동","a":["불러일으키다","환기하다","떠올리게 하다","자아내다","끌어내다"]},{"w":"vocation","m":"천직, 직업","p":"명","a":["천직","직업","소명","사명","적성에 맞는 일"]}],"der":[{"w":"prediction","m":"예측, 예언","p":"명"},{"w":"predictable","m":"예측 가능한","p":"형"},{"w":"dictation","m":"받아쓰기, 구술","p":"명"},{"w":"dictator","m":"독재자","p":"명"},{"w":"contradiction","m":"모순, 반박","p":"명"},{"w":"contradictory","m":"모순되는","p":"형"},{"w":"indication","m":"표시, 암시","p":"명"},{"w":"indicator","m":"지표, 표시기","p":"명"},{"w":"dedication","m":"헌신, 전념","p":"명"},{"w":"dedicated","m":"헌신적인","p":"형"},{"w":"announcement","m":"발표, 공지","p":"명"},{"w":"announcer","m":"아나운서, 진행자","p":"명"},{"w":"pronunciation","m":"발음","p":"명"},{"w":"denunciation","m":"비난, 규탄","p":"명"},{"w":"renunciation","m":"포기, 단념","p":"명"},{"w":"vocalist","m":"가수, 보컬리스트","p":"명"},{"w":"advocacy","m":"옹호, 지지","p":"명"},{"w":"provocation","m":"도발, 자극","p":"명"},{"w":"provocative","m":"도발적인, 자극적인","p":"형"},{"w":"evocative","m":"불러일으키는, 환기시키는","p":"형"},{"w":"vocational","m":"직업의, 직업 교육의","p":"형"}],"syn":[{"w":"forecast","m":"예보하다"},{"w":"foresee","m":"예견하다"},{"w":"command","m":"명령하다"},{"w":"order","m":"지시하다"},{"w":"lexicon","m":"어휘 사전, 어휘"},{"w":"deny","m":"부정하다"},{"w":"oppose","m":"반대하다"},{"w":"show","m":"보여주다"},{"w":"suggest","m":"암시하다"},{"w":"devote","m":"바치다"},{"w":"commit","m":"전념하다"},{"w":"declare","m":"선언하다"},{"w":"proclaim","m":"공표하다"},{"w":"utter","m":"말하다, 소리내다"},{"w":"articulate","m":"또렷이 발음하다"},{"w":"condemn","m":"규탄하다"},{"w":"criticize","m":"비판하다"},{"w":"abandon","m":"버리다"},{"w":"give up","m":"포기하다"},{"w":"wording","m":"용어 선택"},{"w":"outspoken","m":"거리낌 없는"},{"w":"support","m":"지지하다"},{"w":"promote","m":"장려하다"},{"w":"irritate","m":"짜증나게 하다"},{"w":"trigger","m":"유발하다"},{"w":"arouse","m":"불러일으키다"},{"w":"recall","m":"떠올리다"},{"w":"calling","m":"천직, 소명"},{"w":"career","m":"직업"}],"ant":[{"w":"obey","m":"복종하다"},{"w":"confirm","m":"확인하다"},{"w":"agree","m":"동의하다"},{"w":"neglect","m":"소홀히 하다"},{"w":"conceal","m":"숨기다"},{"w":"praise","m":"칭찬하다"},{"w":"applaud","m":"칭송하다"},{"w":"claim","m":"주장하다, 요구하다"},{"w":"silent","m":"조용한, 말없는"},{"w":"oppose","m":"반대하다"},{"w":"calm","m":"진정시키다"},{"w":"hobby","m":"취미"}],"idi":[{"w":"talk over","m":"~에 대해 의논하다"},{"w":"talk into","m":"설득하여 ~하게 하다"},{"w":"talk out of","m":"설득하여 ~을 그만두게 하다"},{"w":"speak up","m":"더 크게 말하다, 거리낌 없이 말하다"},{"w":"speak out","m":"공개적으로 의견을 말하다"},{"w":"tell apart","m":"구별하다"},{"w":"tell on","m":"고자질하다, 일러바치다"},{"w":"bring up","m":"(화제를) 꺼내다, 언급하다"},{"w":"point out","m":"지적하다, 가리키다"},{"w":"call for","m":"요구하다, 필요로 하다"},{"w":"call off","m":"취소하다"},{"w":"give voice to","m":"~을 말로 표현하다"}],"etym":[{"w":"predict","m":"예측하다, 예언하다","pcs":[["pre-","미리"],["dict","말하다"]],"res":"예측하다"},{"w":"dictate","m":"받아쓰게 하다, 명령하다","pcs":[["dict","말하다"],["-ate","동"]],"res":"받아쓰게 하다 · 명령하다"},{"w":"dictionary","m":"사전","pcs":[["dict","말하다"],["-ionary","것"]],"res":"사전"},{"w":"contradict","m":"반박하다, 모순되다","pcs":[["contra-","반대로"],["dict","말하다"]],"res":"반박하다 · 모순되다"},{"w":"indicate","m":"나타내다, 가리키다","pcs":[["in-","향하여"],["dic","말하다"],["-ate","동"]],"res":"가리키다 · 나타내다"},{"w":"dedicate","m":"바치다, 헌신하다","pcs":[["de-","완전히"],["dic","말하다"],["-ate","동"]],"res":"바치다 · 헌신하다"},{"w":"announce","m":"발표하다, 알리다","pcs":[["an-","~에게"],["nounce","전하다"]],"res":"발표하다"},{"w":"pronounce","m":"발음하다, 선언하다","pcs":[["pro-","앞으로·공개적으로"],["nounce","전하다"]],"res":"발음하다"},{"w":"denounce","m":"비난하다, 고발하다","pcs":[["de-","아래로"],["nounce","전하다"]],"res":"공개적으로 비난하다"},{"w":"renounce","m":"포기하다, 단념하다","pcs":[["re-","뒤로·되돌려"],["nounce","전하다"]],"res":"포기하다"},{"w":"vocabulary","m":"어휘, 단어","pcs":[["voc","부르다·목소리"],["-abulary","것"]],"res":"어휘"},{"w":"vocal","m":"목소리의, 거리낌 없이 말하는","pcs":[["voc","목소리"],["-al","형"]],"res":"거리낌 없이 말하는"},{"w":"advocate","m":"옹호하다, 지지하다","pcs":[["ad-","~쪽으로"],["voc","부르다"],["-ate","동"]],"res":"옹호하다"},{"w":"provoke","m":"유발하다, 화나게 하다","pcs":[["pro-","앞으로"],["vok","부르다"]],"res":"유발하다 · 도발하다"},{"w":"evoke","m":"불러일으키다, 환기하다","pcs":[["e-","밖으로"],["vok","부르다"]],"res":"(감정·기억을) 불러일으키다"},{"w":"vocation","m":"천직, 직업","pcs":[["voc","부르다"],["-ation","것"]],"res":"천직 · 소명"}],"theme":"말하다 / 알리다, 전하다 / 부르다, 목소리"},{"n":3,"hw":[{"w":"accept","m":"받아들이다, 수락하다","p":"동","a":["받아들이다","수락하다","수용하다","인정하다","받다"]},{"w":"receive","m":"받다, 받아들이다","p":"동","a":["받다","받아들이다","수령하다","수신하다","맞이하다"]},{"w":"capture","m":"붙잡다, 포착하다","p":"동","a":["붙잡다","포착하다","사로잡다","포획하다","담아내다"]},{"w":"concept","m":"개념, 생각","p":"명","a":["개념","생각","관념","발상","콘셉트"]},{"w":"except","m":"~을 제외하고","p":"전","a":["~을 제외하고","제외하고","~을 빼고","~외에는"]},{"w":"capable","m":"~할 수 있는, 유능한","p":"형","a":["~할 수 있는","할 수 있는","유능한","능력 있는","가능한"]},{"w":"position","m":"위치, 자리, 입장","p":"명","a":["위치","자리","입장","지위","자세","포지션"]},{"w":"compose","m":"구성하다, 작곡하다","p":"동","a":["구성하다","작곡하다","짜다","이루다","작문하다","구성되다"]},{"w":"propose","m":"제안하다, 청혼하다","p":"동","a":["제안하다","청혼하다","제의하다","내놓다","건의하다"]},{"w":"oppose","m":"반대하다, 맞서다","p":"동","a":["반대하다","맞서다","저항하다","대항하다","거스르다"]},{"w":"deposit","m":"예금하다, 두다","p":"동","a":["예금하다","두다","맡기다","쌓다","침전시키다","(돈을) 넣다"]},{"w":"expose","m":"드러내다, 노출시키다","p":"동","a":["드러내다","노출시키다","폭로하다","밝히다","접하게 하다"]},{"w":"contain","m":"포함하다, 담고 있다","p":"동","a":["포함하다","담고 있다","담다","들어 있다","함유하다","억제하다"]},{"w":"maintain","m":"유지하다, 지키다","p":"동","a":["유지하다","지키다","보존하다","지속하다","정비하다","주장하다"]},{"w":"obtain","m":"얻다, 획득하다","p":"동","a":["얻다","획득하다","구하다","입수하다","손에 넣다"]},{"w":"retain","m":"유지하다, 보유하다","p":"동","a":["유지하다","보유하다","간직하다","지니다","계속 가지다"]},{"w":"sustain","m":"지탱하다, 지속하다","p":"동","a":["지탱하다","지속하다","유지하다","떠받치다","버티다"]},{"w":"tend","m":"~하는 경향이 있다, 돌보다","p":"동","a":["경향이 있다","~하는 경향이 있다","돌보다","보살피다","기울다"]}],"der":[{"w":"acceptance","m":"수락, 받아들임","p":"명"},{"w":"acceptable","m":"받아들일 만한","p":"형"},{"w":"receipt","m":"영수증","p":"명"},{"w":"reception","m":"접수처, 환영회","p":"명"},{"w":"captive","m":"포로","p":"명"},{"w":"captivity","m":"감금, 억류","p":"명"},{"w":"conception","m":"구상, 이해","p":"명"},{"w":"conceptual","m":"개념의","p":"형"},{"w":"exception","m":"예외","p":"명"},{"w":"exceptional","m":"예외적인, 뛰어난","p":"형"},{"w":"capability","m":"능력, 역량","p":"명"},{"w":"capacity","m":"수용력, 능력","p":"명"},{"w":"composition","m":"구성, 작곡, 작문","p":"명"},{"w":"composer","m":"작곡가","p":"명"},{"w":"proposal","m":"제안, 청혼","p":"명"},{"w":"proposition","m":"제안, 명제","p":"명"},{"w":"opposition","m":"반대, 저항","p":"명"},{"w":"opposite","m":"반대의, 맞은편의","p":"형"},{"w":"exposure","m":"노출, 폭로","p":"명"},{"w":"container","m":"그릇, 용기","p":"명"},{"w":"content","m":"내용물","p":"명"},{"w":"maintenance","m":"유지, 정비","p":"명"},{"w":"obtainable","m":"얻을 수 있는","p":"형"},{"w":"retention","m":"보유, 유지","p":"명"},{"w":"sustainable","m":"지속 가능한","p":"형"},{"w":"tendency","m":"경향, 성향","p":"명"}],"syn":[{"w":"receive","m":"받다"},{"w":"admit","m":"인정하다"},{"w":"get","m":"받다"},{"w":"obtain","m":"얻다"},{"w":"catch","m":"붙잡다"},{"w":"seize","m":"포착하다"},{"w":"idea","m":"생각"},{"w":"notion","m":"관념"},{"w":"excluding","m":"~을 제외하고"},{"w":"able","m":"할 수 있는"},{"w":"competent","m":"유능한"},{"w":"location","m":"위치"},{"w":"spot","m":"지점"},{"w":"create","m":"만들다"},{"w":"form","m":"이루다"},{"w":"suggest","m":"제안하다"},{"w":"offer","m":"제의하다"},{"w":"resist","m":"저항하다"},{"w":"object","m":"반대하다"},{"w":"store","m":"보관하다"},{"w":"place","m":"두다"},{"w":"reveal","m":"드러내다"},{"w":"uncover","m":"밝히다"},{"w":"include","m":"포함하다"},{"w":"hold","m":"담다"},{"w":"preserve","m":"보존하다"},{"w":"sustain","m":"지속하다"},{"w":"acquire","m":"획득하다"},{"w":"gain","m":"얻다"},{"w":"keep","m":"간직하다"},{"w":"support","m":"떠받치다"},{"w":"maintain","m":"유지하다"},{"w":"incline","m":"~하는 경향이 있다"}],"ant":[{"w":"reject","m":"거절하다"},{"w":"refuse","m":"거부하다"},{"w":"send","m":"보내다"},{"w":"give","m":"주다"},{"w":"release","m":"풀어주다, 놓아주다"},{"w":"free","m":"놓아주다"},{"w":"including","m":"~을 포함하여"},{"w":"incapable","m":"할 수 없는"},{"w":"withdraw","m":"철회하다, 인출하다"},{"w":"support","m":"지지하다"},{"w":"agree","m":"동의하다"},{"w":"conceal","m":"숨기다"},{"w":"cover","m":"가리다"},{"w":"exclude","m":"제외하다"},{"w":"abandon","m":"버리다"},{"w":"lose","m":"잃다"}],"idi":[{"w":"hold on","m":"기다리다, 버티다"},{"w":"hold back","m":"참다, 저지하다"},{"w":"take over","m":"인수하다, 떠맡다"},{"w":"take on","m":"(일을) 맡다, 띠다"},{"w":"take up","m":"(취미·시간을) 차지하다, 시작하다"},{"w":"get hold of","m":"~을 손에 넣다, 연락이 닿다"},{"w":"get over","m":"극복하다, 회복하다"},{"w":"put off","m":"미루다, 연기하다"},{"w":"put up with","m":"참다, 견디다"},{"w":"put together","m":"조립하다, 만들다"},{"w":"keep up with","m":"~을 따라가다, 뒤지지 않다"},{"w":"make up","m":"구성하다, 지어내다, 화해하다"}],"etym":[{"w":"accept","m":"받아들이다, 수락하다","pcs":[["ac-","~쪽으로"],["cept","잡다"]],"res":"받아들이다"},{"w":"receive","m":"받다, 받아들이다","pcs":[["re-","뒤로"],["ceive","잡다"]],"res":"받다"},{"w":"capture","m":"붙잡다, 포착하다","pcs":[["cap","잡다"],["-ture","것·행위"]],"res":"붙잡다"},{"w":"concept","m":"개념, 생각","pcs":[["con-","함께"],["cept","잡다"]],"res":"개념"},{"w":"except","m":"~을 제외하고","pcs":[["ex-","밖으로"],["cept","잡다"]],"res":"~을 제외하고"},{"w":"capable","m":"~할 수 있는, 유능한","pcs":[["cap","잡다"],["-able","할 수 있는"]],"res":"유능한"},{"w":"position","m":"위치, 자리, 입장","pcs":[["pos","놓다"],["-ition","것"]],"res":"위치 · 자리"},{"w":"compose","m":"구성하다, 작곡하다","pcs":[["com-","함께"],["pos","놓다"]],"res":"구성하다"},{"w":"propose","m":"제안하다, 청혼하다","pcs":[["pro-","앞으로"],["pos","놓다"]],"res":"제안하다"},{"w":"oppose","m":"반대하다, 맞서다","pcs":[["op-","맞은편에"],["pos","놓다"]],"res":"반대하다"},{"w":"deposit","m":"예금하다, 두다","pcs":[["de-","아래로"],["posit","놓다"]],"res":"맡기다 · 예금하다"},{"w":"expose","m":"드러내다, 노출시키다","pcs":[["ex-","밖으로"],["pos","놓다"]],"res":"드러내다"},{"w":"contain","m":"포함하다, 담고 있다","pcs":[["con-","함께"],["tain","잡다"]],"res":"안에 담고 있다"},{"w":"maintain","m":"유지하다, 지키다","pcs":[["main-","손으로"],["tain","잡다"]],"res":"유지하다"},{"w":"obtain","m":"얻다, 획득하다","pcs":[["ob-","향하여"],["tain","잡다"]],"res":"얻다"},{"w":"retain","m":"유지하다, 보유하다","pcs":[["re-","뒤로·계속"],["tain","잡다"]],"res":"보유하다"},{"w":"sustain","m":"지탱하다, 지속하다","pcs":[["sus-","아래에서"],["tain","잡다"]],"res":"지탱하다"}],"theme":"잡다, 취하다 / 놓다, 두다 / 잡다, 유지하다"},{"n":4,"hw":[{"w":"produce","m":"생산하다, 만들어내다","p":"동","a":["생산하다","만들어내다","제작하다","산출하다","내놓다","야기하다"]},{"w":"reduce","m":"줄이다, 감소시키다","p":"동","a":["줄이다","감소시키다","낮추다","축소하다","절감하다"]},{"w":"introduce","m":"소개하다, 도입하다","p":"동","a":["소개하다","도입하다","들여오다","처음 선보이다","안내하다"]},{"w":"conduct","m":"수행하다, 지휘하다","p":"동","a":["수행하다","지휘하다","실시하다","행하다","이끌다","안내하다"]},{"w":"educate","m":"교육하다, 가르치다","p":"동","a":["교육하다","가르치다","양성하다","깨우치다","기르다"]},{"w":"induce","m":"유도하다, 설득하다","p":"동","a":["유도하다","설득하다","유발하다","이끌어내다","꾀다"]},{"w":"submit","m":"제출하다, 복종하다","p":"동","a":["제출하다","복종하다","내다","굴복하다","따르다"]},{"w":"admit","m":"인정하다, 입장을 허락하다","p":"동","a":["인정하다","시인하다","입장을 허락하다","받아들이다","들이다"]},{"w":"permit","m":"허락하다, 허용하다","p":"동","a":["허락하다","허용하다","용납하다","승인하다","가능하게 하다"]},{"w":"transmit","m":"전송하다, 전달하다","p":"동","a":["전송하다","전달하다","보내다","전하다","옮기다"]},{"w":"dismiss","m":"해고하다, 묵살하다","p":"동","a":["해고하다","묵살하다","내쫓다","해산시키다","일축하다","떨쳐버리다"]},{"w":"mission","m":"임무, 사명","p":"명","a":["임무","사명","사절단","선교","과제"]},{"w":"import","m":"수입하다, 들여오다","p":"동","a":["수입하다","들여오다","도입하다","반입하다"]},{"w":"export","m":"수출하다, 내보내다","p":"동","a":["수출하다","내보내다","반출하다"]},{"w":"transport","m":"운송하다, 수송하다","p":"동","a":["운송하다","수송하다","나르다","옮기다","운반하다"]},{"w":"support","m":"지지하다, 지탱하다","p":"동","a":["지지하다","지탱하다","받치다","후원하다","응원하다","부양하다"]},{"w":"portable","m":"휴대용의, 들고 다닐 수 있는","p":"형","a":["휴대용의","휴대용","들고 다닐 수 있는","이동식의","운반 가능한"]},{"w":"opportunity","m":"기회","p":"명","a":["기회","호기","좋은 때","찬스"]}],"der":[{"w":"production","m":"생산, 제작","p":"명"},{"w":"product","m":"제품, 산물","p":"명"},{"w":"reduction","m":"감소, 축소","p":"명"},{"w":"introduction","m":"소개, 도입","p":"명"},{"w":"conductor","m":"지휘자, 안내원","p":"명"},{"w":"conduct","m":"행동, 처신","p":"명"},{"w":"education","m":"교육","p":"명"},{"w":"educator","m":"교육자","p":"명"},{"w":"induction","m":"유도, 귀납","p":"명"},{"w":"submission","m":"제출, 복종","p":"명"},{"w":"admission","m":"입장, 인정","p":"명"},{"w":"permission","m":"허락, 허가","p":"명"},{"w":"transmission","m":"전송, 전달","p":"명"},{"w":"dismissal","m":"해고, 일축","p":"명"},{"w":"missionary","m":"선교사","p":"명"},{"w":"importation","m":"수입","p":"명"},{"w":"exportation","m":"수출","p":"명"},{"w":"transportation","m":"운송, 교통","p":"명"},{"w":"supporter","m":"지지자, 후원자","p":"명"},{"w":"supportive","m":"지지하는, 힘이 되는","p":"형"}],"syn":[{"w":"make","m":"만들다"},{"w":"create","m":"창조하다"},{"w":"decrease","m":"감소시키다"},{"w":"lower","m":"낮추다"},{"w":"present","m":"소개하다"},{"w":"bring in","m":"도입하다, 들여오다"},{"w":"carry out","m":"수행하다"},{"w":"direct","m":"지휘하다"},{"w":"teach","m":"가르치다"},{"w":"train","m":"훈련시키다"},{"w":"persuade","m":"설득하다"},{"w":"cause","m":"유발하다"},{"w":"hand in","m":"제출하다"},{"w":"yield","m":"굴복하다"},{"w":"confess","m":"시인하다"},{"w":"acknowledge","m":"인정하다"},{"w":"allow","m":"허용하다"},{"w":"let","m":"허락하다"},{"w":"send","m":"보내다"},{"w":"convey","m":"전달하다"},{"w":"fire","m":"해고하다"},{"w":"reject","m":"묵살하다"},{"w":"task","m":"임무"},{"w":"duty","m":"직무"},{"w":"send abroad","m":"해외로 보내다"},{"w":"carry","m":"나르다"},{"w":"move","m":"옮기다"},{"w":"back","m":"지지하다"},{"w":"sustain","m":"떠받치다"},{"w":"movable","m":"이동 가능한"},{"w":"chance","m":"기회"},{"w":"opening","m":"기회, 공석"}],"ant":[{"w":"consume","m":"소비하다"},{"w":"destroy","m":"파괴하다"},{"w":"increase","m":"늘리다"},{"w":"raise","m":"올리다"},{"w":"prevent","m":"막다"},{"w":"resist","m":"저항하다"},{"w":"deny","m":"부인하다"},{"w":"forbid","m":"금지하다"},{"w":"prohibit","m":"금하다"},{"w":"receive","m":"받다"},{"w":"hire","m":"고용하다"},{"w":"employ","m":"채용하다"},{"w":"export","m":"수출하다"},{"w":"import","m":"수입하다"},{"w":"oppose","m":"반대하다"},{"w":"fixed","m":"고정된"}],"idi":[],"etym":[{"w":"produce","m":"생산하다, 만들어내다","pcs":[["pro-","앞으로"],["duce","이끌다"]],"res":"만들어내다 · 생산하다"},{"w":"reduce","m":"줄이다, 감소시키다","pcs":[["re-","뒤로"],["duce","이끌다"]],"res":"줄이다"},{"w":"introduce","m":"소개하다, 도입하다","pcs":[["intro-","안으로"],["duce","이끌다"]],"res":"소개하다 · 도입하다"},{"w":"conduct","m":"수행하다, 지휘하다","pcs":[["con-","함께"],["duct","이끌다"]],"res":"지휘하다 · 수행하다"},{"w":"educate","m":"교육하다, 가르치다","pcs":[["e-","밖으로"],["duc","이끌다"],["-ate","동"]],"res":"교육하다"},{"w":"induce","m":"유도하다, 설득하다","pcs":[["in-","안으로"],["duce","이끌다"]],"res":"유도하다 · 설득하다"},{"w":"submit","m":"제출하다, 복종하다","pcs":[["sub-","아래로"],["mit","보내다"]],"res":"제출하다"},{"w":"admit","m":"인정하다, 입장을 허락하다","pcs":[["ad-","~쪽으로"],["mit","보내다"]],"res":"들이다 · 인정하다"},{"w":"permit","m":"허락하다, 허용하다","pcs":[["per-","통하여"],["mit","보내다"]],"res":"허락하다"},{"w":"transmit","m":"전송하다, 전달하다","pcs":[["trans-","가로질러"],["mit","보내다"]],"res":"전송하다"},{"w":"dismiss","m":"해고하다, 묵살하다","pcs":[["dis-","멀리"],["miss","보내다"]],"res":"해고하다 · 묵살하다"},{"w":"mission","m":"임무, 사명","pcs":[["miss","보내다"],["-ion","것"]],"res":"임무 · 사명"},{"w":"import","m":"수입하다, 들여오다","pcs":[["im-","안으로"],["port","나르다"]],"res":"수입하다"},{"w":"export","m":"수출하다, 내보내다","pcs":[["ex-","밖으로"],["port","나르다"]],"res":"수출하다"},{"w":"transport","m":"운송하다, 수송하다","pcs":[["trans-","가로질러"],["port","나르다"]],"res":"운송하다"},{"w":"support","m":"지지하다, 지탱하다","pcs":[["sup-","아래에서"],["port","나르다·받치다"]],"res":"지탱하다 · 지지하다"},{"w":"portable","m":"휴대용의, 들고 다닐 수 있는","pcs":[["port","나르다"],["-able","할 수 있는"]],"res":"휴대용의"},{"w":"opportunity","m":"기회","pcs":[["op-","~쪽으로"],["port","항구"],["-unity",""]],"res":"기회"}],"theme":"이끌다 / 보내다 / 나르다, 운반하다"},{"n":5,"hw":[{"w":"proceed","m":"나아가다, 계속하다","p":"동","a":["나아가다","계속하다","진행하다","진행되다","추진하다"]},{"w":"succeed","m":"성공하다, 뒤를 잇다","p":"동","a":["성공하다","뒤를 잇다","계승하다","잇따르다","후임이 되다"]},{"w":"exceed","m":"초과하다, 능가하다","p":"동","a":["초과하다","능가하다","넘다","넘어서다","뛰어넘다"]},{"w":"access","m":"접근, 이용 권한","p":"명","a":["접근","이용 권한","접속","출입","이용"]},{"w":"process","m":"과정, 절차","p":"명","a":["과정","절차","진행","공정","처리"]},{"w":"recede","m":"물러나다, 멀어지다","p":"동","a":["물러나다","멀어지다","후퇴하다","빠지다","줄어들다"]},{"w":"progress","m":"발전, 진보, 진행","p":"명","a":["발전","진보","진행","전진","향상"]},{"w":"aggressive","m":"공격적인, 적극적인","p":"형","a":["공격적인","적극적인","호전적인","공세적인","과감한"]},{"w":"gradual","m":"점진적인, 단계적인","p":"형","a":["점진적인","단계적인","서서히 일어나는","차츰차츰의","완만한"]},{"w":"graduate","m":"졸업하다","p":"동","a":["졸업하다","수료하다","학위를 받다"]},{"w":"grade","m":"등급, 학년, 성적","p":"명","a":["등급","학년","성적","단계","수준","점수"]},{"w":"ingredient","m":"재료, 성분, 요소","p":"명","a":["재료","성분","요소","구성 요소","원료"]},{"w":"prevent","m":"막다, 예방하다","p":"동","a":["막다","예방하다","방지하다","못하게 하다","저지하다"]},{"w":"invent","m":"발명하다, 지어내다","p":"동","a":["발명하다","지어내다","만들어내다","고안하다","창안하다"]},{"w":"event","m":"사건, 행사","p":"명","a":["사건","행사","일","이벤트","경기"]},{"w":"convenient","m":"편리한, 알맞은","p":"형","a":["편리한","알맞은","편한","간편한","형편에 맞는"]},{"w":"adventure","m":"모험","p":"명","a":["모험","모험심","신나는 경험","도전"]},{"w":"convention","m":"관습, 대회, 협약","p":"명","a":["관습","관례","대회","협약","총회","인습"]}],"der":[{"w":"procedure","m":"절차, 진행","p":"명"},{"w":"success","m":"성공","p":"명"},{"w":"successful","m":"성공적인","p":"형"},{"w":"succession","m":"연속, 계승","p":"명"},{"w":"excess","m":"초과, 과잉","p":"명"},{"w":"excessive","m":"지나친, 과도한","p":"형"},{"w":"accessible","m":"접근 가능한","p":"형"},{"w":"procession","m":"행렬","p":"명"},{"w":"recession","m":"경기 침체, 후퇴","p":"명"},{"w":"progressive","m":"진보적인, 점진적인","p":"형"},{"w":"aggression","m":"공격, 침략","p":"명"},{"w":"gradually","m":"점차, 서서히","p":"부"},{"w":"graduation","m":"졸업","p":"명"},{"w":"graduate","m":"졸업생","p":"명"},{"w":"upgrade","m":"등급을 올리다","p":"동"},{"w":"prevention","m":"예방, 방지","p":"명"},{"w":"invention","m":"발명, 발명품","p":"명"},{"w":"inventor","m":"발명가","p":"명"},{"w":"eventual","m":"궁극적인, 결국의","p":"형"},{"w":"eventually","m":"결국, 마침내","p":"부"},{"w":"convenience","m":"편리, 편의","p":"명"},{"w":"adventurous","m":"모험심 강한","p":"형"},{"w":"conventional","m":"관습적인, 전통적인","p":"형"}],"syn":[{"w":"continue","m":"계속하다"},{"w":"advance","m":"나아가다, 발전"},{"w":"achieve","m":"성취하다"},{"w":"follow","m":"뒤를 잇다"},{"w":"surpass","m":"능가하다"},{"w":"go beyond","m":"넘어서다"},{"w":"entry","m":"입장, 접근"},{"w":"entrance","m":"입구"},{"w":"procedure","m":"절차"},{"w":"method","m":"방법"},{"w":"withdraw","m":"물러나다"},{"w":"retreat","m":"후퇴하다"},{"w":"development","m":"발전"},{"w":"hostile","m":"적대적인"},{"w":"assertive","m":"적극적인"},{"w":"steady","m":"꾸준한"},{"w":"step-by-step","m":"단계적인"},{"w":"finish school","m":"학교를 마치다"},{"w":"level","m":"수준"},{"w":"rank","m":"등급"},{"w":"component","m":"구성 요소"},{"w":"element","m":"요소"},{"w":"block","m":"막다"},{"w":"avoid","m":"피하다"},{"w":"create","m":"만들다"},{"w":"devise","m":"고안하다"},{"w":"happening","m":"사건"},{"w":"occasion","m":"행사"},{"w":"handy","m":"편리한"},{"w":"suitable","m":"알맞은"},{"w":"quest","m":"모험, 탐구"},{"w":"custom","m":"관습"},{"w":"assembly","m":"집회"}],"ant":[{"w":"stop","m":"멈추다"},{"w":"retreat","m":"후퇴하다"},{"w":"fail","m":"실패하다"},{"w":"advance","m":"전진하다"},{"w":"approach","m":"다가가다"},{"w":"regress","m":"퇴보"},{"w":"decline","m":"쇠퇴"},{"w":"passive","m":"수동적인"},{"w":"peaceful","m":"평화로운"},{"w":"sudden","m":"갑작스러운"},{"w":"abrupt","m":"급작스러운"},{"w":"enroll","m":"입학하다"},{"w":"allow","m":"허용하다"},{"w":"cause","m":"야기하다"},{"w":"inconvenient","m":"불편한"}],"idi":[],"etym":[{"w":"proceed","m":"나아가다, 계속하다","pcs":[["pro-","앞으로"],["ceed","가다"]],"res":"나아가다 · 진행하다"},{"w":"succeed","m":"성공하다, 뒤를 잇다","pcs":[["suc-","아래에서 위로"],["ceed","가다"]],"res":"잇다"},{"w":"exceed","m":"초과하다, 능가하다","pcs":[["ex-","밖으로"],["ceed","가다"]],"res":"초과하다"},{"w":"access","m":"접근, 이용 권한","pcs":[["ac-","~쪽으로"],["cess","가다"]],"res":"접근"},{"w":"process","m":"과정, 절차","pcs":[["pro-","앞으로"],["cess","가다"]],"res":"과정"},{"w":"recede","m":"물러나다, 멀어지다","pcs":[["re-","뒤로"],["cede","가다"]],"res":"물러나다"},{"w":"progress","m":"발전, 진보, 진행","pcs":[["pro-","앞으로"],["gress","걷다"]],"res":"발전 · 진보"},{"w":"aggressive","m":"공격적인, 적극적인","pcs":[["ag-","~쪽으로"],["gress","걷다"],["-ive","형"]],"res":"공격적인"},{"w":"gradual","m":"점진적인, 단계적인","pcs":[["grad","걸음·단계"],["-ual","형"]],"res":"점진적인"},{"w":"graduate","m":"졸업하다","pcs":[["grad","걸음·단계"],["-uate","동"]],"res":"졸업하다"},{"w":"ingredient","m":"재료, 성분, 요소","pcs":[["in-","안으로"],["gred(i)","걷다"],["-ent","것"]],"res":"재료 · 성분"},{"w":"prevent","m":"막다, 예방하다","pcs":[["pre-","미리"],["vent","오다"]],"res":"예방하다"},{"w":"invent","m":"발명하다, 지어내다","pcs":[["in-","위에"],["vent","오다"]],"res":"발명하다"},{"w":"event","m":"사건, 행사","pcs":[["e-","밖으로"],["vent","오다"]],"res":"사건 · 행사"},{"w":"convenient","m":"편리한, 알맞은","pcs":[["con-","함께"],["ven","오다"],["-ient","형"]],"res":"알맞은 · 편리한"},{"w":"adventure","m":"모험","pcs":[["ad-","~쪽으로"],["vent","오다"],["-ure","것"]],"res":"모험"},{"w":"convention","m":"관습, 대회, 협약","pcs":[["con-","함께"],["vent","오다"],["-ion","것"]],"res":"대회 · (함께 정한) 관습"}],"theme":"가다, 물러나다 / 걷다, 나아가다, 단계 / 오다"},{"n":6,"hw":[{"w":"flexible","m":"유연한, 융통성 있는","p":"형","a":["유연한","융통성 있는","잘 휘는","탄력적인","신축성 있는"]},{"w":"reflect","m":"반사하다, 반영하다, 숙고하다","p":"동","a":["반사하다","반영하다","숙고하다","되비추다","곰곰이 생각하다","나타내다"]},{"w":"deflect","m":"비껴가게 하다, 방향을 바꾸다","p":"동","a":["비껴가게 하다","방향을 바꾸다","피하다","막다","딴 데로 돌리다"]},{"w":"inflexible","m":"융통성 없는, 완고한","p":"형","a":["융통성 없는","완고한","뻣뻣한","고집스러운","굽히지 않는"]},{"w":"reflex","m":"반사 작용, 반사 신경","p":"명","a":["반사 작용","반사 신경","반사","본능적 반응"]},{"w":"distort","m":"왜곡하다, 비틀다","p":"동","a":["왜곡하다","비틀다","찌그러뜨리다","곡해하다","일그러뜨리다"]},{"w":"torture","m":"고문, 심한 고통","p":"명","a":["고문","심한 고통","고통","괴롭힘"]},{"w":"retort","m":"받아치다, 응수하다","p":"동","a":["받아치다","응수하다","되받아치다","쏘아붙이다","반박하다"]},{"w":"extort","m":"강탈하다, 갈취하다","p":"동","a":["강탈하다","갈취하다","뜯어내다","강요하여 빼앗다","착취하다"]},{"w":"tortuous","m":"구불구불한, 복잡한","p":"형","a":["구불구불한","복잡한","꼬불꼬불한","우회하는","에두르는"]},{"w":"convert","m":"전환하다, 바꾸다","p":"동","a":["전환하다","바꾸다","개종시키다","변환하다","전향시키다"]},{"w":"reverse","m":"뒤바꾸다, 거꾸로 하다","p":"동","a":["뒤바꾸다","거꾸로 하다","반전시키다","뒤집다","후진하다"]},{"w":"advertise","m":"광고하다, 알리다","p":"동","a":["광고하다","알리다","선전하다","홍보하다"]},{"w":"version","m":"버전, 판, (개인의) 설명","p":"명","a":["버전","판","형태","설명","이형"]},{"w":"diverse","m":"다양한, 가지각색의","p":"형","a":["다양한","가지각색의","여러 가지의","각양각색의","상이한"]},{"w":"anniversary","m":"기념일","p":"명","a":["기념일","주년","기념일 행사"]},{"w":"controversy","m":"논란, 논쟁","p":"명","a":["논란","논쟁","분쟁","쟁점","말썽"]},{"w":"vertical","m":"수직의, 세로의","p":"형","a":["수직의","세로의","수직","곧추선"]}],"der":[{"w":"flexibility","m":"유연성, 융통성","p":"명"},{"w":"reflection","m":"반사, 반영, 숙고","p":"명"},{"w":"distortion","m":"왜곡, 일그러짐","p":"명"},{"w":"torturous","m":"고통스러운","p":"형"},{"w":"extortion","m":"강탈, 갈취","p":"명"},{"w":"conversion","m":"전환, 개조","p":"명"},{"w":"reversal","m":"반전, 역전","p":"명"},{"w":"reversible","m":"되돌릴 수 있는","p":"형"},{"w":"advertisement","m":"광고","p":"명"},{"w":"diversity","m":"다양성","p":"명"},{"w":"diversify","m":"다양화하다","p":"동"},{"w":"controversial","m":"논란이 많은","p":"형"}],"syn":[{"w":"adaptable","m":"적응력 있는"},{"w":"elastic","m":"탄력 있는"},{"w":"mirror","m":"비추다, 반영하다"},{"w":"ponder","m":"숙고하다"},{"w":"divert","m":"방향을 돌리다"},{"w":"turn aside","m":"비껴가게 하다"},{"w":"rigid","m":"완고한"},{"w":"stubborn","m":"고집스러운"},{"w":"instinct","m":"본능"},{"w":"twist","m":"비틀다"},{"w":"misrepresent","m":"잘못 전하다"},{"w":"agony","m":"극심한 고통"},{"w":"reply","m":"응답하다"},{"w":"snap back","m":"쏘아붙이다"},{"w":"blackmail","m":"협박하여 뜯어내다"},{"w":"winding","m":"구불구불한"},{"w":"complicated","m":"복잡한"},{"w":"transform","m":"변형시키다"},{"w":"change","m":"바꾸다"},{"w":"overturn","m":"뒤집다"},{"w":"promote","m":"홍보하다"},{"w":"publicize","m":"선전하다"},{"w":"edition","m":"판"},{"w":"form","m":"형태"},{"w":"varied","m":"다양한"},{"w":"various","m":"여러 가지의"},{"w":"dispute","m":"논쟁"},{"w":"debate","m":"논란"},{"w":"upright","m":"수직의, 똑바른"}],"ant":[{"w":"rigid","m":"뻣뻣한"},{"w":"stiff","m":"경직된"},{"w":"flexible","m":"유연한"},{"w":"comfort","m":"위안"},{"w":"straight","m":"곧은"},{"w":"uniform","m":"획일적인"},{"w":"identical","m":"동일한"},{"w":"agreement","m":"합의"},{"w":"horizontal","m":"수평의"}],"idi":[],"etym":[{"w":"flexible","m":"유연한, 융통성 있는","pcs":[["flex","구부리다"],["-ible","할 수 있는"]],"res":"유연한"},{"w":"reflect","m":"반사하다, 반영하다, 숙고하다","pcs":[["re-","뒤로"],["flect","구부리다"]],"res":"반사하다 · 반영하다"},{"w":"deflect","m":"비껴가게 하다, 방향을 바꾸다","pcs":[["de-","딴 데로"],["flect","구부리다"]],"res":"비껴가게 하다"},{"w":"inflexible","m":"융통성 없는, 완고한","pcs":[["in-","아닌"],["flex","구부리다"],["-ible","할 수 있는"]],"res":"융통성 없는"},{"w":"reflex","m":"반사 작용, 반사 신경","pcs":[["re-","뒤로"],["flex","구부리다"]],"res":"반사 작용"},{"w":"distort","m":"왜곡하다, 비틀다","pcs":[["dis-","따로따로"],["tort","비틀다"]],"res":"왜곡하다"},{"w":"torture","m":"고문, 심한 고통","pcs":[["tort","비틀다"],["-ure","것"]],"res":"고문"},{"w":"retort","m":"받아치다, 응수하다","pcs":[["re-","되받아"],["tort","비틀다"]],"res":"응수하다"},{"w":"extort","m":"강탈하다, 갈취하다","pcs":[["ex-","밖으로"],["tort","비틀다"]],"res":"갈취하다"},{"w":"tortuous","m":"구불구불한, 복잡한","pcs":[["tort","비틀다"],["-uous","형"]],"res":"구불구불한"},{"w":"convert","m":"전환하다, 바꾸다","pcs":[["con-","완전히"],["vert","돌다"]],"res":"바꾸다 · 전환하다"},{"w":"reverse","m":"뒤바꾸다, 거꾸로 하다","pcs":[["re-","뒤로"],["vers","돌다"]],"res":"거꾸로 하다 · 뒤바꾸다"},{"w":"advertise","m":"광고하다, 알리다","pcs":[["ad-","~쪽으로"],["vert","돌리다"]],"res":"광고하다"},{"w":"version","m":"버전, 판, (개인의) 설명","pcs":[["vers","돌다"],["-ion","것"]],"res":"버전 · 판"},{"w":"diverse","m":"다양한, 가지각색의","pcs":[["di-","여러 방향으로"],["vers","돌다"]],"res":"다양한"},{"w":"anniversary","m":"기념일","pcs":[["anni","해"],["vers","돌다"],["-ary","것"]],"res":"기념일"},{"w":"controversy","m":"논란, 논쟁","pcs":[["contro-","반대로"],["vers","돌다"],["-y","것"]],"res":"논란"},{"w":"vertical","m":"수직의, 세로의","pcs":[["vert","돌다·향하다"],["-ical","형"]],"res":"수직의"}],"theme":"구부리다, 휘다 / 비틀다 / 돌다, 향하다"},{"n":7,"hw":[{"w":"action","m":"행동, 활동, 조치","p":"명","a":["행동","활동","조치","동작","작용"]},{"w":"react","m":"반응하다, 대응하다","p":"동","a":["반응하다","대응하다","반작용하다","맞서다"]},{"w":"agency","m":"대리점, 기관","p":"명","a":["대리점","기관","대행사","단체","청"]},{"w":"exact","m":"정확한, 정밀한","p":"형","a":["정확한","정밀한","꼭 맞는","엄밀한","딱 맞는"]},{"w":"agenda","m":"의제, 안건","p":"명","a":["의제","안건","의사일정","할 일 목록","처리할 일"]},{"w":"navigate","m":"길을 찾다, 항해하다","p":"동","a":["길을 찾다","항해하다","운항하다","조종하다","헤쳐 나가다"]},{"w":"factory","m":"공장","p":"명","a":["공장","제조소","제작소"]},{"w":"manufacture","m":"제조하다, 대량 생산하다","p":"동","a":["제조하다","대량 생산하다","생산하다","만들다"]},{"w":"effect","m":"효과, 영향, 결과","p":"명","a":["효과","영향","결과","효력","작용"]},{"w":"affect","m":"영향을 미치다","p":"동","a":["영향을 미치다","영향을 주다","작용하다","악영향을 주다","감동시키다"]},{"w":"artificial","m":"인공의, 인위적인","p":"형","a":["인공의","인위적인","가짜의","꾸며낸","조작된"]},{"w":"sufficient","m":"충분한","p":"형","a":["충분한","넉넉한","족한","충분히 있는"]},{"w":"construct","m":"건설하다, 구성하다","p":"동","a":["건설하다","구성하다","짓다","세우다","만들다","축조하다"]},{"w":"destruction","m":"파괴, 파멸","p":"명","a":["파괴","파멸","붕괴","말살"]},{"w":"instruct","m":"가르치다, 지시하다","p":"동","a":["가르치다","지시하다","교육하다","알려주다","명령하다"]},{"w":"structure","m":"구조, 구조물","p":"명","a":["구조","구조물","건축물","체계","짜임새"]},{"w":"obstruct","m":"막다, 방해하다","p":"동","a":["막다","방해하다","차단하다","가로막다","지장을 주다"]},{"w":"instrument","m":"도구, 악기","p":"명","a":["도구","악기","기구","수단","기계"]}],"der":[{"w":"active","m":"활동적인","p":"형"},{"w":"activity","m":"활동","p":"명"},{"w":"reaction","m":"반응, 반작용","p":"명"},{"w":"reactive","m":"반응하는","p":"형"},{"w":"agent","m":"대리인, 요원","p":"명"},{"w":"exactly","m":"정확히","p":"부"},{"w":"navigation","m":"항해, 길찾기","p":"명"},{"w":"manufacturer","m":"제조업체, 생산자","p":"명"},{"w":"effective","m":"효과적인","p":"형"},{"w":"effectively","m":"효과적으로","p":"부"},{"w":"sufficiency","m":"충분함","p":"명"},{"w":"insufficient","m":"불충분한","p":"형"},{"w":"construction","m":"건설, 공사","p":"명"},{"w":"destructive","m":"파괴적인","p":"형"},{"w":"instruction","m":"지시, 설명, 교육","p":"명"},{"w":"instructor","m":"강사, 지도자","p":"명"},{"w":"structural","m":"구조의, 구조상의","p":"형"},{"w":"obstruction","m":"방해, 장애물","p":"명"},{"w":"instrumental","m":"도움이 되는, 악기의","p":"형"}],"syn":[{"w":"act","m":"행동"},{"w":"deed","m":"행위"},{"w":"respond","m":"반응하다"},{"w":"bureau","m":"사무국"},{"w":"office","m":"사무소"},{"w":"precise","m":"정밀한"},{"w":"accurate","m":"정확한"},{"w":"schedule","m":"일정"},{"w":"plan","m":"계획"},{"w":"steer","m":"조종하다"},{"w":"plant","m":"공장"},{"w":"mill","m":"제조소"},{"w":"produce","m":"생산하다"},{"w":"make","m":"만들다"},{"w":"result","m":"결과"},{"w":"influence","m":"영향, 영향을 주다"},{"w":"impact","m":"영향을 주다"},{"w":"synthetic","m":"합성의"},{"w":"man-made","m":"인공의"},{"w":"enough","m":"충분한"},{"w":"adequate","m":"충분한"},{"w":"build","m":"짓다"},{"w":"erect","m":"세우다"},{"w":"ruin","m":"파괴"},{"w":"demolition","m":"철거"},{"w":"teach","m":"가르치다"},{"w":"direct","m":"지시하다"},{"w":"framework","m":"뼈대, 틀"},{"w":"system","m":"체계"},{"w":"block","m":"막다"},{"w":"hinder","m":"방해하다"},{"w":"tool","m":"도구"},{"w":"device","m":"기구"}],"ant":[{"w":"inaction","m":"무행동"},{"w":"approximate","m":"대략의"},{"w":"cause","m":"원인"},{"w":"natural","m":"자연의"},{"w":"real","m":"진짜의"},{"w":"insufficient","m":"불충분한"},{"w":"scarce","m":"부족한"},{"w":"destroy","m":"파괴하다"},{"w":"demolish","m":"허물다"},{"w":"construction","m":"건설"},{"w":"creation","m":"창조"},{"w":"clear","m":"치우다"},{"w":"assist","m":"돕다"}],"idi":[],"etym":[{"w":"action","m":"행동, 활동, 조치","pcs":[["act","행하다"],["-ion","것"]],"res":"행동"},{"w":"react","m":"반응하다, 대응하다","pcs":[["re-","되받아"],["act","행하다"]],"res":"반응하다"},{"w":"agency","m":"대리점, 기관","pcs":[["ag","행하다"],["-ency","것"]],"res":"대리점 · 기관"},{"w":"exact","m":"정확한, 정밀한","pcs":[["ex-","밖으로"],["act","몰다"]],"res":"정확한"},{"w":"agenda","m":"의제, 안건","pcs":[["ag","행하다"],["-enda","되어야 할 것들"]],"res":"의제 · 안건"},{"w":"navigate","m":"길을 찾다, 항해하다","pcs":[["nav","배"],["ig","몰다"],["-ate","동"]],"res":"항해하다 · 길을 찾다"},{"w":"factory","m":"공장","pcs":[["fact","만들다"],["-ory","장소"]],"res":"공장"},{"w":"manufacture","m":"제조하다, 대량 생산하다","pcs":[["manu","손"],["fact","만들다"],["-ure",""]],"res":"제조하다"},{"w":"effect","m":"효과, 영향, 결과","pcs":[["ef-","밖으로"],["fect","만들다"]],"res":"결과 · 효과"},{"w":"affect","m":"영향을 미치다","pcs":[["af-","~쪽으로"],["fect","만들다·하다"]],"res":"영향을 미치다"},{"w":"artificial","m":"인공의, 인위적인","pcs":[["arti","기술"],["fic","만들다"],["-ial","형"]],"res":"인공의"},{"w":"sufficient","m":"충분한","pcs":[["suf-","아래에서 받쳐"],["fic","만들다"],["-ient","형"]],"res":"충분한"},{"w":"construct","m":"건설하다, 구성하다","pcs":[["con-","함께"],["struct","세우다"]],"res":"건설하다"},{"w":"destruction","m":"파괴, 파멸","pcs":[["de-","아래로·반대로"],["struct","세우다"],["-ion",""]],"res":"파괴"},{"w":"instruct","m":"가르치다, 지시하다","pcs":[["in-","안에"],["struct","세우다"]],"res":"가르치다"},{"w":"structure","m":"구조, 구조물","pcs":[["struct","세우다"],["-ure","것"]],"res":"구조 · 구조물"},{"w":"obstruct","m":"막다, 방해하다","pcs":[["ob-","맞은편에"],["struct","세우다"]],"res":"가로막다"},{"w":"instrument","m":"도구, 악기","pcs":[["in-","안에"],["stru","세우다"],["-ment","것"]],"res":"도구"}],"theme":"행하다, 몰다 / 만들다, 하다 / 세우다, 짓다"},{"n":8,"hw":[{"w":"photograph","m":"사진","p":"명","a":["사진","사진 한 장"]},{"w":"autograph","m":"(유명인의) 사인, 친필 서명","p":"명","a":["사인","친필 서명","자필 서명","서명"]},{"w":"graphic","m":"생생한, 도표의, 그래픽의","p":"형","a":["생생한","도표의","그래픽의","그림의","사실적인"]},{"w":"grammar","m":"문법","p":"명","a":["문법","어법"]},{"w":"diagram","m":"도표, 도해","p":"명","a":["도표","도해","도식","그림","다이어그램"]},{"w":"paragraph","m":"단락, 문단","p":"명","a":["단락","문단","절"]},{"w":"collect","m":"모으다, 수집하다","p":"동","a":["모으다","수집하다","거두다","징수하다","채집하다"]},{"w":"select","m":"선택하다, 고르다","p":"동","a":["선택하다","고르다","선발하다","선정하다","뽑다"]},{"w":"elect","m":"선출하다, 뽑다","p":"동","a":["선출하다","뽑다","선거하다","선임하다","택하다"]},{"w":"lecture","m":"강의, 강연","p":"명","a":["강의","강연","설교","잔소리","훈계"]},{"w":"intelligent","m":"똑똑한, 지적인","p":"형","a":["똑똑한","지적인","총명한","영리한","지능적인"]},{"w":"legend","m":"전설, 전설적인 인물","p":"명","a":["전설","전설적인 인물","신화","위인"]},{"w":"describe","m":"묘사하다, 서술하다","p":"동","a":["묘사하다","서술하다","설명하다","그리다","기술하다"]},{"w":"prescribe","m":"처방하다, 규정하다","p":"동","a":["처방하다","규정하다","지시하다","명하다"]},{"w":"subscribe","m":"구독하다, 가입하다","p":"동","a":["구독하다","가입하다","신청하다","서명하다","동의하다"]},{"w":"script","m":"대본, 원고, 글씨체","p":"명","a":["대본","원고","글씨체","각본","스크립트"]},{"w":"manuscript","m":"원고, 필사본","p":"명","a":["원고","필사본","수기 원고","손으로 쓴 글"]},{"w":"inscribe","m":"새기다, (이름을) 써넣다","p":"동","a":["새기다","써넣다","적어 넣다","조각하다","기입하다"]}],"der":[{"w":"photographer","m":"사진작가","p":"명"},{"w":"photography","m":"사진술","p":"명"},{"w":"graphics","m":"그래픽, 도표","p":"명"},{"w":"grammatical","m":"문법의, 문법적인","p":"형"},{"w":"collection","m":"수집, 소장품","p":"명"},{"w":"collector","m":"수집가","p":"명"},{"w":"selection","m":"선택, 선발","p":"명"},{"w":"selective","m":"선별적인","p":"형"},{"w":"election","m":"선거","p":"명"},{"w":"lecturer","m":"강사","p":"명"},{"w":"intelligence","m":"지능, 지성","p":"명"},{"w":"legendary","m":"전설적인","p":"형"},{"w":"description","m":"묘사, 서술","p":"명"},{"w":"descriptive","m":"묘사하는, 서술적인","p":"형"},{"w":"prescription","m":"처방전, 처방","p":"명"},{"w":"subscription","m":"구독, 가입","p":"명"},{"w":"subscriber","m":"구독자, 가입자","p":"명"},{"w":"inscription","m":"비문, 새겨진 글","p":"명"}],"syn":[{"w":"picture","m":"사진, 그림"},{"w":"photo","m":"사진"},{"w":"signature","m":"서명"},{"w":"vivid","m":"생생한"},{"w":"chart","m":"도표"},{"w":"figure","m":"도해"},{"w":"passage","m":"구절"},{"w":"gather","m":"모으다"},{"w":"accumulate","m":"축적하다"},{"w":"choose","m":"고르다, 택하다"},{"w":"pick","m":"뽑다"},{"w":"vote for","m":"투표로 뽑다"},{"w":"talk","m":"강연"},{"w":"speech","m":"연설"},{"w":"smart","m":"똑똑한"},{"w":"clever","m":"영리한"},{"w":"myth","m":"신화"},{"w":"depict","m":"묘사하다"},{"w":"portray","m":"그리다"},{"w":"order","m":"지시하다"},{"w":"sign up","m":"가입하다"},{"w":"screenplay","m":"각본"},{"w":"text","m":"원고"},{"w":"document","m":"문서"},{"w":"engrave","m":"새기다"},{"w":"carve","m":"조각하다"}],"ant":[{"w":"vague","m":"흐릿한"},{"w":"scatter","m":"흩뜨리다"},{"w":"distribute","m":"나눠주다"},{"w":"reject","m":"거부하다"},{"w":"stupid","m":"어리석은"},{"w":"foolish","m":"어리석은"},{"w":"unsubscribe","m":"구독을 취소하다"}],"idi":[{"w":"write down","m":"받아 적다, 기록하다"},{"w":"fill out","m":"(서식을) 작성하다"},{"w":"fill in","m":"(빈칸을) 채우다, 알려주다"},{"w":"read through","m":"끝까지 읽다, 통독하다"},{"w":"look up","m":"(사전·정보를) 찾아보다"},{"w":"look over","m":"훑어보다, 검토하다"},{"w":"go over","m":"검토하다, 복습하다"},{"w":"take notes","m":"필기하다, 메모하다"},{"w":"jot down","m":"급히 적다, 메모하다"},{"w":"pick out","m":"골라내다, 알아보다"},{"w":"sort out","m":"분류하다, 해결하다"},{"w":"sign up for","m":"~을 신청하다, 등록하다"}],"etym":[{"w":"photograph","m":"사진","pcs":[["photo","빛"],["graph","그리다"]],"res":"사진"},{"w":"autograph","m":"(유명인의) 사인, 친필 서명","pcs":[["auto","스스로"],["graph","쓰다"]],"res":"친필 서명"},{"w":"graphic","m":"생생한, 도표의, 그래픽의","pcs":[["graph","그리다"],["-ic","형"]],"res":"생생한 · 도표의"},{"w":"grammar","m":"문법","pcs":[["gram","글자"],["-mar",""]],"res":"문법"},{"w":"diagram","m":"도표, 도해","pcs":[["dia-","가로질러"],["gram","쓰다·그리다"]],"res":"도표"},{"w":"paragraph","m":"단락, 문단","pcs":[["para-","옆에"],["graph","쓰다"]],"res":"단락"},{"w":"collect","m":"모으다, 수집하다","pcs":[["col-","함께"],["lect","모으다"]],"res":"수집하다"},{"w":"select","m":"선택하다, 고르다","pcs":[["se-","따로"],["lect","고르다"]],"res":"선택하다"},{"w":"elect","m":"선출하다, 뽑다","pcs":[["e-","밖으로"],["lect","고르다"]],"res":"선출하다"},{"w":"lecture","m":"강의, 강연","pcs":[["lect","읽다"],["-ure","것"]],"res":"강의"},{"w":"intelligent","m":"똑똑한, 지적인","pcs":[["intel-","사이에서"],["lig","고르다"],["-ent","형"]],"res":"똑똑한"},{"w":"legend","m":"전설, 전설적인 인물","pcs":[["leg","읽다"],["-end","되어야 할 것"]],"res":"전설"},{"w":"describe","m":"묘사하다, 서술하다","pcs":[["de-","아래로·자세히"],["scribe","쓰다"]],"res":"묘사하다"},{"w":"prescribe","m":"처방하다, 규정하다","pcs":[["pre-","미리"],["scribe","쓰다"]],"res":"처방하다"},{"w":"subscribe","m":"구독하다, 가입하다","pcs":[["sub-","아래에"],["scribe","쓰다"]],"res":"구독·가입 신청하다"},{"w":"manuscript","m":"원고, 필사본","pcs":[["manu","손"],["script","쓴 것"]],"res":"원고 · 필사본"},{"w":"inscribe","m":"새기다, (이름을) 써넣다","pcs":[["in-","안에·위에"],["scribe","쓰다"]],"res":"새기다"}],"theme":"쓰다, 그리다 / 읽다, 고르다, 모으다 / 쓰다"},{"n":9,"hw":[{"w":"credit","m":"신용, 신뢰, 인정","p":"명","a":["신용","신뢰","인정","공로","외상","학점"]},{"w":"incredible","m":"믿을 수 없는, 놀라운","p":"형","a":["믿을 수 없는","놀라운","엄청난","굉장한","믿기 힘든"]},{"w":"credible","m":"믿을 만한, 신뢰할 수 있는","p":"형","a":["믿을 만한","신뢰할 수 있는","믿음직한","그럴듯한"]},{"w":"creditor","m":"채권자, 빚을 준 사람","p":"명","a":["채권자","빚을 준 사람","대여자"]},{"w":"creed","m":"신조, 신념","p":"명","a":["신조","신념","교리","믿는 바"]},{"w":"discredit","m":"신뢰를 떨어뜨리다, 불신하다","p":"동","a":["신뢰를 떨어뜨리다","불신하다","의심하다","믿지 않다","평판을 깎다"]},{"w":"sympathy","m":"동정, 연민, 공감","p":"명","a":["동정","연민","공감","위로","측은히 여김"]},{"w":"empathy","m":"감정 이입, 공감","p":"명","a":["감정 이입","공감","역지사지","심정 이해"]},{"w":"apathy","m":"무관심, 냉담","p":"명","a":["무관심","냉담","무감각","무기력"]},{"w":"pathetic","m":"측은한, 한심한","p":"형","a":["측은한","한심한","딱한","가련한","애처로운"]},{"w":"passion","m":"열정, 격정","p":"명","a":["열정","격정","열망","정열","강한 감정"]},{"w":"patient","m":"참을성 있는, 인내심 있는","p":"형","a":["참을성 있는","인내심 있는","끈기 있는","참고 견디는"]},{"w":"sense","m":"감각, 느낌, 의미","p":"명","a":["감각","느낌","의미","분별력","지각","센스"]},{"w":"sensitive","m":"민감한, 섬세한","p":"형","a":["민감한","섬세한","예민한","세심한","감수성이 강한"]},{"w":"sensible","m":"분별 있는, 현명한","p":"형","a":["분별 있는","현명한","합리적인","지각 있는","실용적인"]},{"w":"consent","m":"동의하다, 승낙하다","p":"동","a":["동의하다","승낙하다","허락하다","응하다","찬성하다"]},{"w":"sentiment","m":"정서, 감정, 정취","p":"명","a":["정서","감정","정취","감상","심정"]},{"w":"nonsense","m":"말도 안 되는 소리, 헛소리","p":"명","a":["말도 안 되는 소리","헛소리","터무니없는 말","허튼소리","난센스"]}],"der":[{"w":"incredibly","m":"믿을 수 없을 만큼","p":"부"},{"w":"credibility","m":"신뢰성","p":"명"},{"w":"sympathetic","m":"동정적인, 공감하는","p":"형"},{"w":"sympathize","m":"동정하다, 공감하다","p":"동"},{"w":"empathetic","m":"공감하는","p":"형"},{"w":"apathetic","m":"무관심한","p":"형"},{"w":"passionate","m":"열정적인","p":"형"},{"w":"patience","m":"인내심","p":"명"},{"w":"patient","m":"환자","p":"명"},{"w":"sensory","m":"감각의","p":"형"},{"w":"sensitivity","m":"민감성, 감수성","p":"명"},{"w":"sentimental","m":"감상적인","p":"형"}],"syn":[{"w":"trust","m":"신뢰"},{"w":"recognition","m":"인정"},{"w":"amazing","m":"놀라운"},{"w":"unbelievable","m":"믿기 힘든"},{"w":"believable","m":"믿을 만한"},{"w":"reliable","m":"신뢰할 수 있는"},{"w":"lender","m":"대여자"},{"w":"belief","m":"신념"},{"w":"doctrine","m":"교리"},{"w":"doubt","m":"의심하다"},{"w":"compassion","m":"연민"},{"w":"pity","m":"동정"},{"w":"understanding","m":"이해"},{"w":"indifference","m":"무관심"},{"w":"pitiful","m":"측은한"},{"w":"enthusiasm","m":"열정"},{"w":"zeal","m":"열의"},{"w":"tolerant","m":"참을성 있는"},{"w":"feeling","m":"느낌"},{"w":"perception","m":"지각"},{"w":"delicate","m":"섬세한"},{"w":"reasonable","m":"합리적인"},{"w":"wise","m":"현명한"},{"w":"agree","m":"동의하다"},{"w":"approve","m":"승인하다"},{"w":"emotion","m":"감정"},{"w":"rubbish","m":"허튼소리"}],"ant":[{"w":"believable","m":"믿을 만한"},{"w":"ordinary","m":"평범한"},{"w":"incredible","m":"믿을 수 없는"},{"w":"debtor","m":"채무자"},{"w":"trust","m":"신뢰하다"},{"w":"indifference","m":"무관심"},{"w":"enthusiasm","m":"열정"},{"w":"interest","m":"관심"},{"w":"admirable","m":"감탄할 만한"},{"w":"impatient","m":"참을성 없는"},{"w":"insensitive","m":"둔감한"},{"w":"foolish","m":"어리석은"},{"w":"refuse","m":"거부하다"},{"w":"object","m":"반대하다"},{"w":"sense","m":"의미, 분별"}],"idi":[],"etym":[{"w":"credit","m":"신용, 신뢰, 인정","pcs":[["cred","믿다"],["-it",""]],"res":"신용 · 신뢰"},{"w":"incredible","m":"믿을 수 없는, 놀라운","pcs":[["in-","아닌"],["cred","믿다"],["-ible","할 수 있는"]],"res":"놀라운"},{"w":"credible","m":"믿을 만한, 신뢰할 수 있는","pcs":[["cred","믿다"],["-ible","할 수 있는"]],"res":"믿을 만한"},{"w":"creditor","m":"채권자, 빚을 준 사람","pcs":[["cred","믿다·외상"],["-itor","사람"]],"res":"채권자"},{"w":"discredit","m":"신뢰를 떨어뜨리다, 불신하다","pcs":[["dis-","반대로"],["credit","믿다"]],"res":"신뢰를 떨어뜨리다"},{"w":"sympathy","m":"동정, 연민, 공감","pcs":[["sym-","함께"],["path","느낌"],["-y",""]],"res":"동정 · 공감"},{"w":"empathy","m":"감정 이입, 공감","pcs":[["em-","안으로"],["path","느낌"],["-y",""]],"res":"감정 이입"},{"w":"apathy","m":"무관심, 냉담","pcs":[["a-","없는"],["path","느낌"],["-y",""]],"res":"무관심"},{"w":"pathetic","m":"측은한, 한심한","pcs":[["path","느낌·고통"],["-etic","형"]],"res":"측은한 · 한심한"},{"w":"passion","m":"열정, 격정","pcs":[["pass","=path 느끼다·겪다"],["-ion","것"]],"res":"열정"},{"w":"patient","m":"참을성 있는, 인내심 있는","pcs":[["pati","=path 겪다·견디다"],["-ent","형"]],"res":"참을성 있는"},{"w":"sensitive","m":"민감한, 섬세한","pcs":[["sens","느끼다"],["-itive","형"]],"res":"민감한"},{"w":"sensible","m":"분별 있는, 현명한","pcs":[["sens","느끼다·판단하다"],["-ible","할 수 있는"]],"res":"분별 있는"},{"w":"consent","m":"동의하다, 승낙하다","pcs":[["con-","함께"],["sent","느끼다"]],"res":"동의하다"},{"w":"sentiment","m":"정서, 감정, 정취","pcs":[["sent","느끼다"],["-iment","것"]],"res":"정서 · 감정"},{"w":"nonsense","m":"말도 안 되는 소리, 헛소리","pcs":[["non-","아닌"],["sense","의미·느낌"]],"res":"헛소리"}],"theme":"믿다 / 느낌, 고통 / 느끼다, 감지하다"},{"n":10,"hw":[{"w":"biology","m":"생물학","p":"명","a":["생물학","생명 과학"]},{"w":"biography","m":"전기, 일대기","p":"명","a":["전기","일대기","위인전","생애 기록"]},{"w":"survive","m":"살아남다, 견디다","p":"동","a":["살아남다","견디다","생존하다","버티다","이겨내다"]},{"w":"vivid","m":"생생한, 선명한","p":"형","a":["생생한","선명한","강렬한","또렷한","생기 넘치는"]},{"w":"revive","m":"되살리다, 회복시키다","p":"동","a":["되살리다","회복시키다","소생시키다","부활시키다","활기를 되찾다"]},{"w":"vital","m":"필수적인, 생명의","p":"형","a":["필수적인","생명의","매우 중요한","활력 있는","없어서는 안 될"]},{"w":"vivacious","m":"활기 넘치는, 쾌활한","p":"형","a":["활기 넘치는","쾌활한","명랑한","생기발랄한"]},{"w":"generate","m":"발생시키다, 만들어내다","p":"동","a":["발생시키다","만들어내다","생성하다","일으키다","산출하다"]},{"w":"generation","m":"세대","p":"명","a":["세대","대","한 세대","동시대 사람들"]},{"w":"gene","m":"유전자","p":"명","a":["유전자","유전 인자"]},{"w":"genius","m":"천재, 천부적 재능","p":"명","a":["천재","천부적 재능","비범한 재능","귀재"]},{"w":"generous","m":"관대한, 너그러운","p":"형","a":["관대한","너그러운","후한","인심 좋은","넉넉한"]},{"w":"pregnant","m":"임신한","p":"형","a":["임신한","임신 중인","아이를 밴"]},{"w":"mortal","m":"죽을 운명의, 치명적인","p":"형","a":["죽을 운명의","치명적인","필멸의","죽음의","인간의"]},{"w":"immortal","m":"불멸의, 죽지 않는","p":"형","a":["불멸의","죽지 않는","영원한","불후의"]},{"w":"mortgage","m":"(주택) 담보 대출","p":"명","a":["담보 대출","주택 담보 대출","저당","모기지"]},{"w":"mortify","m":"굴욕감을 주다, 몹시 창피하게 하다","p":"동","a":["굴욕감을 주다","몹시 창피하게 하다","수치심을 주다","면목 없게 하다"]},{"w":"murder","m":"살인","p":"명","a":["살인","살해","고의적 살인"]}],"der":[{"w":"biological","m":"생물학적인","p":"형"},{"w":"biologist","m":"생물학자","p":"명"},{"w":"autobiography","m":"자서전","p":"명"},{"w":"survival","m":"생존","p":"명"},{"w":"survivor","m":"생존자","p":"명"},{"w":"vividly","m":"생생하게","p":"부"},{"w":"revival","m":"부활, 회복","p":"명"},{"w":"vitality","m":"활력, 생명력","p":"명"},{"w":"vitamin","m":"비타민","p":"명"},{"w":"generator","m":"발전기","p":"명"},{"w":"genetic","m":"유전의, 유전적인","p":"형"},{"w":"generosity","m":"관대함, 너그러움","p":"명"},{"w":"pregnancy","m":"임신","p":"명"},{"w":"mortality","m":"사망률, 죽을 운명","p":"명"},{"w":"immortality","m":"불멸, 불사","p":"명"},{"w":"mortified","m":"굴욕적인, 몹시 창피한","p":"형"},{"w":"murderer","m":"살인자","p":"명"}],"syn":[{"w":"life story","m":"일대기"},{"w":"endure","m":"견디다"},{"w":"live on","m":"살아남다"},{"w":"clear","m":"선명한"},{"w":"bright","m":"강렬한"},{"w":"restore","m":"회복시키다"},{"w":"renew","m":"되살리다"},{"w":"essential","m":"필수적인"},{"w":"crucial","m":"결정적인"},{"w":"lively","m":"활기찬"},{"w":"energetic","m":"활동적인"},{"w":"produce","m":"생산하다"},{"w":"create","m":"만들어내다"},{"w":"age group","m":"동년배 집단"},{"w":"prodigy","m":"신동"},{"w":"giving","m":"베푸는"},{"w":"kind","m":"친절한"},{"w":"expecting","m":"임신한"},{"w":"deadly","m":"치명적인"},{"w":"fatal","m":"치명적인"},{"w":"eternal","m":"영원한"},{"w":"undying","m":"불멸의"},{"w":"loan","m":"대출"},{"w":"embarrass","m":"당황하게 하다"},{"w":"humiliate","m":"굴욕감을 주다"},{"w":"killing","m":"살해"}],"ant":[{"w":"perish","m":"죽다, 소멸하다"},{"w":"vague","m":"흐릿한"},{"w":"dull","m":"흐릿한, 칙칙한, 생기 없는"},{"w":"trivial","m":"사소한"},{"w":"fool","m":"바보"},{"w":"selfish","m":"이기적인"},{"w":"stingy","m":"인색한"},{"w":"immortal","m":"불멸의"},{"w":"mortal","m":"죽을 운명의"}],"idi":[],"etym":[{"w":"biology","m":"생물학","pcs":[["bio","생명"],["-logy","학문"]],"res":"생물학"},{"w":"biography","m":"전기, 일대기","pcs":[["bio","생명·인생"],["graph","쓰다"],["-y",""]],"res":"전기"},{"w":"survive","m":"살아남다, 견디다","pcs":[["sur-","넘어"],["viv","살다"]],"res":"살아남다"},{"w":"vivid","m":"생생한, 선명한","pcs":[["viv","살다"],["-id","형"]],"res":"생생한"},{"w":"revive","m":"되살리다, 회복시키다","pcs":[["re-","다시"],["viv","살다"]],"res":"되살리다"},{"w":"vital","m":"필수적인, 생명의","pcs":[["vit","생명"],["-al","형"]],"res":"필수적인"},{"w":"vivacious","m":"활기 넘치는, 쾌활한","pcs":[["viv","살다"],["-acious","형"]],"res":"활기 넘치는"},{"w":"generate","m":"발생시키다, 만들어내다","pcs":[["gen","생기다"],["-erate","동"]],"res":"발생시키다"},{"w":"generation","m":"세대","pcs":[["gen","태어나다"],["-eration",""]],"res":"세대"},{"w":"genius","m":"천재, 천부적 재능","pcs":[["gen","태어나다"],["-ius",""]],"res":"천재"},{"w":"generous","m":"관대한, 너그러운","pcs":[["gen","태생"],["-erous",""]],"res":"관대한"},{"w":"pregnant","m":"임신한","pcs":[["prae-","이전"],["gn","=gen 태어나다"],["-ant",""]],"res":"임신한"},{"w":"mortal","m":"죽을 운명의, 치명적인","pcs":[["mort","죽음"],["-al","형"]],"res":"죽을 운명의"},{"w":"immortal","m":"불멸의, 죽지 않는","pcs":[["im-","아닌"],["mort","죽음"],["-al",""]],"res":"불멸의"},{"w":"mortgage","m":"(주택) 담보 대출","pcs":[["mort","죽음"],["gage","약속"]],"res":"담보 대출"},{"w":"mortify","m":"굴욕감을 주다, 몹시 창피하게 하다","pcs":[["mort","죽음"],["-ify","만들다"]],"res":"몹시 창피하게 하다"},{"w":"murder","m":"살인","pcs":[["mur","=mort 죽음, 친족 어근"],["-der",""]],"res":"살인"}],"theme":"생명, 살다 / 태어나다, 생기다, 종류 / 죽음"},{"n":11,"hw":[{"w":"finish","m":"끝내다, 마치다","p":"동","a":["끝내다","마치다","완료하다","끝나다","마무리하다"]},{"w":"final","m":"마지막의, 최종의","p":"형","a":["마지막의","최종의","결정적인","마지막","최후의"]},{"w":"define","m":"정의하다, 규정하다","p":"동","a":["정의하다","규정하다","분명히 하다","한정하다","뜻을 밝히다"]},{"w":"confine","m":"한정하다, 가두다","p":"동","a":["한정하다","가두다","국한하다","제한하다","감금하다"]},{"w":"finite","m":"유한한, 한정된","p":"형","a":["유한한","한정된","한계가 있는","끝이 있는"]},{"w":"infinite","m":"무한한, 끝없는","p":"형","a":["무한한","끝없는","한없는","무궁한","헤아릴 수 없는"]},{"w":"meter","m":"미터, 계량기","p":"명","a":["미터","계량기","측정기","재는 기구"]},{"w":"thermometer","m":"온도계","p":"명","a":["온도계","체온계"]},{"w":"diameter","m":"지름, 직경","p":"명","a":["지름","직경"]},{"w":"geometry","m":"기하학","p":"명","a":["기하학"]},{"w":"symmetry","m":"대칭, 균형","p":"명","a":["대칭","균형","조화","좌우 대칭"]},{"w":"measure","m":"측정하다, 재다","p":"동","a":["측정하다","재다","가늠하다","헤아리다","치수를 재다"]},{"w":"term","m":"용어, 기간, 학기","p":"명","a":["용어","기간","학기","임기","조건"]},{"w":"terminal","m":"터미널, 종착역, 단말기","p":"명","a":["터미널","종착역","단말기","종점","끝"]},{"w":"terminate","m":"끝내다, 종료하다","p":"동","a":["끝내다","종료하다","마치다","해지하다","끝나다"]},{"w":"determine","m":"결정하다, 알아내다","p":"동","a":["결정하다","알아내다","밝혀내다","확정하다","좌우하다"]},{"w":"exterminate","m":"박멸하다, 몰살하다","p":"동","a":["박멸하다","몰살하다","근절하다","전멸시키다","없애다"]},{"w":"limit","m":"한계, 제한","p":"명","a":["한계","제한","한도","경계","끝"]}],"der":[{"w":"finished","m":"끝난, 완성된","p":"형"},{"w":"finally","m":"마침내, 결국","p":"부"},{"w":"finalize","m":"마무리짓다","p":"동"},{"w":"definition","m":"정의","p":"명"},{"w":"definite","m":"명확한, 확실한","p":"형"},{"w":"confinement","m":"감금, 제한","p":"명"},{"w":"infinity","m":"무한대, 무한","p":"명"},{"w":"geometric","m":"기하학의, 기하학적인","p":"형"},{"w":"symmetrical","m":"대칭의, 균형 잡힌","p":"형"},{"w":"measurement","m":"측정, 치수","p":"명"},{"w":"termination","m":"종료, 종결","p":"명"},{"w":"determination","m":"결정, 결단력","p":"명"},{"w":"determined","m":"단호한, 결심한","p":"형"},{"w":"extermination","m":"박멸, 몰살","p":"명"},{"w":"limited","m":"제한된","p":"형"},{"w":"limitation","m":"제한, 한계","p":"명"},{"w":"unlimited","m":"무제한의","p":"형"}],"syn":[{"w":"complete","m":"완료하다"},{"w":"end","m":"끝내다"},{"w":"last","m":"마지막의"},{"w":"ultimate","m":"최종의"},{"w":"explain","m":"설명하다"},{"w":"specify","m":"명시하다"},{"w":"limit","m":"제한하다"},{"w":"restrict","m":"한정하다"},{"w":"limited","m":"제한된"},{"w":"endless","m":"끝없는"},{"w":"boundless","m":"무한한"},{"w":"gauge","m":"측정기, 측정하다"},{"w":"balance","m":"균형"},{"w":"assess","m":"평가하다"},{"w":"word","m":"용어, 단어"},{"w":"period","m":"기간"},{"w":"station","m":"역, 정류장"},{"w":"stop","m":"중단하다"},{"w":"decide","m":"결정하다"},{"w":"settle","m":"확정하다"},{"w":"wipe out","m":"전멸시키다"},{"w":"eradicate","m":"근절하다"},{"w":"boundary","m":"경계"},{"w":"restriction","m":"제한"}],"ant":[{"w":"start","m":"시작하다"},{"w":"begin","m":"시작하다"},{"w":"first","m":"처음의"},{"w":"initial","m":"처음의"},{"w":"release","m":"풀어주다"},{"w":"free","m":"해방하다"},{"w":"infinite","m":"무한한"},{"w":"finite","m":"유한한"},{"w":"limited","m":"한정된"},{"w":"radius","m":"반지름"},{"w":"asymmetry","m":"비대칭"}],"idi":[{"w":"end up","m":"결국 ~하게 되다"},{"w":"put an end to","m":"~을 끝내다, 종지부를 찍다"},{"w":"run out of","m":"~을 다 써버리다, 떨어지다"},{"w":"use up","m":"다 써버리다, 소진하다"},{"w":"carry through","m":"끝까지 해내다, 완수하다"},{"w":"draw the line","m":"한계를 긋다, 선을 긋다"},{"w":"set a limit","m":"한도를 정하다"},{"w":"count up","m":"세어 합하다, 합산하다"},{"w":"add up to","m":"합계가 ~이 되다, 결국 ~을 뜻하다"},{"w":"wind up","m":"끝내다, 결국 ~하게 되다"},{"w":"wrap up","m":"마무리하다, 마치다"},{"w":"at most","m":"기껏해야, 최대한으로"}],"etym":[{"w":"finish","m":"끝내다, 마치다","pcs":[["fin","끝"],["-ish","동"]],"res":"끝내다"},{"w":"final","m":"마지막의, 최종의","pcs":[["fin","끝"],["-al","형"]],"res":"마지막의"},{"w":"define","m":"정의하다, 규정하다","pcs":[["de-","완전히"],["fine","=fin 한계"]],"res":"정의하다"},{"w":"confine","m":"한정하다, 가두다","pcs":[["con-","함께"],["fine","=fin 경계"]],"res":"한정하다 · 가두다"},{"w":"finite","m":"유한한, 한정된","pcs":[["fin","끝"],["-ite","형"]],"res":"유한한"},{"w":"infinite","m":"무한한, 끝없는","pcs":[["in-","아닌"],["fin","끝"],["-ite",""]],"res":"무한한"},{"w":"thermometer","m":"온도계","pcs":[["thermo","열·온도"],["meter","재다"]],"res":"온도계"},{"w":"diameter","m":"지름, 직경","pcs":[["dia-","가로질러"],["meter","재다"]],"res":"지름"},{"w":"geometry","m":"기하학","pcs":[["geo","땅"],["metr","재다"],["-y",""]],"res":"기하학"},{"w":"symmetry","m":"대칭, 균형","pcs":[["sym-","함께"],["metr","재다"],["-y",""]],"res":"대칭"},{"w":"measure","m":"측정하다, 재다","pcs":[["meas","=metr 재다, mensura에서"],["-ure",""]],"res":"측정하다"},{"w":"terminal","m":"터미널, 종착역, 단말기","pcs":[["termin","끝"],["-al",""]],"res":"종착역 · 터미널"},{"w":"terminate","m":"끝내다, 종료하다","pcs":[["termin","끝"],["-ate","동"]],"res":"종료하다"},{"w":"determine","m":"결정하다, 알아내다","pcs":[["de-","완전히"],["termine","=termin 끝·한계"]],"res":"결정하다"},{"w":"exterminate","m":"박멸하다, 몰살하다","pcs":[["ex-","완전히 밖으로"],["termin","끝"],["-ate",""]],"res":"박멸하다"},{"w":"limit","m":"한계, 제한","pcs":[["lim","=경계, limes 경계선"],["-it",""]],"res":"한계"}],"theme":"끝, 한계 / 측정하다, 재다 / 끝, 경계"},{"n":12,"hw":[{"w":"project","m":"계획, 프로젝트, 과제","p":"명","a":["계획","프로젝트","과제","사업","연구 과제"]},{"w":"reject","m":"거절하다, 거부하다","p":"동","a":["거절하다","거부하다","물리치다","퇴짜 놓다","받아들이지 않다"]},{"w":"inject","m":"주입하다, 주사하다","p":"동","a":["주입하다","주사하다","넣다","투입하다","불어넣다"]},{"w":"object","m":"물체, 대상, 목적","p":"명","a":["물체","대상","목적","사물","객체"]},{"w":"subject","m":"주제, 과목, 대상","p":"명","a":["주제","과목","대상","피험자","신하","주어"]},{"w":"eject","m":"내쫓다, 튀어나오게 하다","p":"동","a":["내쫓다","튀어나오게 하다","방출하다","빼내다","탈출시키다"]},{"w":"compel","m":"강요하다, ~하게 만들다","p":"동","a":["강요하다","하게 만들다","억지로 시키다","강제하다","몰아붙이다"]},{"w":"expel","m":"쫓아내다, 추방하다","p":"동","a":["쫓아내다","추방하다","내쫓다","퇴학시키다","배출하다"]},{"w":"impulse","m":"충동, 자극","p":"명","a":["충동","자극","추진력","욕구","충격"]},{"w":"pulse","m":"맥박, 고동","p":"명","a":["맥박","고동","맥","파동","진동"]},{"w":"propel","m":"추진하다, 나아가게 하다","p":"동","a":["추진하다","나아가게 하다","밀고 나가다","몰고 가다","전진시키다"]},{"w":"repel","m":"물리치다, 쫓아버리다","p":"동","a":["물리치다","쫓아버리다","격퇴하다","밀어내다","반발하다"]},{"w":"attract","m":"끌어당기다, 매혹하다","p":"동","a":["끌어당기다","매혹하다","끌다","유인하다","마음을 끌다"]},{"w":"extract","m":"추출하다, 뽑아내다","p":"동","a":["추출하다","뽑아내다","끌어내다","발췌하다","빼내다"]},{"w":"contract","m":"계약, 계약서","p":"명","a":["계약","계약서","약정","도급"]},{"w":"distract","m":"주의를 흐트러뜨리다, 산만하게 하다","p":"동","a":["주의를 흐트러뜨리다","산만하게 하다","딴 데로 돌리다","방해하다","정신을 빼놓다"]},{"w":"subtract","m":"빼다, 감하다","p":"동","a":["빼다","감하다","공제하다","덜다"]},{"w":"trace","m":"추적하다, 따라가다","p":"동","a":["추적하다","따라가다","찾아내다","거슬러 올라가다","본뜨다"]}],"der":[{"w":"projection","m":"예상, 투사","p":"명"},{"w":"rejection","m":"거절, 거부","p":"명"},{"w":"injection","m":"주사, 주입","p":"명"},{"w":"objection","m":"반대, 이의","p":"명"},{"w":"objective","m":"목표, 목적","p":"명"},{"w":"subjective","m":"주관적인","p":"형"},{"w":"ejection","m":"방출, 분출","p":"명"},{"w":"compelling","m":"강렬한, 설득력 있는","p":"형"},{"w":"expulsion","m":"추방, 퇴학","p":"명"},{"w":"impulsive","m":"충동적인","p":"형"},{"w":"propeller","m":"프로펠러, 추진기","p":"명"},{"w":"propulsion","m":"추진, 추진력","p":"명"},{"w":"repellent","m":"방충제, 기피제","p":"명"},{"w":"attraction","m":"매력, 명소","p":"명"},{"w":"attractive","m":"매력적인","p":"형"},{"w":"extraction","m":"추출, 발췌","p":"명"},{"w":"contractor","m":"계약자, 도급업자","p":"명"},{"w":"distraction","m":"주의 산만, 방해 요소","p":"명"},{"w":"subtraction","m":"뺄셈, 공제","p":"명"}],"syn":[{"w":"plan","m":"계획"},{"w":"task","m":"과제"},{"w":"refuse","m":"거부하다"},{"w":"decline","m":"거절하다"},{"w":"insert","m":"삽입하다"},{"w":"thing","m":"사물"},{"w":"item","m":"물품"},{"w":"topic","m":"주제"},{"w":"theme","m":"주제"},{"w":"expel","m":"쫓아내다"},{"w":"force","m":"강요하다"},{"w":"oblige","m":"의무를 지우다"},{"w":"eject","m":"쫓아내다"},{"w":"banish","m":"추방하다"},{"w":"urge","m":"충동"},{"w":"beat","m":"고동, 박동"},{"w":"throb","m":"맥박"},{"w":"drive","m":"몰다"},{"w":"push","m":"밀다"},{"w":"drive away","m":"쫓아내다"},{"w":"fend off","m":"막아내다"},{"w":"draw","m":"끌어당기다"},{"w":"appeal","m":"마음을 끌다"},{"w":"remove","m":"제거하다"},{"w":"draw out","m":"뽑아내다"},{"w":"agreement","m":"합의"},{"w":"deal","m":"거래"},{"w":"divert","m":"딴 데로 돌리다"},{"w":"disturb","m":"방해하다"},{"w":"deduct","m":"공제하다"},{"w":"track","m":"추적하다"},{"w":"follow","m":"따라가다"}],"ant":[{"w":"accept","m":"받아들이다"},{"w":"approve","m":"승인하다"},{"w":"extract","m":"뽑아내다"},{"w":"insert","m":"넣다, 삽입하다"},{"w":"admit","m":"받아들이다"},{"w":"attract","m":"끌어당기다"},{"w":"repel","m":"밀어내다"},{"w":"focus","m":"집중하게 하다"},{"w":"add","m":"더하다"}],"idi":[{"w":"push for","m":"~을 강하게 요구하다, 밀어붙이다"},{"w":"push around","m":"함부로 대하다, 못살게 굴다"},{"w":"pull off","m":"해내다, 성사시키다"},{"w":"pull out","m":"빠져나오다, 철수하다"},{"w":"pull together","m":"협력하다, 힘을 합치다"},{"w":"throw away","m":"버리다, 낭비하다"},{"w":"throw up","m":"토하다, 게우다"},{"w":"drive away","m":"쫓아내다, 몰아내다"},{"w":"kick out","m":"쫓아내다, 내쫓다"},{"w":"draw on","m":"(자원·경험을) 끌어다 쓰다, 활용하다"},{"w":"take out","m":"꺼내다, 빼내다, 데리고 나가다"},{"w":"give off","m":"(냄새·빛 등을) 내뿜다, 발산하다"}],"etym":[{"w":"project","m":"계획, 프로젝트, 과제","pcs":[["pro-","앞으로"],["ject","던지다"]],"res":"계획 · 프로젝트"},{"w":"reject","m":"거절하다, 거부하다","pcs":[["re-","뒤로"],["ject","던지다"]],"res":"거절하다"},{"w":"inject","m":"주입하다, 주사하다","pcs":[["in-","안으로"],["ject","던지다"]],"res":"주입하다"},{"w":"object","m":"물체, 대상, 목적","pcs":[["ob-","앞에"],["ject","던지다"]],"res":"눈앞의 물체 · 대상"},{"w":"subject","m":"주제, 과목, 대상","pcs":[["sub-","아래로"],["ject","던지다"]],"res":"다뤄지는 주제 · 대상"},{"w":"eject","m":"내쫓다, 튀어나오게 하다","pcs":[["e-","밖으로"],["ject","던지다"]],"res":"내쫓다 · 튕겨내다"},{"w":"compel","m":"강요하다, ~하게 만들다","pcs":[["com-","완전히"],["pel","밀다"]],"res":"강요하다"},{"w":"expel","m":"쫓아내다, 추방하다","pcs":[["ex-","밖으로"],["pel","밀다"]],"res":"쫓아내다"},{"w":"impulse","m":"충동, 자극","pcs":[["im-","안으로"],["pulse","밀다"]],"res":"충동"},{"w":"propel","m":"추진하다, 나아가게 하다","pcs":[["pro-","앞으로"],["pel","밀다"]],"res":"추진하다"},{"w":"repel","m":"물리치다, 쫓아버리다","pcs":[["re-","뒤로"],["pel","밀다"]],"res":"물리치다"},{"w":"attract","m":"끌어당기다, 매혹하다","pcs":[["at-","~쪽으로"],["tract","끌다"]],"res":"끌어당기다"},{"w":"extract","m":"추출하다, 뽑아내다","pcs":[["ex-","밖으로"],["tract","끌다"]],"res":"뽑아내다"},{"w":"contract","m":"계약, 계약서","pcs":[["con-","함께"],["tract","끌다"]],"res":"계약"},{"w":"distract","m":"주의를 흐트러뜨리다, 산만하게 하다","pcs":[["dis-","따로"],["tract","끌다"]],"res":"산만하게 하다"},{"w":"subtract","m":"빼다, 감하다","pcs":[["sub-","아래로"],["tract","끌다"]],"res":"빼다"}],"theme":"던지다 / 밀다, 몰다 / 끌다, 당기다"},{"n":13,"hw":[{"w":"join","m":"잇다, 합류하다, 가입하다","p":"동","a":["잇다","합류하다","가입하다","연결하다","함께하다","결합하다"]},{"w":"junction","m":"교차점, 연결 지점","p":"명","a":["교차점","연결 지점","분기점","접합점","교차로"]},{"w":"conjunction","m":"접속사, 결합","p":"명","a":["접속사","결합","연결","공동","동시 발생"]},{"w":"adjust","m":"조정하다, 적응하다","p":"동","a":["조정하다","적응하다","맞추다","조절하다","바로잡다"]},{"w":"joint","m":"공동의, 합동의","p":"형","a":["공동의","합동의","연합의","공유의"]},{"w":"adjoin","m":"인접하다, 붙어 있다","p":"동","a":["인접하다","붙어 있다","맞닿다","이웃하다","접하다"]},{"w":"solve","m":"풀다, 해결하다","p":"동","a":["풀다","해결하다","풀이하다","알아내다"]},{"w":"dissolve","m":"녹다, 녹이다, 해체하다","p":"동","a":["녹다","녹이다","용해하다","해체하다","해산하다"]},{"w":"resolve","m":"해결하다, 결심하다","p":"동","a":["해결하다","결심하다","결의하다","풀다","다짐하다"]},{"w":"absolute","m":"절대적인, 완전한","p":"형","a":["절대적인","완전한","무조건의","확실한","전적인"]},{"w":"solution","m":"해결책, 용액","p":"명","a":["해결책","용액","해법","해결","정답"]},{"w":"absolve","m":"용서하다, 면제하다","p":"동","a":["용서하다","면제하다","사면하다","벗겨 주다","풀어 주다"]},{"w":"strict","m":"엄격한, 엄한","p":"형","a":["엄격한","엄한","철저한","꼼꼼한","빈틈없는"]},{"w":"restrict","m":"제한하다, 한정하다","p":"동","a":["제한하다","한정하다","통제하다","억제하다","구속하다"]},{"w":"string","m":"끈, 줄, 일련","p":"명","a":["끈","줄","일련","현","실"]},{"w":"strain","m":"긴장, 부담, 압박","p":"명","a":["긴장","부담","압박","무리","팽팽함"]},{"w":"constrict","m":"수축시키다, 죄다","p":"동","a":["수축시키다","죄다","조이다","압축하다","좁히다"]},{"w":"stretch","m":"늘이다, 뻗다","p":"동","a":["늘이다","뻗다","쭉 펴다","잡아당기다","기지개를 켜다"]}],"der":[{"w":"adjustment","m":"조정, 적응","p":"명"},{"w":"adjoining","m":"인접한, 붙어 있는","p":"형"},{"w":"solver","m":"해결하는 사람","p":"명"},{"w":"resolution","m":"결심, 해결, 결의","p":"명"},{"w":"absolutely","m":"절대적으로, 전적으로","p":"부"},{"w":"strictly","m":"엄격히, 엄밀히","p":"부"},{"w":"restriction","m":"제한, 규제","p":"명"},{"w":"restricted","m":"제한된","p":"형"},{"w":"constriction","m":"수축, 압축","p":"명"},{"w":"stretchy","m":"잘 늘어나는","p":"형"}],"syn":[{"w":"connect","m":"연결하다"},{"w":"unite","m":"결합하다"},{"w":"crossroads","m":"교차로"},{"w":"intersection","m":"교차점"},{"w":"combination","m":"결합"},{"w":"adapt","m":"적응하다"},{"w":"modify","m":"조정하다"},{"w":"shared","m":"공유의"},{"w":"combined","m":"합동의"},{"w":"border","m":"접하다"},{"w":"abut","m":"맞닿다"},{"w":"resolve","m":"해결하다"},{"w":"work out","m":"풀어내다"},{"w":"melt","m":"녹다"},{"w":"break up","m":"해체하다"},{"w":"settle","m":"해결하다"},{"w":"determine","m":"결심하다"},{"w":"complete","m":"완전한"},{"w":"total","m":"전적인"},{"w":"answer","m":"해답"},{"w":"remedy","m":"해결책"},{"w":"forgive","m":"용서하다"},{"w":"excuse","m":"면제하다"},{"w":"severe","m":"엄한"},{"w":"rigid","m":"엄격한"},{"w":"limit","m":"제한하다"},{"w":"confine","m":"한정하다"},{"w":"cord","m":"끈"},{"w":"rope","m":"줄"},{"w":"pressure","m":"압박"},{"w":"stress","m":"긴장"},{"w":"tighten","m":"조이다"},{"w":"squeeze","m":"압박하다"},{"w":"extend","m":"뻗다"},{"w":"expand","m":"늘이다"}],"ant":[{"w":"separate","m":"분리하다, 개별의, 떨어지다"},{"w":"leave","m":"떠나다"},{"w":"solidify","m":"굳다"},{"w":"relative","m":"상대적인"},{"w":"partial","m":"부분적인"},{"w":"problem","m":"문제"},{"w":"blame","m":"비난하다"},{"w":"condemn","m":"탓하다"},{"w":"lenient","m":"관대한"},{"w":"loose","m":"느슨한"},{"w":"allow","m":"허용하다"},{"w":"free","m":"풀어주다"},{"w":"relaxation","m":"이완"},{"w":"expand","m":"팽창하다"},{"w":"shrink","m":"줄어들다"}],"idi":[{"w":"join in","m":"함께 참여하다, 끼다"},{"w":"join forces","m":"힘을 합치다, 협력하다"},{"w":"tie up","m":"묶다, 매다, (시간을) 묶어두다"},{"w":"tie in with","m":"~와 연결되다, 들어맞다"},{"w":"work out","m":"해결하다, 풀다, 운동하다"},{"w":"figure out","m":"알아내다, 이해하다"},{"w":"sort out","m":"해결하다, 정리하다"},{"w":"loosen up","m":"긴장을 풀다, 느슨해지다"},{"w":"let go of","m":"놓아주다, 풀어주다"},{"w":"hold back","m":"억제하다, 제지하다"},{"w":"crack down on","m":"엄하게 단속하다"},{"w":"come up with","m":"(해결책을) 생각해내다"}],"etym":[{"w":"junction","m":"교차점, 연결 지점","pcs":[["junct","잇다"],["-ion","것"]],"res":"교차점"},{"w":"conjunction","m":"접속사, 결합","pcs":[["con-","함께"],["junct","잇다"],["-ion",""]],"res":"접속사"},{"w":"adjust","m":"조정하다, 적응하다","pcs":[["ad-","~에"],["just","=junct 잇다·맞추다"]],"res":"조정하다"},{"w":"adjoin","m":"인접하다, 붙어 있다","pcs":[["ad-","~에"],["join","잇다"]],"res":"인접하다"},{"w":"dissolve","m":"녹다, 녹이다, 해체하다","pcs":[["dis-","따로따로"],["solve","풀다"]],"res":"녹다 · 해체하다"},{"w":"resolve","m":"해결하다, 결심하다","pcs":[["re-","다시"],["solve","풀다"]],"res":"해결하다 · 결심하다"},{"w":"absolute","m":"절대적인, 완전한","pcs":[["ab-","~에서 떨어져"],["solut","풀린"]],"res":"절대적인"},{"w":"solution","m":"해결책, 용액","pcs":[["solut","풀린 것"],["-ion",""]],"res":"용액"},{"w":"absolve","m":"용서하다, 면제하다","pcs":[["ab-","~에서 떨어져"],["solve","풀다"]],"res":"용서하다 · 면제하다"},{"w":"restrict","m":"제한하다, 한정하다","pcs":[["re-","뒤로"],["strict","조이다"]],"res":"제한하다"},{"w":"constrict","m":"수축시키다, 죄다","pcs":[["con-","완전히"],["strict","조이다"]],"res":"수축시키다"}],"theme":"잇다, 연결하다 / 풀다, 느슨하게 하다 / 묶다, 조이다"},{"n":14,"hw":[{"w":"assist","m":"돕다, 보조하다","p":"동","a":["돕다","보조하다","거들다","지원하다","조력하다"]},{"w":"resist","m":"저항하다, 견디다","p":"동","a":["저항하다","견디다","버티다","참다","이겨내다"]},{"w":"insist","m":"주장하다, 고집하다","p":"동","a":["주장하다","고집하다","우기다","강력히 요구하다","강조하다"]},{"w":"persist","m":"끈질기게 계속하다, 지속되다","p":"동","a":["끈질기게 계속하다","지속되다","고집하다","버티다","끈기 있게 하다"]},{"w":"consist","m":"구성되다, 이루어지다","p":"동","a":["구성되다","이루어지다","되어 있다","성립되다"]},{"w":"exist","m":"존재하다, 살아가다","p":"동","a":["존재하다","살아가다","있다","실재하다","생존하다"]},{"w":"stable","m":"안정된, 견고한","p":"형","a":["안정된","견고한","안정적인","흔들리지 않는","튼튼한"]},{"w":"status","m":"지위, 상태, 신분","p":"명","a":["지위","상태","신분","위상","현황"]},{"w":"state","m":"상태, 국가, 주","p":"명","a":["상태","국가","주","정세","형편"]},{"w":"station","m":"역, 정거장, 부서","p":"명","a":["역","정거장","부서","방송국","위치"]},{"w":"static","m":"정지한, 변화 없는","p":"형","a":["정지한","변화 없는","고정된","정적인","움직이지 않는"]},{"w":"establish","m":"설립하다, 확립하다","p":"동","a":["설립하다","확립하다","세우다","수립하다","정착시키다"]},{"w":"institute","m":"기관, 협회, 연구소","p":"명","a":["기관","협회","연구소","학회","원"]},{"w":"constitute","m":"구성하다, ~이 되다","p":"동","a":["구성하다","이 되다","이루다","성립시키다","~에 해당하다"]},{"w":"substitute","m":"대체하다, 대신하다","p":"동","a":["대체하다","대신하다","갈아 끼우다","바꾸다","대용하다"]},{"w":"statue","m":"조각상, 동상","p":"명","a":["조각상","동상","상","조상"]},{"w":"destiny","m":"운명, 숙명","p":"명","a":["운명","숙명","운","정해진 길"]},{"w":"obstacle","m":"장애물, 방해","p":"명","a":["장애물","방해","걸림돌","난관","장벽"]}],"der":[{"w":"assistance","m":"도움, 지원","p":"명"},{"w":"assistant","m":"조수, 보조자","p":"명"},{"w":"resistance","m":"저항, 저항력","p":"명"},{"w":"resistant","m":"저항력 있는, ~에 강한","p":"형"},{"w":"insistence","m":"주장, 고집","p":"명"},{"w":"persistence","m":"끈기, 지속","p":"명"},{"w":"persistent","m":"끈질긴, 지속적인","p":"형"},{"w":"consistent","m":"일관된, 한결같은","p":"형"},{"w":"consistency","m":"일관성","p":"명"},{"w":"existence","m":"존재, 생존","p":"명"},{"w":"existing","m":"기존의, 현존하는","p":"형"},{"w":"stability","m":"안정, 안정성","p":"명"},{"w":"stabilize","m":"안정시키다","p":"동"},{"w":"statement","m":"진술, 성명","p":"명"},{"w":"stationary","m":"정지한, 움직이지 않는","p":"형"},{"w":"establishment","m":"설립, 기관","p":"명"},{"w":"institution","m":"기관, 제도","p":"명"},{"w":"constitution","m":"헌법, 구성, 체질","p":"명"},{"w":"substitution","m":"대체, 교체","p":"명"},{"w":"destined","m":"운명 지어진, ~할 운명인","p":"형"}],"syn":[{"w":"help","m":"돕다"},{"w":"aid","m":"지원하다"},{"w":"oppose","m":"맞서다"},{"w":"withstand","m":"견디다"},{"w":"demand","m":"요구하다"},{"w":"maintain","m":"주장하다"},{"w":"continue","m":"계속하다"},{"w":"persevere","m":"인내하다"},{"w":"be made up of","m":"~로 구성되다"},{"w":"be","m":"있다"},{"w":"live","m":"살아가다"},{"w":"steady","m":"안정된"},{"w":"firm","m":"견고한"},{"w":"position","m":"지위"},{"w":"rank","m":"신분"},{"w":"condition","m":"상태"},{"w":"nation","m":"국가"},{"w":"stop","m":"정거장"},{"w":"fixed","m":"고정된"},{"w":"motionless","m":"움직이지 않는"},{"w":"found","m":"설립하다"},{"w":"set up","m":"세우다"},{"w":"organization","m":"조직, 기관"},{"w":"form","m":"이루다"},{"w":"make up","m":"구성하다"},{"w":"replace","m":"대체하다"},{"w":"swap","m":"바꾸다"},{"w":"sculpture","m":"조각"},{"w":"figure","m":"상"},{"w":"fate","m":"운명"},{"w":"fortune","m":"운"},{"w":"barrier","m":"장벽"},{"w":"hurdle","m":"장애물"}],"ant":[{"w":"hinder","m":"방해하다"},{"w":"surrender","m":"항복하다"},{"w":"yield","m":"굴복하다"},{"w":"quit","m":"그만두다"},{"w":"give up","m":"포기하다"},{"w":"vanish","m":"사라지다"},{"w":"unstable","m":"불안정한"},{"w":"dynamic","m":"역동적인"},{"w":"active","m":"활동적인"},{"w":"abolish","m":"폐지하다"}],"idi":[{"w":"stand for","m":"~을 상징하다, 나타내다"},{"w":"stand out","m":"두드러지다, 눈에 띄다"},{"w":"stand up for","m":"~을 옹호하다, 지지하다"},{"w":"stand by","m":"지지하다, 대기하다"},{"w":"set up","m":"세우다, 설립하다, 마련하다"},{"w":"hold on","m":"버티다, 기다리다"},{"w":"hold up","m":"지탱하다, 버티다, 지연시키다"},{"w":"stick to","m":"고수하다, 지키다"},{"w":"stick with","m":"계속하다, 곁에 머물다"},{"w":"stand up to","m":"~에 맞서다, 저항하다"},{"w":"make up","m":"구성하다, 이루다"},{"w":"fall apart","m":"무너지다, 산산조각 나다"}],"etym":[{"w":"assist","m":"돕다, 보조하다","pcs":[["as-","곁에"],["sist","서다"]],"res":"돕다"},{"w":"resist","m":"저항하다, 견디다","pcs":[["re-","맞서"],["sist","서다"]],"res":"저항하다"},{"w":"insist","m":"주장하다, 고집하다","pcs":[["in-","위에"],["sist","서다"]],"res":"고집하다 · 주장하다"},{"w":"persist","m":"끈질기게 계속하다, 지속되다","pcs":[["per-","끝까지"],["sist","서다"]],"res":"끈질기게 계속하다"},{"w":"consist","m":"구성되다, 이루어지다","pcs":[["con-","함께"],["sist","서다"]],"res":"구성되다"},{"w":"exist","m":"존재하다, 살아가다","pcs":[["ex-","밖으로"],["(s)ist","서다"]],"res":"존재하다"},{"w":"stable","m":"안정된, 견고한","pcs":[["sta","서다"],["-ble","할 수 있는"]],"res":"안정된"},{"w":"status","m":"지위, 상태, 신분","pcs":[["stat","서다"],["-us",""]],"res":"지위 · 상태"},{"w":"station","m":"역, 정거장, 부서","pcs":[["stat","서다"],["-ion",""]],"res":"역 · 정거장"},{"w":"static","m":"정지한, 변화 없는","pcs":[["stat","서다"],["-ic","형"]],"res":"정지한"},{"w":"establish","m":"설립하다, 확립하다","pcs":[["e-","강조"],["stabl","=sta 굳게 서다"],["-ish",""]],"res":"설립하다"},{"w":"institute","m":"기관, 협회, 연구소","pcs":[["in-","안에"],["stitut","세우다"]],"res":"기관"},{"w":"constitute","m":"구성하다, ~이 되다","pcs":[["con-","함께"],["stitut","세우다"]],"res":"구성하다"},{"w":"substitute","m":"대체하다, 대신하다","pcs":[["sub-","대신"],["stitut","세우다"]],"res":"대체하다"},{"w":"statue","m":"조각상, 동상","pcs":[["stat","세우다"],["-ue",""]],"res":"조각상"},{"w":"destiny","m":"운명, 숙명","pcs":[["de-","완전히"],["stin","=sta 세우다·정하다"],["-y",""]],"res":"운명"},{"w":"obstacle","m":"장애물, 방해","pcs":[["ob-","맞은편에"],["sta","서다"],["-cle",""]],"res":"장애물"}],"theme":"서다, 버티다 / 서다, 서 있는 상태 / 세우다, 두다"},{"n":15,"hw":[{"w":"settle","m":"정착하다, 해결하다, 자리잡다","p":"동","a":["정착하다","해결하다","자리잡다","안정시키다","가라앉다","합의하다"]},{"w":"reside","m":"거주하다, 살다","p":"동","a":["거주하다","살다","머무르다","존재하다"]},{"w":"session","m":"(특정 활동의) 시간, 회기, 모임","p":"명","a":["시간","회기","모임","기간","수업","회의"]},{"w":"sediment","m":"침전물, 퇴적물","p":"명","a":["침전물","퇴적물","앙금","찌꺼기"]},{"w":"sedentary","m":"앉아서 하는, 활동이 적은","p":"형","a":["앉아서 하는","활동이 적은","주로 앉아 있는","정착성의"]},{"w":"seat","m":"자리, 좌석","p":"명","a":["자리","좌석","의석","앉는 곳"]},{"w":"president","m":"대통령, 회장, 사장","p":"명","a":["대통령","회장","사장","의장","총장"]},{"w":"preside","m":"주재하다, 의장을 맡다","p":"동","a":["주재하다","의장을 맡다","사회를 보다","통솔하다","주관하다"]},{"w":"possess","m":"소유하다, 지니다","p":"동","a":["소유하다","지니다","가지다","보유하다","갖추다"]},{"w":"obsess","m":"사로잡다, 강박을 갖게 하다","p":"동","a":["사로잡다","강박을 갖게 하다","집착하게 하다","끊임없이 떠오르다"]},{"w":"assess","m":"평가하다, 가늠하다","p":"동","a":["평가하다","가늠하다","산정하다","사정하다","판단하다"]},{"w":"dissident","m":"반체제 인사, 반대자","p":"명","a":["반체제 인사","반대자","이의를 제기하는 사람","저항 인사"]},{"w":"subside","m":"가라앉다, 진정되다","p":"동","a":["가라앉다","진정되다","잦아들다","수그러들다","내려앉다"]},{"w":"sedate","m":"진정시키다, 가라앉히다","p":"동","a":["진정시키다","가라앉히다","안정시키다","마취시키다"]},{"w":"subsidy","m":"보조금, 지원금","p":"명","a":["보조금","지원금","장려금","조성금"]},{"w":"supersede","m":"대체하다, 대신하다","p":"동","a":["대체하다","대신하다","물러나게 하다","밀어내다","능가하다"]},{"w":"insidious","m":"서서히 퍼지는, 교활한","p":"형","a":["서서히 퍼지는","교활한","음흉한","잠행성의","몰래 해를 끼치는"]},{"w":"sit","m":"앉다, 위치하다","p":"동","a":["앉다","위치하다","자리하다","앉아 있다"]}],"der":[{"w":"settlement","m":"정착, 합의, 정착지","p":"명"},{"w":"settler","m":"정착민","p":"명"},{"w":"residence","m":"거주지, 주택","p":"명"},{"w":"resident","m":"거주자, 주민","p":"명"},{"w":"sedimentary","m":"퇴적의, 침전의","p":"형"},{"w":"seating","m":"좌석 배치","p":"명"},{"w":"presidency","m":"대통령직, 회장직","p":"명"},{"w":"presidential","m":"대통령의","p":"형"},{"w":"possession","m":"소유, 소유물","p":"명"},{"w":"obsession","m":"집착, 강박","p":"명"},{"w":"obsessed","m":"사로잡힌, 집착하는","p":"형"},{"w":"assessment","m":"평가, 사정","p":"명"},{"w":"sedative","m":"진정제","p":"명"},{"w":"subsidize","m":"보조금을 주다","p":"동"}],"syn":[{"w":"resolve","m":"해결하다"},{"w":"establish","m":"정착시키다"},{"w":"live","m":"살다"},{"w":"dwell","m":"거주하다"},{"w":"meeting","m":"모임"},{"w":"period","m":"기간"},{"w":"deposit","m":"퇴적물"},{"w":"inactive","m":"활동적이지 않은"},{"w":"chair","m":"의자, 의장을 맡다"},{"w":"place","m":"자리"},{"w":"chairman","m":"의장"},{"w":"head","m":"수장"},{"w":"lead","m":"이끌다"},{"w":"own","m":"소유하다"},{"w":"have","m":"가지다"},{"w":"preoccupy","m":"사로잡다"},{"w":"evaluate","m":"평가하다"},{"w":"judge","m":"판단하다"},{"w":"rebel","m":"반항자"},{"w":"protester","m":"항의자"},{"w":"calm down","m":"진정되다"},{"w":"diminish","m":"줄어들다"},{"w":"calm","m":"진정시키다"},{"w":"soothe","m":"달래다"},{"w":"grant","m":"지원금"},{"w":"aid","m":"원조"},{"w":"replace","m":"대체하다"},{"w":"supplant","m":"대신 들어서다"},{"w":"sneaky","m":"교활한"},{"w":"subtle","m":"은밀한"},{"w":"be seated","m":"앉다"}],"ant":[{"w":"active","m":"활동적인"},{"w":"lack","m":"결여하다"},{"w":"supporter","m":"지지자"},{"w":"rise","m":"치솟다"},{"w":"increase","m":"증가하다"},{"w":"agitate","m":"흥분시키다"},{"w":"stand","m":"서다"}],"idi":[{"w":"sit back","m":"편히 앉다, 느긋이 쉬다"},{"w":"sit in for","m":"~을 대신하다, 대리 출석하다"},{"w":"settle down","m":"정착하다, 진정되다"},{"w":"settle for","m":"~으로 만족하다, 받아들이다"},{"w":"settle in","m":"자리를 잡다, 적응하다"},{"w":"stay put","m":"그 자리에 머무르다, 가만히 있다"},{"w":"calm down","m":"진정하다, 차분해지다"},{"w":"die down","m":"잦아들다, 가라앉다"},{"w":"take over","m":"인수하다, 떠맡다, 장악하다"},{"w":"look into","m":"조사하다, 살펴보다"},{"w":"preside over","m":"~을 주재하다, 통솔하다"},{"w":"be hooked on","m":"~에 빠지다, 중독되다"}],"etym":[{"w":"reside","m":"거주하다, 살다","pcs":[["re-","계속"],["sid","앉다"]],"res":"거주하다"},{"w":"session","m":"(특정 활동의) 시간, 회기, 모임","pcs":[["sess","앉다"],["-ion","것"]],"res":"모임 · 회기"},{"w":"sediment","m":"침전물, 퇴적물","pcs":[["sed","앉다·가라앉다"],["-iment","것"]],"res":"침전물"},{"w":"sedentary","m":"앉아서 하는, 활동이 적은","pcs":[["sed","앉다"],["-entary","형"]],"res":"앉아서 하는"},{"w":"president","m":"대통령, 회장, 사장","pcs":[["pre-","앞에"],["sid","앉다"],["-ent","사람"]],"res":"대통령 · 회장"},{"w":"preside","m":"주재하다, 의장을 맡다","pcs":[["pre-","앞에"],["sid","앉다"]],"res":"주재하다"},{"w":"possess","m":"소유하다, 지니다","pcs":[["pos-","완전히"],["sess","앉다"]],"res":"소유하다"},{"w":"obsess","m":"사로잡다, 강박을 갖게 하다","pcs":[["ob-","맞은편에"],["sess","앉다"]],"res":"사로잡다"},{"w":"assess","m":"평가하다, 가늠하다","pcs":[["as-","곁에"],["sess","앉다"]],"res":"평가하다"},{"w":"dissident","m":"반체제 인사, 반대자","pcs":[["dis-","따로"],["sid","앉다"],["-ent","사람"]],"res":"반대자"},{"w":"subside","m":"가라앉다, 진정되다","pcs":[["sub-","아래로"],["sid","앉다"]],"res":"진정되다"},{"w":"sedate","m":"진정시키다, 가라앉히다","pcs":[["sed","앉다·가라앉다"],["-ate","동"]],"res":"진정시키다"},{"w":"subsidy","m":"보조금, 지원금","pcs":[["sub-","아래에서"],["sid","앉다·받쳐 주다"],["-y",""]],"res":"보조금"},{"w":"supersede","m":"대체하다, 대신하다","pcs":[["super-","위에"],["sed","앉다"]],"res":"대체하다"},{"w":"insidious","m":"서서히 퍼지는, 교활한","pcs":[["in-","안에"],["sid","앉다"],["-ious",""]],"res":"음흉한 · 서서히 퍼지는"}],"theme":"앉다, 머무르다 / 앉다 → 다스리다, 차지하다 / 앉다 → 가라앉다, 진정하다"},{"n":16,"hw":[{"w":"capital","m":"수도, 자본, 대문자","p":"명","a":["수도","자본","대문자","중심지","밑천"]},{"w":"captain","m":"주장, 선장, 대위","p":"명","a":["주장","선장","대위","기장","우두머리"]},{"w":"chief","m":"장(長), 우두머리, 추장","p":"명","a":["장","우두머리","추장","최고위자","수장"]},{"w":"chapter","m":"장(章), 단원","p":"명","a":["장","단원","챕터","한 장","절"]},{"w":"capitalize","m":"대문자로 쓰다, 자본화하다, 이용하다","p":"동","a":["대문자로 쓰다","자본화하다","이용하다","활용하다"]},{"w":"achieve","m":"이루다, 달성하다","p":"동","a":["이루다","달성하다","성취하다","해내다","이룩하다"]},{"w":"manual","m":"손으로 하는, 수동의","p":"형","a":["손으로 하는","수동의","육체의","손의"]},{"w":"manage","m":"관리하다, 다루다, 해내다","p":"동","a":["관리하다","다루다","해내다","경영하다","처리하다","용케 해내다"]},{"w":"manipulate","m":"조작하다, 조종하다","p":"동","a":["조작하다","조종하다","교묘히 다루다","다루다","주무르다"]},{"w":"manner","m":"방식, 태도, 예절","p":"명","a":["방식","태도","예절","방법","몸가짐"]},{"w":"mandate","m":"명령, 권한, 위임","p":"명","a":["명령","권한","위임","지시","위임 통치"]},{"w":"emancipate","m":"해방하다, 자유롭게 하다","p":"동","a":["해방하다","자유롭게 하다","풀어 주다","벗어나게 하다"]},{"w":"pedal","m":"페달, 발판","p":"명","a":["페달","발판"]},{"w":"pedestrian","m":"보행자","p":"명","a":["보행자","도보 여행자","걷는 사람"]},{"w":"pedestal","m":"받침대, 주춧돌","p":"명","a":["받침대","주춧돌","대좌","기단"]},{"w":"impede","m":"방해하다, 지연시키다","p":"동","a":["방해하다","지연시키다","막다","지장을 주다","더디게 하다"]},{"w":"expedition","m":"탐험, 원정, 탐험대","p":"명","a":["탐험","원정","탐험대","원정대","여행"]},{"w":"tripod","m":"삼각대","p":"명","a":["삼각대","삼발이"]}],"der":[{"w":"capitalism","m":"자본주의","p":"명"},{"w":"achievement","m":"업적, 성취","p":"명"},{"w":"manually","m":"수동으로, 손으로","p":"부"},{"w":"management","m":"관리, 경영","p":"명"},{"w":"manager","m":"관리자, 경영자","p":"명"},{"w":"manipulation","m":"조작, 조종","p":"명"},{"w":"mandatory","m":"의무적인, 강제의","p":"형"},{"w":"emancipation","m":"해방","p":"명"}],"syn":[{"w":"leader","m":"지도자"},{"w":"commander","m":"지휘관"},{"w":"head","m":"수장"},{"w":"boss","m":"우두머리"},{"w":"section","m":"절, 부분"},{"w":"accomplish","m":"달성하다"},{"w":"attain","m":"이루다"},{"w":"hand-operated","m":"손으로 작동하는"},{"w":"handle","m":"다루다"},{"w":"run","m":"운영하다"},{"w":"control","m":"조종하다"},{"w":"way","m":"방식"},{"w":"attitude","m":"태도"},{"w":"order","m":"명령"},{"w":"authority","m":"권한"},{"w":"free","m":"해방하다"},{"w":"liberate","m":"자유롭게 하다"},{"w":"treadle","m":"발판"},{"w":"walker","m":"보행자"},{"w":"base","m":"받침"},{"w":"stand","m":"받침대"},{"w":"hinder","m":"방해하다"},{"w":"obstruct","m":"막다"},{"w":"journey","m":"여정"},{"w":"voyage","m":"항해, 여행"}],"ant":[{"w":"subordinate","m":"부하"},{"w":"fail","m":"실패하다"},{"w":"automatic","m":"자동의"},{"w":"enslave","m":"노예로 만들다"},{"w":"driver","m":"운전자"},{"w":"aid","m":"돕다"},{"w":"facilitate","m":"촉진하다"}],"idi":[{"w":"hand in","m":"제출하다"},{"w":"hand out","m":"나눠 주다, 배포하다"},{"w":"by hand","m":"손으로, 수작업으로"},{"w":"get out of hand","m":"감당할 수 없게 되다"},{"w":"head for","m":"~로 향하다"},{"w":"use your head","m":"머리를 쓰다, 생각하다"},{"w":"keep your head","m":"침착함을 유지하다"},{"w":"ahead of","m":"~보다 앞서, ~보다 빨리"},{"w":"on foot","m":"걸어서, 도보로"},{"w":"step by step","m":"한 걸음씩, 차근차근"},{"w":"put your foot down","m":"단호히 반대하다, 강경히 나오다"},{"w":"stand on your own feet","m":"자립하다, 독립하다"}],"etym":[{"w":"capital","m":"수도, 자본, 대문자","pcs":[["capit","머리"],["-al",""]],"res":"수도 · 자본"},{"w":"captain","m":"주장, 선장, 대위","pcs":[["capt","=capit 머리"],["-ain","사람"]],"res":"주장 · 선장"},{"w":"chapter","m":"장(章), 단원","pcs":[["chapt","=capit 머리"],["-er",""]],"res":"장"},{"w":"capitalize","m":"대문자로 쓰다, 자본화하다, 이용하다","pcs":[["capit","머리"],["-alize",""]],"res":"대문자로 쓰다"},{"w":"achieve","m":"이루다, 달성하다","pcs":[["a-","~에"],["chiev","=capit 머리·끝"]],"res":"이루다"},{"w":"manual","m":"손으로 하는, 수동의","pcs":[["manu","손"],["-al","형"]],"res":"수동의"},{"w":"manage","m":"관리하다, 다루다, 해내다","pcs":[["man","손"],["-age",""]],"res":"관리하다"},{"w":"manipulate","m":"조작하다, 조종하다","pcs":[["mani","손"],["pul","채우다"],["-ate",""]],"res":"조작하다"},{"w":"manner","m":"방식, 태도, 예절","pcs":[["man","손"],["-ner",""]],"res":"방식 · 태도"},{"w":"mandate","m":"명령, 권한, 위임","pcs":[["man","손"],["dat","주다"],["-e",""]],"res":"명령·위임"},{"w":"emancipate","m":"해방하다, 자유롭게 하다","pcs":[["e-","밖으로"],["man","손"],["cip","잡다"],["-ate",""]],"res":"해방하다"},{"w":"pedal","m":"페달, 발판","pcs":[["ped","발"],["-al",""]],"res":"페달"},{"w":"pedestrian","m":"보행자","pcs":[["ped","발"],["-estrian",""]],"res":"보행자"},{"w":"pedestal","m":"받침대, 주춧돌","pcs":[["ped","발"],["-estal",""]],"res":"받침대"},{"w":"impede","m":"방해하다, 지연시키다","pcs":[["im-","안에"],["ped","발"]],"res":"방해하다"},{"w":"expedition","m":"탐험, 원정, 탐험대","pcs":[["ex-","밖으로"],["ped","발"],["-ition",""]],"res":"탐험 · 원정"},{"w":"tripod","m":"삼각대","pcs":[["tri-","셋"],["pod","발"]],"res":"삼각대"}],"theme":"머리 / 손 / 발"},{"n":17,"hw":[{"w":"lucid","m":"명료한, 또렷한","p":"형","a":["명료한","또렷한","명쾌한","맑은","분명한"]},{"w":"translucent","m":"반투명한","p":"형","a":["반투명한","빛이 비치는","투명한"]},{"w":"illuminate","m":"비추다, 밝히다, 설명하다","p":"동","a":["비추다","밝히다","설명하다","조명하다","분명히 하다"]},{"w":"luminous","m":"빛나는, 환한","p":"형","a":["빛나는","환한","야광의","발광하는","밝은"]},{"w":"illustrate","m":"삽화를 넣다, 예시로 설명하다","p":"동","a":["삽화를 넣다","예시로 설명하다","분명히 보여 주다","예증하다","도해하다"]},{"w":"luxury","m":"사치, 호화로움","p":"명","a":["사치","호화로움","사치품","호사","豪華"]},{"w":"telephone","m":"전화, 전화기","p":"명","a":["전화","전화기"]},{"w":"symphony","m":"교향곡, 조화","p":"명","a":["교향곡","조화","심포니","교향악"]},{"w":"microphone","m":"마이크, 확성기","p":"명","a":["마이크","확성기","송화기"]},{"w":"phonics","m":"발음 중심 학습법, 파닉스","p":"명","a":["발음 중심 학습법","파닉스","음성학 교수법"]},{"w":"phonetic","m":"음성의, 발음의","p":"형","a":["음성의","발음의","음성 표기의"]},{"w":"headphone","m":"헤드폰, 이어폰","p":"명","a":["헤드폰","이어폰","수화기"]},{"w":"sound","m":"소리, 음향","p":"명","a":["소리","음향","음","잡음"]},{"w":"sonic","m":"소리의, 음속의","p":"형","a":["소리의","음속의","음파의"]},{"w":"resonate","m":"울려 퍼지다, 공감을 일으키다","p":"동","a":["울려 퍼지다","공감을 일으키다","공명하다","반향하다","메아리치다"]},{"w":"dissonance","m":"불협화음, 부조화","p":"명","a":["불협화음","부조화","불일치","엇갈림"]},{"w":"unison","m":"일제히, 조화, 제창","p":"명","a":["일제히","조화","제창","동음","한목소리"]},{"w":"consonant","m":"자음","p":"명","a":["자음"]}],"der":[{"w":"illumination","m":"조명, 밝힘","p":"명"},{"w":"luminosity","m":"광도, 밝기","p":"명"},{"w":"illustration","m":"삽화, 예시","p":"명"},{"w":"luxurious","m":"호화로운, 사치스러운","p":"형"},{"w":"symphonic","m":"교향곡의","p":"형"},{"w":"phonic","m":"음성의","p":"형"},{"w":"phonetics","m":"음성학","p":"명"},{"w":"resonance","m":"공명, 반향","p":"명"}],"syn":[{"w":"clear","m":"명료한"},{"w":"plain","m":"분명한"},{"w":"see-through","m":"비치는"},{"w":"light up","m":"밝히다"},{"w":"brighten","m":"환하게 하다"},{"w":"bright","m":"밝은"},{"w":"glowing","m":"빛나는"},{"w":"demonstrate","m":"보여 주다"},{"w":"depict","m":"묘사하다"},{"w":"extravagance","m":"사치"},{"w":"phone","m":"전화"},{"w":"harmony","m":"조화"},{"w":"mic","m":"마이크"},{"w":"earphone","m":"이어폰"},{"w":"noise","m":"소음"},{"w":"tone","m":"음"},{"w":"acoustic","m":"음향의"},{"w":"echo","m":"메아리치다"},{"w":"reverberate","m":"울려 퍼지다"},{"w":"discord","m":"불협화"}],"ant":[{"w":"vague","m":"모호한"},{"w":"obscure","m":"불분명한"},{"w":"opaque","m":"불투명한"},{"w":"darken","m":"어둡게 하다"},{"w":"dim","m":"어둑한"},{"w":"necessity","m":"필수품"},{"w":"silence","m":"침묵"},{"w":"harmony","m":"조화"},{"w":"vowel","m":"모음"}],"idi":[{"w":"light up","m":"환하게 밝히다, 밝아지다"},{"w":"come to light","m":"밝혀지다, 드러나다"},{"w":"shed light on","m":"~을 밝히다, 해명하다"},{"w":"in light of","m":"~을 고려하여, ~에 비추어"},{"w":"make light of","m":"가볍게 여기다, 대수롭지 않게 여기다"},{"w":"sound like","m":"~처럼 들리다, ~인 것 같다"},{"w":"sound out","m":"의중을 떠보다, 타진하다"},{"w":"ring a bell","m":"들어본 듯하다, 기억이 나다"},{"w":"loud and clear","m":"아주 분명하게"},{"w":"turn up","m":"(소리를) 키우다, 나타나다"},{"w":"turn down","m":"(소리를) 줄이다, 거절하다"},{"w":"speak up","m":"더 크게 말하다, 의견을 말하다"}],"etym":[{"w":"lucid","m":"명료한, 또렷한","pcs":[["luc","빛"],["-id","형"]],"res":"명료한"},{"w":"translucent","m":"반투명한","pcs":[["trans-","통과하여"],["luc","빛"],["-ent",""]],"res":"반투명한"},{"w":"illuminate","m":"비추다, 밝히다, 설명하다","pcs":[["il-","안으로"],["lumin","빛"],["-ate",""]],"res":"비추다"},{"w":"luminous","m":"빛나는, 환한","pcs":[["lumin","빛"],["-ous","형"]],"res":"빛나는"},{"w":"illustrate","m":"삽화를 넣다, 예시로 설명하다","pcs":[["il-","안으로"],["lustr","빛"],["-ate",""]],"res":"예시로 설명하다"},{"w":"luxury","m":"사치, 호화로움","pcs":[["lux","빛·광채"],["-ury",""]],"res":"사치 · 호화로움"},{"w":"telephone","m":"전화, 전화기","pcs":[["tele-","멀리"],["phon","소리"]],"res":"전화"},{"w":"symphony","m":"교향곡, 조화","pcs":[["sym-","함께"],["phon","소리"],["-y",""]],"res":"교향곡"},{"w":"microphone","m":"마이크, 확성기","pcs":[["micro-","작은"],["phon","소리"]],"res":"마이크"},{"w":"phonics","m":"발음 중심 학습법, 파닉스","pcs":[["phon","소리"],["-ics","학문"]],"res":"파닉스"},{"w":"phonetic","m":"음성의, 발음의","pcs":[["phon","소리"],["-etic","형"]],"res":"음성의"},{"w":"headphone","m":"헤드폰, 이어폰","pcs":[["head","머리"],["phon","소리"]],"res":"헤드폰"},{"w":"sonic","m":"소리의, 음속의","pcs":[["son","소리"],["-ic","형"]],"res":"소리의"},{"w":"resonate","m":"울려 퍼지다, 공감을 일으키다","pcs":[["re-","되울려"],["son","소리"],["-ate",""]],"res":"공명하다"},{"w":"dissonance","m":"불협화음, 부조화","pcs":[["dis-","어긋나게"],["son","소리"],["-ance",""]],"res":"불협화음"},{"w":"unison","m":"일제히, 조화, 제창","pcs":[["uni-","하나"],["son","소리"]],"res":"일제히 · 한목소리"},{"w":"consonant","m":"자음","pcs":[["con-","함께"],["son","소리"],["-ant",""]],"res":"자음"}],"theme":"빛, 빛나다 / 소리, 목소리 / 소리"},{"n":18,"hw":[{"w":"annual","m":"연례의, 매년의","p":"형","a":["연례의","매년의","한 해의","연간의","해마다의"]},{"w":"millennium","m":"천년, 새 천년","p":"명","a":["천년","새 천년","밀레니엄","천 년간"]},{"w":"biennial","m":"2년마다의, 격년의","p":"형","a":["2년마다의","격년의","2년에 한 번의","2년생의"]},{"w":"centennial","m":"100주년","p":"명","a":["100주년","백 주년","백년제"]},{"w":"perennial","m":"계속되는, 여러 해 사는","p":"형","a":["계속되는","여러 해 사는","끊임없는","다년생의","영원한"]},{"w":"decade","m":"10년","p":"명","a":["10년","십 년","십년간"]},{"w":"chronic","m":"만성의, 고질적인","p":"형","a":["만성의","고질적인","지속적인","오래가는","상습적인"]},{"w":"chronological","m":"연대순의, 시간순의","p":"형","a":["연대순의","시간순의","순차적인","시대순의"]},{"w":"synchronize","m":"동시에 일어나게 하다, 동기화하다","p":"동","a":["동시에 일어나게 하다","동기화하다","시간을 맞추다","일치시키다"]},{"w":"chronicle","m":"연대기, 기록","p":"명","a":["연대기","기록","사건 기록","연혁"]},{"w":"anachronism","m":"시대착오, 시대에 안 맞는 것","p":"명","a":["시대착오","시대에 안 맞는 것","연대 착오"]},{"w":"chronometer","m":"정밀 시계, 크로노미터","p":"명","a":["정밀 시계","크로노미터","정밀 시간계"]},{"w":"temporary","m":"일시적인, 임시의","p":"형","a":["일시적인","임시의","잠정적인","한시적인","잠깐의"]},{"w":"contemporary","m":"현대의, 동시대의","p":"형","a":["현대의","동시대의","당대의","같은 시대의","현대적인"]},{"w":"tempo","m":"박자, 속도","p":"명","a":["박자","속도","템포","리듬","페이스"]},{"w":"temporal","m":"시간의, 현세의","p":"형","a":["시간의","현세의","세속의","일시적인"]},{"w":"tense","m":"(문법) 시제","p":"명","a":["시제","동사 시제"]},{"w":"tempest","m":"폭풍우, 큰 소동","p":"명","a":["폭풍우","큰 소동","폭풍","대소동"]}],"der":[{"w":"annually","m":"해마다, 매년","p":"부"},{"w":"chronology","m":"연대기, 연대순","p":"명"},{"w":"synchronization","m":"동기화","p":"명"},{"w":"temporarily","m":"일시적으로","p":"부"},{"w":"tempestuous","m":"격렬한, 폭풍우 같은","p":"형"}],"syn":[{"w":"yearly","m":"매년의"},{"w":"thousand years","m":"천 년"},{"w":"lasting","m":"지속되는"},{"w":"enduring","m":"오래가는"},{"w":"ten years","m":"10년"},{"w":"persistent","m":"지속적인"},{"w":"long-lasting","m":"오래가는"},{"w":"sequential","m":"순차적인"},{"w":"coordinate","m":"조정하다"},{"w":"record","m":"기록"},{"w":"account","m":"기록"},{"w":"timepiece","m":"시계"},{"w":"brief","m":"잠깐의"},{"w":"passing","m":"일시적인"},{"w":"modern","m":"현대의"},{"w":"current","m":"당대의"},{"w":"pace","m":"속도"},{"w":"rhythm","m":"리듬"},{"w":"worldly","m":"세속의"},{"w":"storm","m":"폭풍"}],"ant":[{"w":"annual","m":"매년의"},{"w":"temporary","m":"일시적인"},{"w":"acute","m":"급성의"},{"w":"permanent","m":"영구적인"},{"w":"ancient","m":"고대의"},{"w":"eternal","m":"영원한"},{"w":"spiritual","m":"영적인"},{"w":"calm","m":"고요"}],"idi":[{"w":"in time","m":"시간 맞춰, 늦지 않게"},{"w":"on time","m":"정각에, 제시간에"},{"w":"from time to time","m":"때때로, 가끔"},{"w":"for the time being","m":"당분간, 우선은"},{"w":"time after time","m":"몇 번이고, 되풀이해서"},{"w":"ahead of time","m":"미리, 시간보다 앞서"},{"w":"keep up with the times","m":"시대에 뒤떨어지지 않다"},{"w":"day after day","m":"날마다, 매일같이"},{"w":"all year round","m":"일 년 내내"},{"w":"in the long run","m":"장기적으로, 결국에는"},{"w":"sooner or later","m":"조만간, 머지않아"},{"w":"once in a while","m":"가끔, 이따금"}],"etym":[{"w":"annual","m":"연례의, 매년의","pcs":[["ann","해"],["-ual","형"]],"res":"연례의"},{"w":"millennium","m":"천년, 새 천년","pcs":[["mill","천"],["enn","해"],["-ium",""]],"res":"천년"},{"w":"biennial","m":"2년마다의, 격년의","pcs":[["bi-","둘"],["enn","해"],["-ial",""]],"res":"격년의"},{"w":"centennial","m":"100주년","pcs":[["cent","백"],["enn","해"],["-ial",""]],"res":"100주년"},{"w":"perennial","m":"계속되는, 여러 해 사는","pcs":[["per-","내내"],["enn","해"],["-ial",""]],"res":"계속되는"},{"w":"decade","m":"10년","pcs":[["dec","열"],["-ade",""]],"res":"10년"},{"w":"chronic","m":"만성의, 고질적인","pcs":[["chron","시간"],["-ic","형"]],"res":"만성의"},{"w":"chronological","m":"연대순의, 시간순의","pcs":[["chron","시간"],["log","말·순서"],["-ical",""]],"res":"연대순의"},{"w":"synchronize","m":"동시에 일어나게 하다, 동기화하다","pcs":[["syn-","함께"],["chron","시간"],["-ize",""]],"res":"동기화하다"},{"w":"chronicle","m":"연대기, 기록","pcs":[["chron","시간"],["-icle",""]],"res":"연대기"},{"w":"anachronism","m":"시대착오, 시대에 안 맞는 것","pcs":[["ana-","거꾸로"],["chron","시간"],["-ism",""]],"res":"시대착오"},{"w":"chronometer","m":"정밀 시계, 크로노미터","pcs":[["chrono","시간"],["meter","재다"]],"res":"정밀 시계"},{"w":"temporary","m":"일시적인, 임시의","pcs":[["tempor","시간"],["-ary","형"]],"res":"일시적인"},{"w":"contemporary","m":"현대의, 동시대의","pcs":[["con-","함께"],["tempor","시간"],["-ary",""]],"res":"동시대의"},{"w":"temporal","m":"시간의, 현세의","pcs":[["tempor","시간"],["-al","형"]],"res":"시간의 · 현세의"}],"theme":"해, 년(年) / 시간 / 시간, 때"},{"n":19,"hw":[{"w":"benefit","m":"이익, 혜택","p":"명","a":["이익","혜택","이득","수당","유익"]},{"w":"benefactor","m":"후원자, 은인","p":"명","a":["후원자","은인","기부자","독지가"]},{"w":"benevolent","m":"자비로운, 인자한","p":"형","a":["자비로운","인자한","호의적인","선의의","친절한"]},{"w":"benign","m":"양성의, 온화한, 해롭지 않은","p":"형","a":["양성의","온화한","해롭지 않은","상냥한","순한"]},{"w":"bonus","m":"보너스, 상여금, 덤","p":"명","a":["보너스","상여금","덤","특별 수당","이점"]},{"w":"benediction","m":"축복, 축복 기도","p":"명","a":["축복","축복 기도","감사 기도","축도"]},{"w":"magnify","m":"확대하다, 크게 하다","p":"동","a":["확대하다","크게 하다","과장하다","키우다"]},{"w":"magnitude","m":"규모, 크기, 중요도","p":"명","a":["규모","크기","중요도","정도","진도"]},{"w":"magnificent","m":"웅장한, 장엄한, 훌륭한","p":"형","a":["웅장한","장엄한","훌륭한","장대한","멋진"]},{"w":"major","m":"주요한, 더 큰, 다수의","p":"형","a":["주요한","더 큰","다수의","중대한","대다수의"]},{"w":"maximum","m":"최대, 최대한","p":"명","a":["최대","최대한","최댓값","극대","최고"]},{"w":"magnanimous","m":"관대한, 도량이 큰","p":"형","a":["관대한","도량이 큰","아량 있는","너그러운"]},{"w":"malice","m":"악의, 적의","p":"명","a":["악의","적의","앙심","해치려는 마음"]},{"w":"malfunction","m":"제대로 작동하지 않다, 고장 나다","p":"동","a":["제대로 작동하지 않다","고장 나다","오작동하다","기능 이상을 일으키다"]},{"w":"malnutrition","m":"영양실조","p":"명","a":["영양실조","영양 부족"]},{"w":"malevolent","m":"악의적인, 적의 있는","p":"형","a":["악의적인","적의 있는","해치려는","심술궂은"]},{"w":"malaria","m":"말라리아","p":"명","a":["말라리아"]},{"w":"malignant","m":"악성의, 악의 있는","p":"형","a":["악성의","악의 있는","해로운","치명적인"]}],"der":[{"w":"beneficial","m":"유익한, 이로운","p":"형"},{"w":"benevolence","m":"자비, 선의","p":"명"},{"w":"magnifier","m":"확대경, 돋보기","p":"명"},{"w":"magnificence","m":"웅장함, 장려함","p":"명"},{"w":"majority","m":"다수, 대부분","p":"명"},{"w":"maximize","m":"극대화하다","p":"동"},{"w":"malicious","m":"악의적인","p":"형"}],"syn":[{"w":"advantage","m":"이점"},{"w":"profit","m":"이득"},{"w":"supporter","m":"후원자"},{"w":"patron","m":"후원자"},{"w":"kind","m":"친절한"},{"w":"generous","m":"관대한"},{"w":"harmless","m":"해롭지 않은"},{"w":"gentle","m":"온화한"},{"w":"reward","m":"보상"},{"w":"extra","m":"덤"},{"w":"blessing","m":"축복"},{"w":"enlarge","m":"확대하다"},{"w":"amplify","m":"증폭하다"},{"w":"size","m":"크기"},{"w":"scale","m":"규모"},{"w":"splendid","m":"훌륭한"},{"w":"grand","m":"웅장한"},{"w":"main","m":"주요한"},{"w":"primary","m":"주된"},{"w":"most","m":"최대"},{"w":"peak","m":"정점"},{"w":"noble","m":"고결한"},{"w":"spite","m":"악의"},{"w":"hatred","m":"증오"},{"w":"break down","m":"고장 나다"},{"w":"evil","m":"사악한"},{"w":"hostile","m":"적대적인"},{"w":"deadly","m":"치명적인"}],"ant":[{"w":"harm","m":"해"},{"w":"loss","m":"손실"},{"w":"malefactor","m":"악인"},{"w":"malevolent","m":"악의적인"},{"w":"cruel","m":"잔인한"},{"w":"malignant","m":"악성의"},{"w":"curse","m":"저주"},{"w":"reduce","m":"줄이다"},{"w":"shrink","m":"축소하다"},{"w":"modest","m":"수수한"},{"w":"minor","m":"사소한, 더 작은"},{"w":"minimum","m":"최소"},{"w":"petty","m":"옹졸한"},{"w":"goodwill","m":"선의"},{"w":"kindness","m":"친절"},{"w":"work","m":"작동하다"},{"w":"benevolent","m":"자비로운"},{"w":"benign","m":"양성의"}],"idi":[{"w":"be good at","m":"~을 잘하다"},{"w":"do good","m":"이롭다, 선행을 하다"},{"w":"for good","m":"영원히, 아주"},{"w":"make the best of","m":"최대한 활용하다"},{"w":"go bad","m":"상하다, 나빠지다"},{"w":"not half bad","m":"꽤 괜찮다"},{"w":"take a turn for the worse","m":"악화되다"},{"w":"a big deal","m":"큰일, 중대한 것"},{"w":"on a large scale","m":"대규모로"},{"w":"blow up","m":"확대하다, 폭발하다, 화내다"},{"w":"first and foremost","m":"무엇보다 먼저, 가장 중요하게"},{"w":"at most","m":"기껏해야, 최대한"}],"etym":[{"w":"benefit","m":"이익, 혜택","pcs":[["bene","좋게"],["fit","=fac 하다"]],"res":"이익 · 혜택"},{"w":"benefactor","m":"후원자, 은인","pcs":[["bene","좋게"],["fact","하다"],["-or","사람"]],"res":"후원자"},{"w":"benevolent","m":"자비로운, 인자한","pcs":[["bene","좋게"],["vol","바라다"],["-ent",""]],"res":"자비로운"},{"w":"benign","m":"양성의, 온화한, 해롭지 않은","pcs":[["ben","좋은"],["-ign","태생"]],"res":"해롭지 않은 · 양성의"},{"w":"bonus","m":"보너스, 상여금, 덤","pcs":[["bon","좋은"],["-us",""]],"res":"보너스 · 덤"},{"w":"benediction","m":"축복, 축복 기도","pcs":[["bene","좋게"],["dict","말하다"],["-ion",""]],"res":"축복"},{"w":"magnify","m":"확대하다, 크게 하다","pcs":[["magni","크게"],["fy","=fac 만들다"]],"res":"확대하다"},{"w":"magnitude","m":"규모, 크기, 중요도","pcs":[["magni","크다"],["-tude","상태"]],"res":"규모 · 크기"},{"w":"magnificent","m":"웅장한, 장엄한, 훌륭한","pcs":[["magni","크게"],["fic","만들다"],["-ent",""]],"res":"웅장한"},{"w":"major","m":"주요한, 더 큰, 다수의","pcs":[["maj","=magn 더 큰"],["-or",""]],"res":"주요한"},{"w":"maximum","m":"최대, 최대한","pcs":[["max","=magn 가장 큰"],["-imum",""]],"res":"최대"},{"w":"magnanimous","m":"관대한, 도량이 큰","pcs":[["magn","크다"],["anim","마음"],["-ous",""]],"res":"관대한"},{"w":"malice","m":"악의, 적의","pcs":[["mal","나쁘다"],["-ice",""]],"res":"악의"},{"w":"malfunction","m":"제대로 작동하지 않다, 고장 나다","pcs":[["mal","나쁘게"],["function","작동"]],"res":"고장 나다"},{"w":"malnutrition","m":"영양실조","pcs":[["mal","나쁘게"],["nutrition","영양"]],"res":"영양실조"},{"w":"malevolent","m":"악의적인, 적의 있는","pcs":[["mal","나쁘게"],["vol","바라다"],["-ent",""]],"res":"악의적인"},{"w":"malaria","m":"말라리아","pcs":[["mal","나쁜"],["aria","공기"]],"res":"말라리아"},{"w":"malignant","m":"악성의, 악의 있는","pcs":[["mal","나쁜"],["-ign","태생"],["-ant",""]],"res":"악성의"}],"theme":"좋다, 잘 / 크다, 위대하다 / 나쁘다, 악하다"},{"n":20,"hw":[{"w":"equal","m":"같은, 평등한, 동등한","p":"형","a":["같은","평등한","동등한","대등한","균등한"]},{"w":"equator","m":"적도","p":"명","a":["적도"]},{"w":"equivalent","m":"동등한, 맞먹는","p":"형","a":["동등한","맞먹는","상응하는","~에 해당하는","같은 값의"]},{"w":"equilibrium","m":"평형, 균형","p":"명","a":["평형","균형","평정","안정"]},{"w":"adequate","m":"충분한, 적절한","p":"형","a":["충분한","적절한","알맞은","쓸 만한","족한"]},{"w":"equity","m":"공정, 공평, 자기 자본","p":"명","a":["공정","공평","형평","자기 자본","지분"]},{"w":"multiple","m":"다수의, 다양한, 복합적인","p":"형","a":["다수의","다양한","복합적인","여러 개의","많은"]},{"w":"multitude","m":"다수, 군중","p":"명","a":["다수","군중","많음","수많은 사람","무리"]},{"w":"multicultural","m":"다문화의","p":"형","a":["다문화의","여러 문화의","다문화적인"]},{"w":"polygon","m":"다각형","p":"명","a":["다각형"]},{"w":"multimedia","m":"멀티미디어, 다중 매체","p":"명","a":["멀티미디어","다중 매체","복합 매체"]},{"w":"monotonous","m":"단조로운, 지루한","p":"형","a":["단조로운","지루한","변화 없는","따분한"]},{"w":"unite","m":"결합하다, 통합하다, 단결하다","p":"동","a":["결합하다","통합하다","단결하다","하나로 합치다","연합하다"]},{"w":"uniform","m":"제복, 유니폼","p":"명","a":["제복","유니폼","교복","군복","단복"]},{"w":"universe","m":"우주, 만물","p":"명","a":["우주","만물","전 세계","전체"]},{"w":"unique","m":"독특한, 유일한","p":"형","a":["독특한","유일한","고유한","특별한","둘도 없는"]},{"w":"monologue","m":"독백, 혼자 하는 긴 말","p":"명","a":["독백","혼자 하는 긴 말","모놀로그","1인 대사"]},{"w":"monopoly","m":"독점, 전매","p":"명","a":["독점","전매","독차지","독점권"]}],"der":[{"w":"equality","m":"평등, 동등","p":"명"},{"w":"equally","m":"똑같이, 동등하게","p":"부"},{"w":"adequately","m":"충분히, 적절히","p":"부"},{"w":"equitable","m":"공정한, 공평한","p":"형"},{"w":"multiply","m":"곱하다, 크게 늘리다","p":"동"},{"w":"monotony","m":"단조로움","p":"명"},{"w":"unity","m":"통합, 단결","p":"명"},{"w":"union","m":"연합, 조합","p":"명"},{"w":"universal","m":"보편적인, 전 세계의","p":"형"},{"w":"monopolize","m":"독점하다","p":"동"}],"syn":[{"w":"same","m":"같은"},{"w":"identical","m":"동일한"},{"w":"equal","m":"같은"},{"w":"comparable","m":"비슷한"},{"w":"balance","m":"균형"},{"w":"stability","m":"안정"},{"w":"sufficient","m":"충분한"},{"w":"enough","m":"충분한"},{"w":"fairness","m":"공정"},{"w":"justice","m":"정의"},{"w":"numerous","m":"수많은"},{"w":"various","m":"다양한"},{"w":"crowd","m":"군중"},{"w":"host","m":"다수"},{"w":"diverse","m":"다양한"},{"w":"dull","m":"따분한"},{"w":"boring","m":"지루한"},{"w":"combine","m":"결합하다"},{"w":"join","m":"합치다"},{"w":"outfit","m":"복장"},{"w":"cosmos","m":"우주"},{"w":"special","m":"특별한"},{"w":"distinctive","m":"독특한"},{"w":"soliloquy","m":"독백"},{"w":"control","m":"장악"}],"ant":[{"w":"unequal","m":"불평등한"},{"w":"different","m":"다른"},{"w":"imbalance","m":"불균형"},{"w":"inadequate","m":"불충분한"},{"w":"inequity","m":"불공정"},{"w":"single","m":"단일의"},{"w":"handful","m":"소수"},{"w":"varied","m":"다채로운"},{"w":"divide","m":"나누다"},{"w":"separate","m":"분리하다"},{"w":"common","m":"흔한"},{"w":"ordinary","m":"평범한"},{"w":"dialogue","m":"대화"},{"w":"competition","m":"경쟁"}],"idi":[{"w":"one by one","m":"하나씩, 차례로"},{"w":"at once","m":"즉시, 동시에"},{"w":"all in all","m":"대체로, 전반적으로"},{"w":"above all","m":"무엇보다도"},{"w":"a number of","m":"다수의, 여러"},{"w":"plenty of","m":"많은, 충분한"},{"w":"a great deal of","m":"많은 (양의)"},{"w":"more or less","m":"대체로, 거의"},{"w":"on the whole","m":"전체적으로, 대체로"},{"w":"in common","m":"공통으로, 공동으로"},{"w":"even out","m":"고르게 되다, 균등해지다"},{"w":"add up","m":"합산되다, 말이 되다"}],"etym":[{"w":"equal","m":"같은, 평등한, 동등한","pcs":[["equ","같다"],["-al","형"]],"res":"평등한"},{"w":"equator","m":"적도","pcs":[["equ","같다"],["-ator",""]],"res":"적도"},{"w":"equivalent","m":"동등한, 맞먹는","pcs":[["equi","같다"],["val","가치"],["-ent",""]],"res":"동등한"},{"w":"equilibrium","m":"평형, 균형","pcs":[["equi","같다"],["libr","저울"],["-ium",""]],"res":"평형"},{"w":"adequate","m":"충분한, 적절한","pcs":[["ad-","~에"],["equ","같다"],["-ate",""]],"res":"충분한"},{"w":"equity","m":"공정, 공평, 자기 자본","pcs":[["equ","같다·공정"],["-ity",""]],"res":"공정 · 공평"},{"w":"multiple","m":"다수의, 다양한, 복합적인","pcs":[["multi","많은"],["-ple","겹"]],"res":"다수의"},{"w":"multitude","m":"다수, 군중","pcs":[["multi","많은"],["-tude","상태"]],"res":"다수 · 군중"},{"w":"multicultural","m":"다문화의","pcs":[["multi","많은"],["cultural","문화의"]],"res":"다문화의"},{"w":"polygon","m":"다각형","pcs":[["poly","많은"],["gon","각"]],"res":"다각형"},{"w":"multimedia","m":"멀티미디어, 다중 매체","pcs":[["multi","많은"],["media","매체"]],"res":"멀티미디어"},{"w":"monotonous","m":"단조로운, 지루한","pcs":[["mono","하나"],["ton","소리"],["-ous",""]],"res":"단조로운"},{"w":"unite","m":"결합하다, 통합하다, 단결하다","pcs":[["uni","하나"],["-te",""]],"res":"통합하다"},{"w":"uniform","m":"제복, 유니폼","pcs":[["uni","하나"],["form","형태"]],"res":"제복"},{"w":"universe","m":"우주, 만물","pcs":[["uni","하나"],["vers","돌다"]],"res":"우주"},{"w":"unique","m":"독특한, 유일한","pcs":[["uni","하나"],["-que",""]],"res":"유일한 · 독특한"},{"w":"monologue","m":"독백, 혼자 하는 긴 말","pcs":[["mono","하나"],["log","말"],["-ue",""]],"res":"독백"},{"w":"monopoly","m":"독점, 전매","pcs":[["mono","하나"],["pol","팔다"],["-y",""]],"res":"독점"}],"theme":"같다, 평등하다 / 많은 / 하나"}];
+const TN = {hw:'표제어', der:'파생어', idi:'숙어', syn:'유의어', ant:'반의어'};
+const S = {name:'', mode:'one', chs:[1], types:['hw'], lvl:1, best:{1:0,2:0,3:0,4:0,5:0,6:0,7:0}, snd:true};
+let G = null;
+
+/* ── 사운드 (파일 없이 생성) ── */
+let AC=null;
+function ac(){ if(!AC){ try{ AC=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } } return AC; }
+function beep(freq, dur, type, vol, slide){
+  if(!S.snd) return;
+  const c=ac(); if(!c) return;
+  try{
+    const o=c.createOscillator(), g=c.createGain();
+    o.type=type||'sine'; o.frequency.setValueAtTime(freq, c.currentTime);
+    if(slide) o.frequency.exponentialRampToValueAtTime(slide, c.currentTime+dur);
+    g.gain.setValueAtTime(vol||.12, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001, c.currentTime+dur);
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(c.currentTime+dur);
+  }catch(e){}
+}
+const SFX = {
+  ok:  n => beep(520+Math.min(n,10)*45, .1, 'triangle', .1),
+  no:  () => { beep(180, .18, 'sawtooth', .1, 90); },
+  crit:() => { beep(880,.07,'square',.09); setTimeout(()=>beep(1320,.12,'square',.09),60); },
+  tick:() => beep(1200,.03,'sine',.05),
+  win: () => [0,120,240,400].forEach((d,i)=>setTimeout(()=>beep([523,659,784,1047][i],.22,'triangle',.11),d)),
+  lose:() => [0,140,300].forEach((d,i)=>setTimeout(()=>beep([392,311,196][i],.3,'sawtooth',.1),d)),
+  pop: () => beep(700,.05,'sine',.06)
+};
+
+/* ══ 저장 (실패해도 게임은 계속) ══ */
+const SKEY='sieun_v1_save';
+let SAVE={ best:{}, clear:{}, badges:{}, bossKill:{}, stat:{play:0,ok:0,mx:0,perfect:0} };
+let saveOK=true;
+function loadSave(){
+  try{
+    const r=localStorage.getItem(SKEY);
+    if(r){
+      const o=JSON.parse(r);
+      if(o&&typeof o==='object'){
+        SAVE.best=o.best||{}; SAVE.clear=o.clear||{}; SAVE.badges=o.badges||{};
+        SAVE.bossKill=o.bossKill||{};
+        SAVE.stat=Object.assign({play:0,ok:0,mx:0,perfect:0}, o.stat||{});
+      }
+    }
+  }catch(e){ saveOK=false; }
+}
+function putSave(){
+  if(!saveOK) return;
+  try{ localStorage.setItem(SKEY, JSON.stringify(SAVE)); }
+  catch(e){ saveOK=false; }
+}
+function wipeSave(){
+  try{ localStorage.removeItem(SKEY); }catch(e){}
+  SAVE={ best:{}, clear:{}, badges:{}, bossKill:{}, stat:{play:0,ok:0,mx:0,perfect:0} };
+}
+/* 강·단계별 최고점 키 */
+function bkey(ch,lv){ return ch+'_'+lv; }
+function esc2(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ══ 보스 20종 ══ */
+const BOSSES=[
+  {e:'👹',n:'어휘 도깨비',hp:110},{e:'🐺',n:'늑대 어원',hp:120},
+  {e:'🦂',n:'전갈 접두사',hp:125},{e:'🐍',n:'뱀 접미사',hp:130},
+  {e:'🦇',n:'박쥐 다의어',hp:135},{e:'🕷️',n:'거미 파생어',hp:140},
+  {e:'🦖',n:'공룡 라틴',hp:145},{e:'🐙',n:'문어 그리스',hp:150},
+  {e:'👻',n:'유령 동의어',hp:155},{e:'🧟',n:'좀비 반의어',hp:160},
+  {e:'🦈',n:'상어 숙어',hp:165},{e:'🐲',n:'용 어근왕',hp:170},
+  {e:'🧛',n:'뱀파이어 철자',hp:175},{e:'🤖',n:'로봇 발음',hp:180},
+  {e:'👽',n:'외계 문법',hp:185},{e:'🦑',n:'크라켄 구문',hp:190},
+  {e:'🐉',n:'동방룡 관용구',hp:195},{e:'💀',n:'해골 수능왕',hp:200},
+  {e:'🔥',n:'화염 마스터',hp:210},{e:'👑',n:'어휘의 왕',hp:220}
+];
+function bossOf(ch){ return BOSSES[Math.max(0,Math.min(19,(ch|0)-1))]; }
+
+/* ══ 도전과제 ══ */
+const BADGES=[
+  {id:'first', e:'🎯', n:'첫 걸음', d:'아무 모드나 클리어'},
+  {id:'combo10', e:'🔥', n:'콤보 마스터', d:'10콤보 달성'},
+  {id:'combo20', e:'⚡', n:'시은 마스터', d:'20콤보 달성'},
+  {id:'perfect', e:'💎', n:'무결점', d:'한 번도 안 틀리고 클리어'},
+  {id:'sgrade', e:'⭐', n:'S등급', d:'S등급 획득'},
+  {id:'boss1', e:'🗡️', n:'보스 사냥꾼', d:'보스 1마리 처치'},
+  {id:'boss5', e:'⚔️', n:'보스 학살자', d:'보스 5마리 처치'},
+  {id:'boss20', e:'👑', n:'보스 정복자', d:'보스 20마리 전부 처치'},
+  {id:'etym', e:'🧩', n:'어원 학자', d:'어원 조합 클리어'},
+  {id:'all6', e:'🎮', n:'육관왕', d:'6개 모드 전부 클리어'},
+  {id:'ch5', e:'📗', n:'5강 정복', d:'5개 강 클리어'},
+  {id:'ch20', e:'📚', n:'완전 정복', d:'20강 전부 클리어'},
+  {id:'play50', e:'🏃', n:'꾸준함', d:'50판 플레이'},
+  {id:'word500', e:'🧠', n:'단어 사냥꾼', d:'정답 500개'}
+];
+function gotBadge(id){
+  if(SAVE.badges[id]) return false;
+  SAVE.badges[id]=Date.now(); putSave();
+  const b=BADGES.find(x=>x.id===id);
+  if(b) setTimeout(()=>banner(b.e+' '+b.n,'#fcd34d'), 400);
+  return true;
+}
+function checkBadges(o){
+  // o: {lv, grade, mx, wrong, acc, bossWin, ch}
+  const newly=[];
+  const g=id=>{ if(gotBadge(id)) newly.push(id); };
+  g('first');
+  if(o.mx>=10) g('combo10');
+  if(o.mx>=20) g('combo20');
+  if(o.wrong===0 && o.acc>=100) g('perfect');
+  if(o.grade==='S') g('sgrade');
+  if(o.lv===4) g('etym');
+  const kills=Object.keys(SAVE.bossKill).length;
+  if(kills>=1) g('boss1');
+  if(kills>=5) g('boss5');
+  if(kills>=20) g('boss20');
+  const modes={}; Object.keys(SAVE.clear).forEach(k=>modes[k.split('_')[1]]=1);
+  if(Object.keys(modes).length>=6) g('all6');
+  const chs={}; Object.keys(SAVE.clear).forEach(k=>chs[k.split('_')[0]]=1);
+  if(Object.keys(chs).length>=5) g('ch5');
+  if(Object.keys(chs).length>=20) g('ch20');
+  if(SAVE.stat.play>=50) g('play50');
+  if(SAVE.stat.ok>=500) g('word500');
+  return newly;
+}
+
+/* iOS 오디오 잠금 해제 — 사용자 제스처에서 호출 */
+let unlocked=false;
+function unlock(){
+  if(unlocked) return; unlocked=true;
+  const c=ac(); if(!c) return;
+  try{
+    if(c.state==='suspended') c.resume();
+    const o=c.createOscillator(), g=c.createGain();
+    g.gain.setValueAtTime(0, c.currentTime);
+    o.connect(g); g.connect(c.destination);
+    o.start(); o.stop(c.currentTime+.01);
+  }catch(e){}
+}
+
+/* ── 화면 연출 ── */
+function flash(col, ms){
+  const f=$('flash'); if(!f) return;
+  f.style.background=col; f.classList.add('on');
+  setTimeout(()=>f.classList.remove('on'), ms||90);
+}
+function banner(txt, col){
+  const b=$('bnr'); if(!b) return;
+  b.textContent=txt; b.style.color=col||'#fcd34d';
+  b.classList.remove('go'); void b.offsetWidth; b.classList.add('go');
+}
+const CMB_MSG=[[20,'시은 마스터!','#fcd34d'],[15,'UNSTOPPABLE!','#f472b6'],
+               [10,'GREAT!','#38bdf8'],[5,'GOOD!','#4ade80']];
+function comboFx(n){
+  for(const [need,msg,col] of CMB_MSG){
+    if(n===need){ banner(msg,col); flash('rgba(252,211,77,.14)',110); return; }
+  }
+}
+function heat(n){
+  const w=document.querySelector('.wrap');
+  if(!w) return;
+  w.classList.add('bg-heat');
+  if(n>=15) w.style.background='radial-gradient(circle at 50% 0%,rgba(244,114,182,.16),transparent 60%)';
+  else if(n>=10) w.style.background='radial-gradient(circle at 50% 0%,rgba(56,189,248,.13),transparent 60%)';
+  else if(n>=5) w.style.background='radial-gradient(circle at 50% 0%,rgba(74,222,128,.1),transparent 60%)';
+  else w.style.background='';
+}
+
+const $ = id => document.getElementById(id);
+const rnd = n => Math.floor(Math.random()*n);
+const shuf = a => { a=a.slice(); for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]];} return a; };
+function show(id){ document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on')); $(id).classList.add('on'); }
+
+// 챕터 칩
+const chsBox = $('chs');
+for(let i=1;i<=20;i++){
+  const b=document.createElement('button');
+  b.className='chip sm'+(i===1?' on':''); b.dataset.ch=i; b.textContent=i+'강';
+  b.onclick=()=>{
+    if(S.mode==='one'){ chsBox.querySelectorAll('.chip').forEach(c=>c.classList.remove('on')); b.classList.add('on'); }
+    else if(S.mode==='many'){ b.classList.toggle('on'); }
+    syncCh();
+  };
+  chsBox.appendChild(b);
+}
+function syncCh(){
+  S.chs=[...chsBox.querySelectorAll('.chip.on')].map(c=>+c.dataset.ch);
+  if(S.mode==='all') S.chs=Array.from({length:20},(_,i)=>i+1);
+}
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('[data-mode]').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); S.mode=b.dataset.mode;
+  const one = S.mode==='one';
+  chsBox.style.opacity = S.mode==='all'?'.35':'1';
+  chsBox.style.pointerEvents = S.mode==='all'?'none':'auto';
+  if(S.mode==='all'){ S.chs=Array.from({length:20},(_,i)=>i+1); }
+  else {
+    const on=[...chsBox.querySelectorAll('.chip.on')];
+    if(one && on.length>1){ on.slice(1).forEach(c=>c.classList.remove('on')); }
+    if(on.length===0) chsBox.querySelector('.chip').classList.add('on');
+    syncCh();
+  }
+});
+$('typ').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{
+  b.classList.toggle('on');
+  S.types=[...$('typ').querySelectorAll('.chip.on')].map(c=>c.dataset.t);
+});
+
+// 풀 만들기
+function pool(){
+  const out=[];
+  S.chs.forEach(n=>{
+    const c=DATA.find(x=>x.n===n); if(!c) return;
+    S.types.forEach(t=>{
+      (c[t]||[]).forEach(it=>{ if(it.w&&it.m) out.push({w:it.w,m:it.m,t:t,ch:n}); });
+    });
+  });
+  // 같은 단어 중복 제거 — 뜻이 더 자세한(긴) 쪽을 남김
+  const m={};
+  out.forEach(o=>{
+    const k=o.w.toLowerCase();
+    if(!m[k] || o.m.length>m[k].m.length) m[k]=o;
+  });
+  return Object.keys(m).map(k=>m[k]);
+}
+
+$('go').onclick=()=>{
+  unlock();
+  S.name=$('nm').value.trim()||'학생';
+  syncCh();
+  const p=pool();
+  if(S.types.length===0){ $('err').innerHTML='<div class="err">출제 범위를 1개 이상 선택하세요</div>'; return; }
+  if(S.chs.length===0){ $('err').innerHTML='<div class="err">강을 1개 이상 선택하세요</div>'; return; }
+  if(p.length<5){ $('err').innerHTML='<div class="err">선택한 범위에 단어가 부족합니다 ('+p.length+'개). 최소 5개 필요 — 강이나 출제 범위를 늘려주세요.</div>'; return; }
+  $('err').innerHTML='';
+  const lbl = S.mode==='all'?'전체 20강':(S.chs.length>3?S.chs.length+'개 강':S.chs.map(c=>c+'강').join(', '));
+  $('lvinfo').textContent = S.name+' · '+lbl+' · '+p.length+'단어';
+  // 이 강의 저장된 최고점 불러오기
+  if(S.chs.length===1){
+    for(let lv=1;lv<=6;lv++){
+      const v=SAVE.best[bkey(S.chs[0],lv)]||0;
+      S.best[lv]=v; const e=$('b'+lv); if(e) e.textContent=v||'-';
+    }
+  } else {
+    ['1','2','3','4','5','6'].forEach(k=>{ const e=$('b'+k); if(e) e.textContent=S.best[k]||'-'; });
+  }
+  show('s_lvl');
+};
+if(!saveOK){ const e=$('err'); if(e) e.innerHTML='<div class="err" style="background:rgba(251,146,60,.12);border-color:#fb923c;color:#fb923c">⚠ 이 브라우저에서는 기록이 저장되지 않습니다. 크롬이나 사파리로 열어주세요.</div>'; }
+$('wipe').onclick=()=>{
+  if(!confirm('모든 기록(진행도·도전과제·최고점)을 지웁니다. 계속할까요?')) return;
+  wipeSave(); S.best={1:0,2:0,3:0,4:0,5:0,6:0}; refreshHome();
+  ['1','2','3','4','5','6'].forEach(k=>{ const e=$('b'+k); if(e) e.textContent='-'; });
+  SFX.pop();
+};
+$('sndb').onclick=()=>{ S.snd=!S.snd; $('sndb').textContent=S.snd?'🔊':'🔇'; if(S.snd){unlock();SFX.pop();} };
+$('bk').onclick=()=>{ refreshHome(); show('s_home'); };
+$('tolvl').onclick=()=>{ refreshHome(); show('s_lvl'); };
+document.querySelectorAll('.lvl').forEach(l=>l.onclick=()=>{ S.lvl=+l.dataset.l; countdown(()=>start(S.lvl)); });
+
+function countdown(cb){
+  const d=document.createElement('div'); d.className='cd'; d.textContent='3';
+  document.body.appendChild(d); let n=3;
+  ac(); SFX.tick();
+  const iv=setInterval(()=>{ n--; if(n>0){d.textContent=n;SFX.tick();} else {clearInterval(iv);d.remove();beep(880,.14,'triangle',.1);cb();} },700);
+}
+function pop(x,y,txt,col){
+  const e=document.createElement('div'); e.className='pop'; e.textContent=txt;
+  e.style.left=x+'px'; e.style.top=y+'px'; e.style.color=col;
+  document.body.appendChild(e); setTimeout(()=>e.remove(),800);
+}
+function quit(){ if(G&&G.stop)G.stop(); G=null; show('s_lvl'); }
+
+/* 뜻을 조각으로 분해 — "존경하다, 존중하다" → ["존경하다","존중하다"] */
+function frags(m){
+  return String(m||'').replace(/\//g,',').split(',')
+    .map(x=>x.trim()).filter(x=>x.length>0);
+}
+/* 두 뜻이 조각 하나라도 겹치면 true (= 오답으로 쓰면 안 됨) */
+function clash(a, b){
+  const fa=frags(a), fb=frags(b);
+  for(const x of fa){ if(fb.indexOf(x)>=0) return true; }
+  return false;
+}
+/* 오답 생성 — 뜻 겹침 완전 배제. 같은 타입 우선, 부족하면 전체 풀 */
+function distract(p, cur, n){
+  const safe = x => x.w.toLowerCase()!==cur.w.toLowerCase() && !clash(x.m, cur.m);
+  const same = shuf(p.filter(x=>x.t===cur.t && safe(x)));
+  const rest = shuf(p.filter(x=>x.t!==cur.t && safe(x)));
+  const cand = same.concat(rest);
+  const out=[], usedM=[], usedW={};
+  for(const c of cand){
+    if(out.length>=n) break;
+    if(usedW[c.w.toLowerCase()]) continue;
+    let dup=false;
+    for(const m of usedM){ if(clash(m, c.m)){ dup=true; break; } }
+    if(dup) continue;
+    usedM.push(c.m); usedW[c.w.toLowerCase()]=1; out.push(c);
+  }
+  return out;
+}
+/* 문제로 쓸 수 있는지 — 오답 n개를 확보할 수 있어야 함 */
+function usable(p, cur, n){ return distract(p, cur, n).length >= n; }
+/* 오답 확보 가능한 단어만 골라내기 */
+function pickQ(p, n){
+  const c = shuf(p);
+  for(const q of c){ if(usable(p, q, n)) return q; }
+  return null;
+}
+
+function start(lv){
+  const p = pool();
+  if(lv===1) g1(p); else if(lv===2) g2(p); else if(lv===3) g3(p); else if(lv===4) g4();
+  else if(lv===5) g5(p); else if(lv===6) g6(p); else g7(p);
+}
+function hearts(n){ return '❤️'.repeat(n)+'🖤'.repeat(3-n); }
+
+/* ───── 1단계 ───── */
+function g1(p){
+  show('s_g1');
+  // 20문제 보장 — 풀이 모자라면 섞어서 채움 (연속 중복 없이)
+  const N=20;
+  let qs=[];
+  while(qs.length<N){
+    const b=shuf(p);
+    for(const q of b){
+      if(qs.length>=N) break;
+      if(qs.length && qs[qs.length-1].w===q.w) continue;
+      qs.push(q);
+    }
+    if(p.length===1) break;
+  }
+  qs=qs.slice(0,N);
+  let i=0, hp=3, sc=0, cmb=0, mx=0, wrong=[], lock=false, t0, raf, tries=0;
+  let pauseAt=0;
+  G={stop:()=>{cancelAnimationFrame(raf);},
+     pause:()=>{ pauseAt=performance.now(); cancelAnimationFrame(raf); },
+     resume:()=>{ if(pauseAt){ t0+=performance.now()-pauseAt; pauseAt=0; } tick(); }};
+  const PER=6000;
+  function draw(){
+    if(i>=qs.length||hp<=0){ return end1(); }
+    const q=qs[i];
+    $('h1').textContent=hearts(hp); $('p1').textContent=sc;
+    $('pr1').textContent=(i+1)+' / '+N;
+    const e1=$('q1'); e1.textContent=q.w;
+    e1.className='w'+(q.w.length>14?' l3':q.w.length>11?' l2':q.w.length>8?' l1':'');
+    $('qt1').textContent=TN[q.t]+' · '+q.ch+'강';
+    const ds=distract(p,q,4);
+    const opts=shuf([q,...ds]);
+    const box=$('o1'); box.innerHTML='';
+    opts.forEach(o=>{
+      const b=document.createElement('button'); b.className='opt'; b.textContent=o.m;
+      b.onclick=e=>hit(o,q,b,e); box.appendChild(b);
+    });
+    lock=false; tries=0; t0=performance.now(); tick();
+  }
+  function tick(){
+    if(pauseAt) return;
+    const el=performance.now()-t0, left=Math.max(0,1-el/PER);
+    const f=$('t1'); f.style.width=(left*100)+'%';
+    f.className='tfill'+(left<.25?' d':left<.5?' w':'');
+    if(left<=0&&!lock){ lock=true; wrong.push(qs[i]); hp--; cmb=0; $('c1').classList.remove('on');
+      SFX.no(); flash('rgba(248,113,113,.2)',120); heat(0);
+      $('h1').textContent=hearts(hp);
+      [...$('o1').children].forEach(c=>{ if(c.textContent===qs[i].m)c.classList.add('ok'); });
+      document.querySelector('.wrap').classList.add('shake');
+      setTimeout(()=>{document.querySelector('.wrap').classList.remove('shake');i++;draw();},900); return; }
+    if(!lock) raf=requestAnimationFrame(tick);
+  }
+  function hit(o,q,b,e){
+    if(lock)return;
+    const ok = o.m===q.m;
+
+    if(ok){
+      lock=true; cancelAnimationFrame(raf);
+      cmb++; mx=Math.max(mx,cmb);
+      const spd=Math.max(0,1-(performance.now()-t0)/PER);
+      // 재시도로 맞히면 점수 절반
+      const half = tries>0 ? .5 : 1;
+      const pt=Math.round((100+Math.floor(spd*60))*(1+cmb*.1)*half);
+      sc+=pt; b.classList.add('ok');
+      $('c1').textContent=cmb+' COMBO'; $('c1').classList.toggle('on',cmb>1);
+      pop(e.clientX-18,e.clientY-18,'+'+pt,'#4ade80');
+      SFX.ok(cmb); comboFx(cmb); heat(cmb);
+      $('p1').textContent=sc; $('h1').textContent=hearts(hp);
+      setTimeout(()=>{ i++; draw(); }, 380);
+      return;
+    }
+
+    tries++;
+    if(tries===1){
+      // 1차 오답 — 기회 한 번 더. 목숨 안 깎임, 정답 공개 안 함
+      b.classList.add('no'); b.disabled=true; b.style.opacity='.4';
+      cmb=0; $('c1').classList.remove('on');
+      SFX.no(); heat(0);
+      $('rt1').textContent='한 번 더!'; $('rt1').classList.add('on');
+      setTimeout(()=>$('rt1').classList.remove('on'),700);
+      document.querySelector('.wrap').classList.add('shake');
+      setTimeout(()=>document.querySelector('.wrap').classList.remove('shake'),240);
+      return;
+    }
+
+    // 2차 오답 — 목숨 -1, 정답 공개
+    lock=true; cancelAnimationFrame(raf);
+    b.classList.add('no'); hp--; wrong.push(q);
+    SFX.no(); flash('rgba(248,113,113,.2)',120);
+    [...$('o1').children].forEach(c=>{ if(c.textContent===q.m)c.classList.add('ok'); });
+    document.querySelector('.wrap').classList.add('shake');
+    setTimeout(()=>document.querySelector('.wrap').classList.remove('shake'),300);
+    $('p1').textContent=sc; $('h1').textContent=hearts(hp);
+    setTimeout(()=>{ i++; draw(); }, 1000);
+  }
+  function end1(){
+    const done=i, acc=done?Math.round((done-wrong.length)/done*100):0;
+    result(sc,[['맞춤',(done-wrong.length)+'/'+done],['정확도',acc+'%'],['최고콤보',mx]],wrong,acc,false);
+  }
+  draw();
+}
+
+/* ───── 2단계 낙하 ───── */
+function g2(p){
+  show('s_g2');
+  const box=$('fall'); box.querySelectorAll('.fw').forEach(e=>e.remove());
+  let hp=3, sc=0, cmb=0, mx=0, wrong=[], live=[], spawnT=0, raf, t0=performance.now(), ok=0, tot=0;
+  let dead=false, pauseAt=0, lastF=performance.now();
+  G={stop:()=>{cancelAnimationFrame(raf);dead=true;},
+     pause:()=>{ pauseAt=performance.now(); cancelAnimationFrame(raf); },
+     resume:()=>{ if(pauseAt){ const d=performance.now()-pauseAt; t0+=d; spawnT+=d; pauseAt=0; }
+                  lastF=performance.now(); loop(); }};
+  // 낙하는 "몇 초 만에 바닥"으로 정의 → 기기 크기 무관
+  function fallSec(){ const s=(performance.now()-t0)/1000; return Math.max(1.5, 3.6-s*.075); }
+  function gap(){ const s=(performance.now()-t0)/1000; return Math.max(550,1500-s*38); }
+  // 회전/리사이즈 대응 — y를 비율로 유지
+  let lastH=box.clientHeight||1;
+  function onResize(){
+    const h=box.clientHeight||1;
+    if(h!==lastH && lastH>0){ live.forEach(l=>{ l.y=l.y/lastH*h; }); lastH=h; }
+  }
+  window.addEventListener('resize', onResize);
+  const _stop=G.stop;
+  G.stop=()=>{ window.removeEventListener('resize', onResize); _stop(); };
+  function spawn(){
+    if(live.length>=4)return;
+    const q=p[rnd(p.length)];
+    if(live.some(l=>l.q.w===q.w))return;
+    const e=document.createElement('div');
+    e.className='fw'+(q.w.length>12?' l2':q.w.length>9?' l1':'');
+    e.textContent=q.w; e.style.top='-34px'; box.appendChild(e);
+    const w=e.offsetWidth||90, bw=box.clientWidth;
+    e.style.left=Math.max(4,rnd(Math.max(1,bw-w-8)))+'px';
+    live.push({q,e,y:-34}); tot++;
+    opts();
+  }
+  function opts(){
+    const b=$('o2'); b.innerHTML='';
+    if(!live.length)return;
+    const tgt=live[0].q;
+    const ds=distract(p,tgt,3);
+    shuf([tgt,...ds]).forEach(o=>{
+      const btn=document.createElement('button'); btn.className='fopt'; btn.textContent=o.m;
+      btn.onclick=e=>tap(o,btn,e); b.appendChild(btn);
+    });
+  }
+  function tap(o,btn,ev){
+    if(dead||!live.length)return;
+    const idx=live.findIndex(l=>l.q.m===o.m);
+    if(idx>=0){
+      const l=live[idx]; cmb++; mx=Math.max(mx,cmb); ok++;
+      const h=box.clientHeight, bonus=Math.round((1-l.y/h)*50);
+      const pt=Math.round((80+bonus)*(1+cmb*.12)); sc+=pt;
+      btn.classList.add('ok');
+      pop(ev.clientX-18,ev.clientY-18,'+'+pt,'#4ade80');
+      $('c2').textContent=cmb+' COMBO'; $('c2').classList.toggle('on',cmb>1);
+      SFX.ok(cmb); comboFx(cmb); heat(cmb);
+      l.e.remove(); live.splice(idx,1);
+      setTimeout(opts,120);
+    } else {
+      btn.classList.add('no'); cmb=0; $('c2').classList.remove('on');
+      sc=Math.max(0,sc-30); SFX.no(); heat(0);
+      setTimeout(()=>btn.classList.remove('no'),320);
+    }
+    $('p2').textContent=sc;
+  }
+  function loop(){
+    if(dead||pauseAt)return;
+    const now=performance.now(), h=box.clientHeight||1;
+    onResize();
+    if(now-spawnT>gap()){ spawnT=now; spawn(); }
+    let dt=(now-lastF)/1000; lastF=now;
+    if(dt>.25) dt=.25;  // 탭 복귀 시 순간 점프 방지
+    const px=h/fallSec();  // 초당 픽셀 = 화면높이 / 목표시간
+    for(let i=live.length-1;i>=0;i--){
+      const l=live[i]; l.y+=px*dt;
+      l.e.style.top=l.y+'px';
+      if(l.y>h*.75) l.e.classList.add('dz');
+      if(l.y>h-24){
+        wrong.push(l.q); l.e.remove(); live.splice(i,1);
+        hp--; cmb=0; $('c2').classList.remove('on'); $('h2').textContent=hearts(hp);
+        SFX.no(); flash('rgba(248,113,113,.2)',130); heat(0);
+        document.querySelector('.wrap').classList.add('shake');
+        setTimeout(()=>document.querySelector('.wrap').classList.remove('shake'),300);
+        opts();
+        if(hp<=0){ dead=true; return end2(); }
+      }
+    }
+    raf=requestAnimationFrame(loop);
+  }
+  function end2(){
+    cancelAnimationFrame(raf);
+    const acc=tot?Math.round(ok/tot*100):0;
+    result(sc,[['처리',ok+'개'],['놓침',wrong.length],['최고콤보',mx]],wrong,acc,false);
+  }
+  $('h2').textContent=hearts(hp); $('p2').textContent='0';
+  spawnT=performance.now(); spawn(); loop();
+}
+
+/* ───── 3단계 보스 ───── */
+function g3(p){
+  show('s_g3');
+  const BOSS=bossOf(S.chs.length===1?S.chs[0]:(S.mode==='all'?20:S.chs[S.chs.length-1]));
+  const BMAX=BOSS.hp; let bhp=BMAX, mhp=100, sc=0, cmb=0, mx=0, wrong=[], lock=false, ok=0, tot=0;
+  let left=60, iv, dead=false, rage=false;
+  G={stop:()=>{clearInterval(iv);dead=true;},
+     pause:()=>{ clearInterval(iv); },
+     resume:()=>{ if(!dead) iv=setInterval(timer,1000); }};
+  function bars(){
+    $('bf').style.width=Math.max(0,bhp/BMAX*100)+'%'; $('bhp').textContent=Math.max(0,Math.round(bhp))+' / '+BMAX;
+    $('mf').style.width=Math.max(0,mhp)+'%'; $('mhp').textContent=Math.max(0,Math.round(mhp))+' / 100';
+  }
+  function draw(){
+    if(dead)return;
+    const q=pickQ(p,4)||p[rnd(p.length)];
+    const e3=$('q3'); e3.textContent=q.w;
+    e3.className='w'+(q.w.length>14?' l3':q.w.length>11?' l2':q.w.length>8?' l1':'');
+    e3.style.fontSize=''; $('qt3').textContent=TN[q.t]+' · '+q.ch+'강';
+    const ds=distract(p,q,4);
+    const box=$('o3'); box.innerHTML='';
+    shuf([q,...ds]).forEach(o=>{
+      const b=document.createElement('button'); b.className='opt'; b.textContent=o.m;
+      b.onclick=e=>hit(o,q,b,e); box.appendChild(b);
+    });
+    lock=false; tot++;
+  }
+  function hit(o,q,b,e){
+    if(lock||dead)return; lock=true;
+    if(o.m===q.m){
+      ok++; cmb++; mx=Math.max(mx,cmb);
+      const crit=cmb>=3;
+      const dmg=crit?18:10;
+      bhp-=dmg; sc+=Math.round(100*(1+cmb*.15));
+      b.classList.add('ok');
+      const f=$('bfc'); f.classList.add('hit'); setTimeout(()=>f.classList.remove('hit'),140);
+      pop(e.clientX-22,e.clientY-18,(crit?'CRIT -':'-')+dmg,crit?'#fcd34d':'#f472b6');
+      $('c3').textContent=cmb+' COMBO'+(crit?' ⚡':''); $('c3').classList.toggle('on',cmb>1);
+      if(crit){ SFX.crit(); flash('rgba(252,211,77,.2)',90); } else SFX.ok(cmb);
+      comboFx(cmb); heat(cmb);
+      if(bhp<=BMAX*.4 && !rage){ rage=true; $('bfc').classList.add('rage');
+        banner('보스 분노!','#f87171'); flash('rgba(248,113,113,.3)',180);
+        beep(140,.5,'sawtooth',.12,70); }
+    } else {
+      b.classList.add('no'); mhp-=14; cmb=0; wrong.push(q); $('c3').classList.remove('on');
+      SFX.no(); flash('rgba(248,113,113,.25)',140); heat(0);
+      [...$('o3').children].forEach(c=>{ if(c.textContent===q.m)c.classList.add('ok'); });
+      document.querySelector('.wrap').classList.add('shake');
+      setTimeout(()=>document.querySelector('.wrap').classList.remove('shake'),300);
+    }
+    $('p3').textContent=sc; bars();
+    if(bhp<=0){ dead=true; clearInterval(iv); $('bfc').textContent='💥';
+      const bc=(S.chs.length===1?S.chs[0]:(S.mode==='all'?20:S.chs[S.chs.length-1]));
+      SAVE.bossKill[bc]=Date.now(); putSave();
+      $('bfc').classList.remove('rage'); banner('보스 처치!','#4ade80');
+      flash('rgba(74,222,128,.3)',260); SFX.win();
+      return setTimeout(()=>end3(true),900); }
+    if(mhp<=0){ dead=true; clearInterval(iv); banner('패배...','#f87171'); SFX.lose();
+      return setTimeout(()=>end3(false),900); }
+    setTimeout(()=>{ if(!dead)draw(); }, o.m===q.m?300:800);
+  }
+  function end3(win){
+    const acc=tot?Math.round(ok/tot*100):0;
+    if(win) sc+=Math.round(left*20);
+    result(sc,[['남은시간',left+'초'],['정확도',acc+'%'],['최고콤보',mx]],wrong,acc,win);
+  }
+  function timer(){
+    if(dead)return;
+    left--; $('tm3').textContent=left;
+    if(left<=10){ $('tm3').parentElement.classList.add('rageon'); SFX.tick(); }
+    if(left<=0){ dead=true; clearInterval(iv); banner('시간 초과','#f87171'); SFX.lose(); end3(false); }
+  }
+  bars(); $('p3').textContent='0'; $('tm3').textContent=left;
+  $('tm3').parentElement.classList.remove('rageon');
+  $('bfc').textContent=BOSS.e; $('bfc').classList.remove('rage');
+  $('bnm').textContent=BOSS.e+' '+BOSS.n;
+  iv=setInterval(timer,1000);
+  draw();
+}
+
+/* ───── 4단계 어원 조합 ───── */
+function etymPool(){
+  const out=[];
+  S.chs.forEach(n=>{
+    const c=DATA.find(x=>x.n===n); if(!c) return;
+    (c.etym||[]).forEach(e=>out.push(Object.assign({ch:n}, e)));
+  });
+  return out;
+}
+function g4(){
+  const ep = etymPool();
+  if(ep.length===0){
+    show('s_lvl');
+    alert('선택한 강에 어원 조합 데이터가 없습니다. 다른 강을 골라주세요.');
+    return;
+  }
+  show('s_g4');
+  const N = Math.min(10, Math.max(5, ep.length));
+  let qs=[];
+  while(qs.length<N){
+    const b=shuf(ep);
+    for(const q of b){ if(qs.length>=N)break; if(qs.length&&qs[qs.length-1].w===q.w)continue; qs.push(q); }
+    if(ep.length===1) break;
+  }
+  qs=qs.slice(0,N);
+  let i=0, hp=3, sc=0, cmb=0, mx=0, wrong=[], slots=[], lock=false, t0;
+  let pauseAt=0, elapsed=0;
+  G={stop:()=>{}, pause:()=>{ pauseAt=performance.now(); }, resume:()=>{
+       if(pauseAt){ t0+=performance.now()-pauseAt; pauseAt=0; } }};
+
+  function bar(){
+    const b=$('eb4'); b.innerHTML='';
+    for(let k=0;k<N;k++){
+      const d=document.createElement('div'); d.className='eb';
+      const f=document.createElement('i');
+      f.style.width = k<i ? '100%' : '0';
+      f.style.background = wrong.some(x=>x.idx===k) ? 'var(--bad)' : 'var(--c1)';
+      d.appendChild(f); b.appendChild(d);
+    }
+  }
+  function draw(){
+    if(i>=qs.length||hp<=0) return end4();
+    const q=qs[i];
+    $('h4').textContent=hearts(hp); $('p4').textContent=sc; $('rv4').innerHTML='';
+    $('q4').textContent=q.m;
+    $('qt4').textContent='조각 '+q.pcs.length+'개 · '+q.ch+'강';
+    bar();
+    slots=new Array(q.pcs.length).fill(null);
+    renderSlots(q);
+    // 조각 = 정답조각 + 다른 단어의 조각 섞기
+    const mine=q.pcs.map((p,idx)=>({f:p[0], m:p[1], ok:idx}));
+    const others=[];
+    const seen={}; q.pcs.forEach(p=>seen[p[0]]=1);
+    shuf(ep).forEach(e=>{
+      if(others.length>=2||e.w===q.w) return;
+      e.pcs.forEach(p=>{
+        if(others.length>=2||seen[p[0]]) return;
+        seen[p[0]]=1; others.push({f:p[0], m:p[1], ok:-1});
+      });
+    });
+    const all=shuf(mine.concat(others));
+    all.forEach(x=>{ x.inSlot=false; x.btn=null; });
+    const box=$('pc4'); box.innerHTML='';
+    all.forEach(pc=>{
+      const b=document.createElement('button'); b.className='epc';
+      b.innerHTML='<span class="pf">'+pc.f.replace(/</g,'&lt;')+'</span>'+
+                  (pc.m?'<span class="pm">'+pc.m.replace(/</g,'&lt;')+'</span>':'');
+      b.onclick=e=>place(pc,b,q,e);
+      box.appendChild(b);
+    });
+    lock=false; t0=performance.now();
+  }
+  function renderSlots(q){
+    const box=$('sl4'); box.innerHTML='';
+    slots.forEach((sv,idx)=>{
+      const d=document.createElement('div');
+      d.className='eslot'+(sv?' fill':'');
+      if(sv){
+        d.innerHTML='<span class="sf">'+sv.f.replace(/</g,'&lt;')+'</span>'+
+                    (sv.m?'<span class="sm">'+sv.m.replace(/</g,'&lt;')+'</span>':'');
+        d.onclick=()=>{ if(lock)return; slots[idx]=null; sv.inSlot=false;
+                        if(sv.btn) sv.btn.classList.remove('used');
+                        renderSlots(q); SFX.pop(); };
+      } else {
+        d.innerHTML='<span class="idx">'+(idx+1)+'</span>';
+      }
+      box.appendChild(d);
+    });
+  }
+  function place(pc,btn,q,ev){
+    if(lock) return;
+    if(pc.inSlot) return;                 // 이미 슬롯에 들어간 조각
+    if(btn.classList.contains('used')) return;
+    const idx=slots.indexOf(null);
+    if(idx<0) return;                      // 슬롯 가득참
+    pc.btn=btn; pc.inSlot=true; slots[idx]=pc; btn.classList.add('used');
+    SFX.pop(); renderSlots(q);
+    if(slots.every(x=>x)) check(q,ev);
+  }
+  function check(q,ev){
+    lock=true;
+    const good = slots.every((sv,idx)=> sv.ok===idx);
+    if(good){
+      cmb++; mx=Math.max(mx,cmb);
+      const sec=(performance.now()-t0)/1000;
+      const bonus=Math.max(0, Math.round((12-sec)*8));
+      const pt=Math.round((150+bonus)*(1+cmb*.12));
+      sc+=pt;
+      SFX.ok(cmb); comboFx(cmb); heat(cmb);
+      flash('rgba(74,222,128,.15)',110);
+      if(ev) pop(ev.clientX-18, ev.clientY-30, '+'+pt, '#4ade80');
+      $('c4').textContent=cmb+' COMBO'; $('c4').classList.toggle('on',cmb>1);
+      $('rv4').innerHTML='<div class="ereveal">✅ '+q.w.replace(/</g,'&lt;')+
+        ' = '+q.pcs.map(p=>p[0]+(p[1]?'('+p[1]+')':'')).join(' + ')+'</div>';
+      $('p4').textContent=sc;
+      setTimeout(()=>{ i++; draw(); }, 1100);
+    } else {
+      hp--; cmb=0; wrong.push({w:q.w, m:q.m, idx:i});
+      $('c4').classList.remove('on'); SFX.no();
+      flash('rgba(248,113,113,.2)',130); heat(0);
+      document.querySelectorAll('#sl4 .eslot').forEach((e,idx)=>{
+        if(!slots[idx]||slots[idx].ok!==idx) e.classList.add('wrongfx');
+      });
+      $('h4').textContent=hearts(hp);
+      $('rv4').innerHTML='<div class="ereveal" style="background:rgba(248,113,113,.1);border-color:var(--bad);color:var(--bad)">'+
+        '❌ 정답: '+q.w.replace(/</g,'&lt;')+' = '+q.pcs.map(p=>p[0]+(p[1]?'('+p[1]+')':'')).join(' + ')+'</div>';
+      setTimeout(()=>{ i++; draw(); }, 1900);
+    }
+  }
+  function end4(){
+    const done=i, acc=done?Math.round((done-wrong.length)/done*100):0;
+    result(sc,[['맞춤',(done-wrong.length)+'/'+done],['정확도',acc+'%'],['최고콤보',mx]],
+           wrong.map(x=>({w:x.w,m:x.m})),acc,false);
+  }
+  draw();
+}
+
+/* ───── 5단계 두더지 ───── */
+function g5(p){
+  show('s_g5');
+  const HOLES=6;
+  let hp=3, sc=0, cmb=0, mx=0, wrong=[], ok=0, tot=0;
+  let cur=null, dead=false, pauseAt=0, t0=performance.now();
+  let holes=[], iv=null;
+
+  G={stop:()=>{ dead=true; clearInterval(iv);
+                holes.forEach(h=>{ if(h.tm){clearTimeout(h.tm);h.tm=null;}
+                  if(h.rel){clearTimeout(h.rel);h.rel=null;}
+                  h.mole.classList.remove('up','hitok','hitno');
+                  h.mole.onclick=null; h.busy=false; h.word=null; h.isT=false; }); },
+     pause:()=>{ pauseAt=performance.now(); clearInterval(iv);
+                 holes.forEach(h=>{ if(h.tm){clearTimeout(h.tm); h.tm=null;}
+                                    if(h.rel){clearTimeout(h.rel); h.rel=null;} }); },
+     resume:()=>{ if(pauseAt){ t0+=performance.now()-pauseAt; pauseAt=0; }
+                  if(!dead) iv=setInterval(cycle, 380); }};
+
+  // 난이도: 시간 지날수록 두더지가 빨리 사라짐
+  function upTime(){ const s=(performance.now()-t0)/1000; return Math.max(1050, 2500-s*30); }
+  function fillRate(){ const s=(performance.now()-t0)/1000; return Math.min(.62, .3+s*.006); }
+
+  const box=$('holes'); box.innerHTML='';
+  for(let k=0;k<HOLES;k++){
+    const h=document.createElement('div'); h.className='hole';
+    const m=document.createElement('div'); m.className='mole';
+    h.appendChild(m); box.appendChild(h);
+    holes.push({el:h, mole:m, word:null, isT:false, tm:null, rel:null, busy:false});
+  }
+
+  function newTarget(){
+    // 정답 뜻을 하나 고른다 (오답 후보 4개 확보 가능한 것)
+    const q = pickQ(p,3) || p[rnd(p.length)];
+    cur = q; tot++;
+    $('q5').textContent=q.m;
+    $('qt5').textContent=TN[q.t]+' · '+q.ch+'강 · 이 뜻의 단어를 때리세요';
+  }
+  function popMole(h, word, isT){
+    if(h.busy||dead) return;
+    // 같은 단어 중복 방지
+    const same = holes.filter(x=>x!==h && x.word && x.word.w===word.w && x.busy);
+    if(same.length){
+      if(!isT) return;            // 오답이면 그냥 포기
+      same.forEach(freeHole);     // 정답이면 기존 것 치우고 등장
+    }
+    h.busy=true; h.word=word; h.isT=isT;
+    const m=h.mole;
+    m.textContent=word.w;
+    m.className='mole'+(word.w.length>12?' l2':word.w.length>9?' l1':'');
+    void m.offsetWidth;
+    m.classList.add('up');
+    h.tm=setTimeout(()=>{
+      if(dead) return;
+      m.classList.remove('up');
+      if(h.isT && !dead){
+        // 정답 놓침
+        h.isT=false;
+        hp--; cmb=0; $('c5').classList.remove('on'); $('h5').textContent=hearts(hp);
+        wrong.push(cur); SFX.no(); flash('rgba(248,113,113,.2)',120); heat(0);
+        if(hp<=0){ dead=true; clearInterval(iv); return setTimeout(end5,600); }
+        newTarget();
+        forceTarget();
+      }
+      h.rel=setTimeout(()=>{ h.busy=false; h.word=null; h.isT=false; h.rel=null; }, 230);
+    }, upTime());
+    m.onclick=()=>whack(h);
+  }
+  function whack(h){
+    if(dead||!h.busy||!h.word) return;
+    const m=h.mole;
+    if(h.isT){
+      ok++; cmb++; mx=Math.max(mx,cmb);
+      const pt=Math.round(110*(1+cmb*.13));
+      sc+=pt; m.classList.add('hitok');
+      SFX.ok(cmb); comboFx(cmb); heat(cmb);
+      const r=m.getBoundingClientRect();
+      pop(r.left+r.width/2-16, r.top-6, '+'+pt, '#4ade80');
+      $('c5').textContent=cmb+' COMBO'; $('c5').classList.toggle('on',cmb>1);
+      $('p5').textContent=sc;
+      clearTimeout(h.tm); h.tm=null; h.isT=false;
+      h.rel=setTimeout(()=>{ m.classList.remove('up');
+        h.rel=setTimeout(()=>{ h.busy=false; h.word=null; h.rel=null; },230); },120);
+      newTarget();
+      forceTarget();
+    } else {
+      // 오답 타격 — 감점만, 목숨은 유지
+      sc=Math.max(0, sc-40); cmb=0; $('c5').classList.remove('on');
+      m.classList.add('hitno'); SFX.no(); heat(0);
+      $('p5').textContent=sc;
+      const r=m.getBoundingClientRect();
+      pop(r.left+r.width/2-16, r.top-6, '-40', '#f87171');
+      clearTimeout(h.tm); h.tm=null;
+      h.rel=setTimeout(()=>{ m.classList.remove('up');
+        h.rel=setTimeout(()=>{ h.busy=false; h.word=null; h.rel=null; },230); },120);
+    }
+  }
+  // 구멍 즉시 비우기 (대기 타이머 취소 포함)
+  function freeHole(h){
+    if(h.tm){ clearTimeout(h.tm); h.tm=null; }
+    if(h.rel){ clearTimeout(h.rel); h.rel=null; }
+    h.mole.classList.remove('up','hitok','hitno');
+    h.busy=false; h.word=null; h.isT=false;
+  }
+  // 현재 정답 두더지가 실제로 올라와 있는지 (DOM 기준 - 플래그 어긋남 방지)
+  function targetShown(){
+    return holes.some(h=>h.isT && h.busy && h.mole.classList.contains('up'));
+  }
+  // 정답 두더지 강제 등장 — 빈 구멍 없으면 오답 하나 즉시 치움
+  function forceTarget(){
+    if(dead||pauseAt||!cur) return;
+    if(targetShown()) return;
+    // 낡은 정답 구멍이 남아있으면 정리
+    holes.forEach(h=>{ if(h.isT && !h.mole.classList.contains('up')) freeHole(h); });
+    let free=holes.filter(h=>!h.busy);
+    if(!free.length){
+      const victim=holes.find(h=>!h.isT) || holes[0];
+      freeHole(victim);
+      free=[victim];
+    }
+    popMole(free[rnd(free.length)], cur, true);
+  }
+  function cycle(){
+    if(dead||pauseAt) return;
+    // 정답이 화면에 없으면 최우선 등장 보장
+    if(cur && !targetShown()){ forceTarget(); return; }
+    const free=holes.filter(h=>!h.busy);
+    if(!free.length) return;
+    // 오답 두더지 채우기 — 화면에 이미 있는 단어는 제외
+    if(Math.random() < fillRate()){
+      const onScreen={};
+      holes.forEach(h=>{ if(h.busy&&h.word) onScreen[h.word.w]=1; });
+      const ds=distract(p, cur, 4).filter(x=>!onScreen[x.w]);
+      if(ds.length) popMole(free[rnd(free.length)], ds[rnd(ds.length)], false);
+    }
+  }
+  function end5(){
+    const acc=tot?Math.round(ok/tot*100):0;
+    result(sc,[['처치',ok+'개'],['정확도',acc+'%'],['최고콤보',mx]],wrong,acc,false);
+  }
+
+  $('h5').textContent=hearts(hp); $('p5').textContent='0';
+  $('c5').classList.remove('on');
+  newTarget();
+  forceTarget();
+  iv=setInterval(cycle, 380);
+}
+
+/* ───── 6단계 폭탄 해체 ───── */
+function g6(p){
+  show('s_g6');
+  const SLOTS=3;
+  let hp=3, sc=0, cmb=0, mx=0, wrong=[], ok=0, tot=0;
+  let dead=false, pauseAt=0, t0=performance.now(), openIdx=-1, raf=null;
+  let bombs=[];
+
+  G={stop:()=>{ dead=true; cancelAnimationFrame(raf); $('bombs').innerHTML=''; },
+     pause:()=>{ pauseAt=performance.now(); cancelAnimationFrame(raf); },
+     resume:()=>{ if(pauseAt){ const d=performance.now()-pauseAt;
+                    bombs.forEach(b=>{ if(b) b.born+=d; }); t0+=d; pauseAt=0; }
+                  if(!dead) loop(); }};
+
+  // 도화선: 시간 갈수록 짧아짐
+  function fuseMs(){ const s=(performance.now()-t0)/1000; return Math.max(4200, 9000-s*95); }
+
+  const box=$('bombs');
+  function make(i){
+    // 화면에 살아있는 다른 폭탄과 단어 중복 방지
+    const used = bombs.filter((b,j)=>b && j!==i && !b.dead).map(b=>b.q.w.toLowerCase());
+    let q=null;
+    for(let t=0;t<40;t++){
+      const c = pickQ(p,3) || p[rnd(p.length)];
+      if(used.indexOf(c.w.toLowerCase())<0){ q=c; break; }
+    }
+    if(!q){ // 풀이 아주 작을 때: 중복 안 되는 것 전수 탐색
+      const free = p.filter(x=>used.indexOf(x.w.toLowerCase())<0);
+      q = free.length ? free[rnd(free.length)] : (pickQ(p,3)||p[rnd(p.length)]);
+    }
+    const life = fuseMs();
+    const el=document.createElement('div'); el.className='bomb';
+    el.innerHTML='<div class="brow"><span class="bic">💣</span>'+
+      '<span class="bw'+(q.w.length>13?' l2':q.w.length>10?' l1':'')+'"></span>'+
+      '<span class="bt">0.0</span></div><div class="fuse"><i style="width:100%"></i></div>';
+    el.querySelector('.bw').textContent=q.w;
+    el.onclick=()=>openBomb(i);
+    return {q, el, born:performance.now(), life, dead:false, opened:false};
+  }
+  function render(){
+    box.innerHTML='';
+    bombs.forEach(b=>{ if(b) box.appendChild(b.el); });
+  }
+  function spawnAll(){
+    bombs=[]; for(let i=0;i<SLOTS;i++) bombs.push(make(i));
+    render();
+  }
+  function openBomb(i){
+    if(dead||pauseAt) return;
+    const b=bombs[i];
+    if(!b||b.dead||b.opened) return;
+    if(openIdx>=0 && openIdx!==i){
+      // 다른 폭탄 열려있으면 닫기
+      const o=bombs[openIdx];
+      if(o&&o.opened&&!o.dead){ o.opened=false; o.el.classList.remove('open');
+        const ex=o.el.querySelector('.bopts'); if(ex) ex.remove(); }
+    }
+    openIdx=i; b.opened=true; b.el.classList.add('open');
+    const ds=distract(p,b.q,3);
+    const opts=shuf([b.q].concat(ds));
+    const wrap=document.createElement('div'); wrap.className='bopts';
+    opts.forEach(o=>{
+      const btn=document.createElement('button'); btn.className='bopt'; btn.textContent=o.m;
+      btn.onclick=ev=>{ ev.stopPropagation(); cut(i,o,btn,ev); };
+      wrap.appendChild(btn);
+    });
+    b.el.appendChild(wrap);
+    $('bh6').textContent='선을 골라 자르세요 — 나머지 폭탄도 타는 중!';
+  }
+  function cut(i,o,btn,ev){
+    if(dead||pauseAt) return;
+    const b=bombs[i];
+    if(!b||b.dead) return;
+    tot++;
+    if(o.m===b.q.m){
+      ok++; cmb++; mx=Math.max(mx,cmb);
+      const left=1-(performance.now()-b.born)/b.life;
+      const pt=Math.round((120+Math.round(Math.max(0,left)*80))*(1+cmb*.13));
+      sc+=pt; b.dead=true;
+      btn.classList.add('ok'); b.el.classList.add('safe'); b.el.classList.remove('crit','warn');
+      b.el.querySelector('.bic').textContent='✅';
+      SFX.ok(cmb); comboFx(cmb); heat(cmb);
+      if(ev) pop(ev.clientX-18, ev.clientY-24, '+'+pt, '#4ade80');
+      $('c6').textContent=cmb+' COMBO'; $('c6').classList.toggle('on',cmb>1);
+      $('p6').textContent=sc;
+      openIdx=-1; $('bh6').textContent='해체 성공!';
+      setTimeout(()=>{ if(dead)return; bombs[i]=make(i); render(); }, 520);
+    } else {
+      btn.classList.add('no'); wrong.push(b.q);
+      [...b.el.querySelectorAll('.bopt')].forEach(x=>{ if(x.textContent===b.q.m) x.classList.add('ok'); });
+      SFX.no();
+      setTimeout(()=>{ if(!dead) boom(i,true); }, 420);
+    }
+  }
+  function boom(i, byCut){
+    const b=bombs[i];
+    if(!b||b.dead||dead) return;
+    b.dead=true; b.el.classList.add('boom'); b.el.classList.remove('crit','warn','open');
+    b.el.querySelector('.bic').textContent='💥';
+    const ex=b.el.querySelector('.bopts'); if(ex) ex.remove();
+    if(!byCut) wrong.push(b.q);
+    if(openIdx===i) openIdx=-1;
+    hp--; cmb=0; $('c6').classList.remove('on'); $('h6').textContent=hearts(hp);
+    SFX.no(); flash('rgba(248,113,113,.3)',170); heat(0);
+    banner('💥 폭발!','#f87171');
+    document.querySelector('.wrap').classList.add('shake');
+    setTimeout(()=>document.querySelector('.wrap').classList.remove('shake'),300);
+    $('bh6').textContent='정답: '+b.q.w+' = '+b.q.m;
+    if(hp<=0){ dead=true; cancelAnimationFrame(raf); return setTimeout(end6,900); }
+    setTimeout(()=>{ if(dead)return; bombs[i]=make(i); render(); }, 800);
+  }
+  function loop(){
+    if(dead||pauseAt) return;
+    const now=performance.now();
+    for(let i=0;i<bombs.length;i++){
+      const b=bombs[i];
+      if(!b||b.dead) continue;
+      const el=(now-b.born)/b.life;
+      const left=Math.max(0,1-el);
+      const secs=Math.max(0,(b.life-(now-b.born))/1000);
+      const t=b.el.querySelector('.bt'); if(t) t.textContent=secs.toFixed(1);
+      const f=b.el.querySelector('.fuse i'); if(f) f.style.width=(left*100)+'%';
+      b.el.classList.toggle('warn', left<.5 && left>=.22);
+      b.el.classList.toggle('crit', left<.22);
+      if(left<=0){ boom(i,false); }
+    }
+    raf=requestAnimationFrame(loop);
+  }
+  function end6(){
+    const acc=tot?Math.round(ok/tot*100):0;
+    result(sc,[['해체',ok+'개'],['정확도',acc+'%'],['최고콤보',mx]],wrong,acc,false);
+  }
+
+  $('h6').textContent=hearts(hp); $('p6').textContent='0';
+  $('c6').classList.remove('on'); $('bh6').textContent='폭탄을 눌러 해체하세요';
+  spawnAll();
+  loop();
+}
+
+/* ───── 7단계 짝 맞추기 ───── */
+function g7(p){
+  show('s_g7');
+  const PAIRS=8;
+  // 뜻이 서로 겹치지 않는 8개 단어 선별 (겹치면 짝 판정이 모호해짐)
+  const picked=[];
+  for(const q of shuf(p)){
+    if(picked.length>=PAIRS) break;
+    if(picked.some(x=>clash(x.m,q.m))) continue;
+    picked.push(q);
+  }
+  if(picked.length<3){
+    show('s_lvl');
+    alert('선택한 범위에 단어가 부족합니다. 강이나 출제 범위를 늘려주세요.');
+    return;
+  }
+  const N=picked.length;
+
+  let sc=0, cmb=0, mx=0, flips=0, rest=N, wrong=[], dead=false;
+  let open=[], lock=false, pauseAt=0, t0=performance.now(), iv=null, secs=0;
+
+  G={stop:()=>{ dead=true; clearInterval(iv); },
+     pause:()=>{ clearInterval(iv); pauseAt=1; },
+     resume:()=>{ pauseAt=0; if(!dead) iv=setInterval(tick,1000); }};
+
+  // 카드 = 단어카드 N개 + 뜻카드 N개
+  const deck=[];
+  picked.forEach((q,i)=>{
+    deck.push({pid:i, type:'w', txt:q.w, q});
+    deck.push({pid:i, type:'m', txt:q.m, q});
+  });
+  const cards=shuf(deck);
+
+  const box=$('cards'); box.innerHTML='';
+  box.style.gridTemplateColumns='repeat(4,1fr)';
+  cards.forEach((c,idx)=>{
+    const el=document.createElement('div'); el.className='card';
+    const fc=c.type==='w'?'front w':'front';
+    const sz=c.txt.length>11?' f2':c.txt.length>7?' f1':'';
+    el.innerHTML='<div class="inner"><div class="fc back">?</div>'+
+      '<div class="fc '+fc+sz+'"></div></div>';
+    el.querySelector('.front').textContent=c.txt;
+    c.el=el; c.idx=idx; c.done=false;
+    el.onclick=()=>flip(c);
+    box.appendChild(el);
+  });
+
+  function tick(){ if(dead||pauseAt)return; secs++; $('tm7').textContent=secs; }
+  function flip(c){
+    if(dead||lock||c.done||pauseAt) return;
+    if(open.includes(c)) return;
+    if(open.length>=2) return;
+    c.el.classList.add('flip');
+    SFX.pop();
+    open.push(c);
+    if(open.length===2){ flips++; $('flip7').textContent=flips; check(); }
+  }
+  function check(){
+    lock=true;
+    const [a,b]=open;
+    // 같은 짝 + 서로 다른 타입(단어-뜻)이어야 정답
+    const good = a.pid===b.pid && a.type!==b.type;
+    if(good){
+      cmb++; mx=Math.max(mx,cmb); rest--;
+      const eff=Math.max(0, 1-(flips-(N-rest))*0.06);
+      const pt=Math.round((150+Math.round(eff*100))*(1+cmb*.15));
+      sc+=pt;
+      a.done=b.done=true;
+      a.el.classList.add('done'); b.el.classList.add('done');
+      SFX.ok(cmb); comboFx(cmb); heat(cmb);
+      const r=b.el.getBoundingClientRect();
+      pop(r.left+r.width/2-16, r.top-4, '+'+pt, '#4ade80');
+      $('c7').textContent=cmb+' COMBO'; $('c7').classList.toggle('on',cmb>1);
+      $('p7').textContent=sc; $('rest7').textContent=rest;
+      open=[]; lock=false;
+      if(rest<=0){ dead=true; clearInterval(iv); banner('클리어!','#4ade80');
+        SFX.win(); flash('rgba(74,222,128,.25)',220); return setTimeout(end7,800); }
+    } else {
+      cmb=0; $('c7').classList.remove('on'); heat(0); SFX.no();
+      if(a.pid!==b.pid) wrong.push(a.q);
+      a.el.classList.add('bad'); b.el.classList.add('bad');
+      setTimeout(()=>{
+        if(dead) return;
+        a.el.classList.remove('flip','bad'); b.el.classList.remove('flip','bad');
+        open=[]; lock=false;
+      }, 720);
+    }
+  }
+  function end7(){
+    const perfect=N*1;  // 최소 뒤집기 = 짝 수
+    const acc=flips? Math.round(perfect/flips*100) : 0;
+    sc+=Math.max(0, (120-secs)*8);  // 시간 보너스
+    result(sc,[['시간',secs+'초'],['뒤집기',flips+'회'],['최고콤보',mx]],
+           wrong, Math.min(100,acc), false);
+  }
+
+  $('p7').textContent='0'; $('tm7').textContent='0';
+  $('rest7').textContent=N; $('flip7').textContent='0';
+  $('c7').classList.remove('on');
+  iv=setInterval(tick,1000);
+}
+
+/* ───── 결과 ───── */
+function result(sc, stats, wrong, acc, bossWin){
+  const lv=S.lvl;
+  const g = acc>=95?'S':acc>=85?'A':acc>=70?'B':'C';
+
+  // ── 통계 누적 ──
+  const mxs=stats.find(x=>x[0]==='최고콤보');
+  const mxv=mxs?(parseInt(mxs[1])||0):0;
+  SAVE.stat.play=(SAVE.stat.play||0)+1;
+  const oks=stats.find(x=>['맞춤','처치','해체','처리'].indexOf(x[0])>=0);
+  if(oks){ const n=parseInt(String(oks[1]))||0; SAVE.stat.ok=(SAVE.stat.ok||0)+n; }
+  if(mxv>(SAVE.stat.mx||0)) SAVE.stat.mx=mxv;
+
+  // ── 강별 최고점 + 클리어 도장 ──
+  const clearOK = (lv===3) ? !!bossWin : (acc>=60);
+  const targets = (S.mode==='all') ? [] : S.chs;
+  const gv={S:4,A:3,B:2,C:1};
+  targets.forEach(ch=>{
+    const k=bkey(ch,lv);
+    if(!SAVE.best[k]||sc>SAVE.best[k]) SAVE.best[k]=sc;
+    if(clearOK){
+      const g0=SAVE.clear[k];
+      if(!g0||gv[g]>gv[g0]) SAVE.clear[k]=g;
+    }
+  });
+  putSave();
+
+  const nb = sc>S.best[lv];
+  if(nb) S.best[lv]=sc;
+  ['1','2','3','4','5','6'].forEach(k=>$('b'+k).textContent=S.best[k]||'-');
+  $('nbadge').innerHTML = nb&&sc>0 ? '<div class="nb">🎉 최고기록 갱신!</div>' : '';
+  $('grd').textContent=g; $('grd').className='grade g'+g;
+  $('rsc').textContent=sc.toLocaleString();
+  $('rl').textContent=S.name+' · '+lv+'단계';
+  $('rst').innerHTML=stats.map(s=>'<div><b>'+s[1]+'</b>'+s[0]+'</div>').join('');
+  // 보스전 결과
+  if(lv===3){
+    if(bossWin){
+      const bs=bossOf(S.chs.length===1?S.chs[0]:(S.mode==='all'?20:S.chs[S.chs.length-1]));
+      $('passbox').innerHTML='<div class="pass"><div class="h">'+bs.e+' '+esc2(bs.n)+' 처치!</div>'+
+        '<div class="s">처치한 보스 '+Object.keys(SAVE.bossKill).length+' / 20</div></div>';
+    } else {
+      $('passbox').innerHTML='<div class="pass" style="background:rgba(248,113,113,.12);border-color:var(--bad)">'+
+        '<div class="h" style="color:var(--bad)">보스 처치 실패</div>'+
+        '<div class="s">다시 도전!</div></div>';
+    }
+  } else $('passbox').innerHTML='';
+  // 자랑용 공유 카드
+  const LV=['','5지선다','낙하단어','보스전','어원조합','두더지','폭탄해체','짝맞추기'][lv];
+  const rng = S.mode==='all'?'전체 20강':(S.chs.length>3?S.chs.length+'개 강':S.chs.map(c=>c+'강').join(','));
+  $('shot').innerHTML='<div class="shot"><div class="top">SIEUN ENGLISH · 시은보카 1</div>'+
+    '<div class="who">'+S.name+' · '+g+'등급 · '+sc.toLocaleString()+'점</div>'+
+    '<div class="rng">'+LV+' · '+rng+' · 정확도 '+acc+'% · 최고콤보 '+
+    (stats.find(x=>x[0]==='최고콤보')?stats.find(x=>x[0]==='최고콤보')[1]:0)+'</div></div>'+
+    '<div class="tip">📸 화면 캡처해서 친구한테 자랑하기</div>';
+  // ── 도전과제 ──
+  const newBadges=checkBadges({lv, grade:g, mx:mxv, wrong:wrong.length, acc,
+                               bossWin, ch:S.chs[0]});
+  if(newBadges.length){
+    $('bdg').innerHTML='<div class="nbg"><div class="nbt">🏅 새 도전과제!</div>'+
+      newBadges.map(id=>{ const b=BADGES.find(x=>x.id===id);
+        return '<div class="nbi">'+b.e+' <b>'+esc2(b.n)+'</b> — '+esc2(b.d)+'</div>'; }).join('')+
+      '</div>';
+    setTimeout(()=>SFX.win(), 500);
+  } else $('bdg').innerHTML='';
+
+  // 결과 사운드
+  if(lv!==3){ if(g==='S'||g==='A') SFX.win(); else SFX.pop(); }
+  heat(0);
+  drawMap();
+  // 틀린 단어
+  if(wrong.length){
+    const seen={}, uq=[];
+    wrong.forEach(w=>{ if(!seen[w.w]){seen[w.w]=1;uq.push(w);} });
+    $('wrong').innerHTML='<div class="lb" style="padding:0 9px 5px">틀린 단어 '+uq.length+'개</div>'+
+      uq.map(w=>'<div class="wi"><b>'+w.w+'</b><span>'+w.m+'</span></div>').join('');
+  } else $('wrong').innerHTML='';
+  show('s_res');
+}
+$('again').onclick=()=>countdown(()=>start(S.lvl));
+
+/* ══ 일시정지 (앱 전환/화면 꺼짐) ══ */
+let paused=false;
+function inGame(){ return G && !!document.querySelector('#s_g1.on,#s_g2.on,#s_g3.on,#s_g4.on,#s_g5.on,#s_g6.on,#s_g7.on'); }
+function doPause(){
+  if(!inGame()||paused) return;
+  paused=true;
+  if(G.pause) G.pause();
+  $('pause').classList.add('on');
+}
+function doResume(){
+  if(!paused) return;
+  paused=false;
+  $('pause').classList.remove('on');
+  if(G&&G.resume) G.resume();
+}
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden) doPause(); });
+window.addEventListener('blur', ()=>doPause());
+$('presume').onclick=()=>{ unlock(); doResume(); };
+$('pquit').onclick=()=>{ paused=false; $('pause').classList.remove('on'); quit(); };
+
+/* ══ 지도 · 뱃지 렌더 ══ */
+function chGrade(ch){
+  // 그 강에서 딴 최고 등급 (6모드 중)
+  const gv={S:4,A:3,B:2,C:1}; let best=null;
+  for(let lv=1;lv<=6;lv++){
+    const g=SAVE.clear[bkey(ch,lv)];
+    if(g && (!best || gv[g]>gv[best])) best=g;
+  }
+  return best;
+}
+function drawMap(){
+  [['map','mprog'],['map2','mprog2']].forEach(([mid,pid])=>{
+    const box=$(mid); if(!box) return;
+    box.innerHTML=''; let done=0;
+    for(let ch=1;ch<=20;ch++){
+      const g=chGrade(ch); if(g) done++;
+      const d=document.createElement('div');
+      d.className='mc'+(g?' done g'+g:'')+(SAVE.bossKill[ch]?' boss':'');
+      d.innerHTML='<span class="cn">'+ch+'</span>'+(g?'<span class="cg">'+g+'</span>':'');
+      d.title=ch+'강'+(g?' · '+g+'등급':' · 미클리어');
+      box.appendChild(d);
+    }
+    const pe=$(pid); if(pe) pe.textContent=done+' / 20';
+  });
+}
+function drawBadges(){
+  const box=$('badges'); if(!box) return;
+  box.innerHTML=''; let n=0;
+  BADGES.forEach(b=>{
+    const has=!!SAVE.badges[b.id]; if(has) n++;
+    const d=document.createElement('div');
+    d.className='bg1'+(has?' on':'');
+    d.textContent=b.e; d.title=b.n+' — '+b.d+(has?' ✓':'');
+    box.appendChild(d);
+  });
+  const pe=$('bprog'); if(pe) pe.textContent=n+' / '+BADGES.length;
+  const ls=$('lstat');
+  if(ls) ls.innerHTML='<div><b>'+(SAVE.stat.play||0)+'</b>플레이</div>'+
+    '<div><b>'+(SAVE.stat.ok||0)+'</b>정답</div>'+
+    '<div><b>'+(SAVE.stat.mx||0)+'</b>최고콤보</div>'+
+    '<div><b>'+Object.keys(SAVE.bossKill).length+'</b>보스</div>';
+}
+function refreshHome(){ drawMap(); drawBadges(); }
+
+loadSave();
+refreshHome();
+
+/* ══ 뒤로가기 가로채기 ══ */
+try{ history.replaceState({p:'home'},''); }catch(e){}
+function pushGuard(){ try{ history.pushState({p:'game'},''); }catch(e){} }
+window.addEventListener('popstate', ()=>{
+  if(inGame()){ pushGuard(); if(paused) doResume(); quit(); }
+  else if($('s_res').classList.contains('on')||$('s_lvl').classList.contains('on')){
+    pushGuard(); show('s_home');
+  }
+});
+
+/* ══ 더블탭 확대 방지 ══ */
+let lastTap=0;
+document.addEventListener('touchend', e=>{
+  const now=Date.now();
+  if(now-lastTap<320){ e.preventDefault(); }
+  lastTap=now;
+}, {passive:false});
+document.addEventListener('gesturestart', e=>e.preventDefault());
+
+window.DATA=DATA;window.S=S;window.pool=pool;window.start=start;window.distract=distract;window.result=result;window.quit=quit;window.banner=banner;window.clash=clash;window.etymPool=etymPool;window.g5=g5;window.g6=g6;try{ Object.defineProperty(window,'SAVE',{get:()=>SAVE,configurable:true}); }catch(e){}window.drawMap=drawMap;window.drawBadges=drawBadges;window.BADGES=BADGES;window.BOSSES=BOSSES;window.bossOf=bossOf;window.putSave=putSave;window.wipeSave=wipeSave;window.loadSave=loadSave;window.chGrade=chGrade;window.refreshHome=refreshHome;window.g7=g7;window.g6=g6;try{ Object.defineProperty(window,'SAVE',{get:()=>SAVE,configurable:true}); }catch(e){}window.drawMap=drawMap;window.drawBadges=drawBadges;window.BADGES=BADGES;window.BOSSES=BOSSES;window.bossOf=bossOf;window.putSave=putSave;window.wipeSave=wipeSave;window.loadSave=loadSave;window.chGrade=chGrade;window.refreshHome=refreshHome;window.g7=g7;window.g4=g4;window.doPause=doPause;window.doResume=doResume;window.frags=frags;window.usable=usable;window.pickQ=pickQ;window.comboFx=comboFx;window.flash=flash;window.SFX=SFX;
+</script></body></html>

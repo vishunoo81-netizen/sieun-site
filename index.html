@@ -1133,6 +1133,14 @@ document.addEventListener('DOMContentLoaded',function(){
  .mv{padding:12px;} .mbody{grid-template-columns:1fr;padding:18px;}
  .mhd{padding:20px 22px 14px;} .mhd b{font-size:19px;}
 }
+/* 휴대폰: 한글이 단어 중간에서 끊기지 않게, 제목이 화면 밖으로 나가지 않게 */
+body{word-break:keep-all;overflow-wrap:break-word;}
+@media(max-width:600px){
+ .hero6 h1{font-size:30px!important;letter-spacing:-1px!important;}
+ .results .sec-h{font-size:28px!important;}
+ .results .sec-p{font-size:15px!important;padding:0 16px;}
+ .schmap .items,.schmap .items.six{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+}
 </style>
 </body>
 </html>
